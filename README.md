@@ -1,5 +1,4 @@
-# 👋 Hi, I'm Harish Jaypal
-  
+# iHarishJaypal.github.io  
 🚀 Future AI Developer | 💻 PHP Developer | 🎨 Web Designer            
         
 ---   
