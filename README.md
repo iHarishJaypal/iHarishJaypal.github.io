@@ -11,7 +11,7 @@
 
 - 🔭 **Currently Working On:** Web Projects
 - 🌱 **Learning:** Python, Artificial Intelligence, LLMs
-- 🤖 **Building:** AI Projects & Automation
+- 🤖 **Building:** AI Projects & Automation 
 - 🎯 **Goal:** Become a Top AI Developer
 - ⚡ **Fun Fact:** I build things faster than I explain them 😎
 
@@ -19,7 +19,7 @@
 
 # 🛠️ Tech Stack
 
-### 💻 Languages
+### 💻 Languages     
 <p>
 <img src="https://skillicons.dev/icons?i=php,html,css,js,python,mysql" />
 </p>
