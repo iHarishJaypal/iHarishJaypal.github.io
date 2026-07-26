@@ -5,7 +5,7 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Poppins&size=26&pause=1000&color=00F7FF&center=true&vCenter=true&width=900&lines=Welcome+to+my+GitHub!;PHP+Developer;Future+AI+Developer;Web+Designer;Always+Learning+Something+New!+🚀" />
 
----               z
+---              
 
 # 🧠 About Me
 
