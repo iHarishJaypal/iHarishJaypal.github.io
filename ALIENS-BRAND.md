@@ -1,9 +1,9 @@
 # Aliens Brand — UI Reference
 
-Use **"Aliens Brand"** as the shorthand for the visual system and interaction patterns below whenever Harish asks to apply the Aliens Brand to a website or dashboard.
+Use **"Aliens Brand"** as the shorthand for this visual system and interaction pattern. For this project, the product name is **Aliens TelcoNet**.
 
 ## Visual direction
-- Product identity shown in the supplied references: **Score / base.software**, within the Aliens Company workspace.
+- Project brand identity: **Aliens TelcoNet**. The supplied Aliens TelcoNet / base.software screens remain the layout and interaction reference, adapted to a telecom operations workspace within Aliens Company.
 - Premium, compact SaaS dashboard aesthetic; clear hierarchy and dense but readable navigation.
 - Dark theme is the default: near-black page background, charcoal surfaces, subtle borders, muted secondary text.
 - Light theme is also required and should preserve the same hierarchy and layout.
