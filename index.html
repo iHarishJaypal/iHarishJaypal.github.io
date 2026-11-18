@@ -83,6 +83,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
 @media(max-width:1180px){.topnav{min-width:0}.workspace{width:285px}.topbar{left:349px}.main{margin-left:349px}}
 @media(max-width:850px){.workspace,.rail,.topbar{display:none}.main{margin:0;padding:86px 16px 100px}}
 </style>
+<link rel="stylesheet" href="telconet-ui.css">
 </head>
 <body>
 <div class="app" id="app">
@@ -101,7 +102,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   </aside>
   <aside class="workspace">
     <div class="workspace-head"><div class="wordmark">TelcoNet<small>ALIENS COMPANY</small></div></div>
-    <button class="company-select" data-action="toast" data-message="Aliens TelcoNet workspace"><span class="company-icon"><i data-lucide="radio-tower"></i></span><span><small>COMPANY</small><strong>Aliens TelcoNet</strong></span><span class="caret">⌄</span></button>
+    <button class="company-select" data-action="toast" data-message="Aliens Company workspace"><span class="company-icon"><i data-lucide="radio-tower"></i></span><span><small>COMPANY</small><strong>Aliens Company</strong></span><span class="caret">⌄</span></button>
     <button class="new-btn" data-action="toast" data-message="Create menu opened">＋ &nbsp;New</button>
     <div class="side-scroll">
       <div class="group-label">DASHBOARD</div>
@@ -117,7 +118,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
       <a class="side-link" href="#coverage" data-view="reports"><span class="side-icon"><i data-lucide="layout-grid"></i></span><span><strong>Run Coverage</strong><small>Scored run coverage</small></span></a>
       <a class="side-link" href="#detail" data-view="reports"><span class="side-icon"><i data-lucide="list"></i></span><span><strong>Run Detail</strong><small>Execution run details</small></span></a>
     </div>
-    <div class="side-bottom"><button class="profile-mini" data-action="profile" aria-label="Open profile">👤</button><span style="font-size:10px;color:var(--muted)">Aliens TelcoNet workspace</span></div>
+    <div class="side-bottom"><button class="profile-mini" data-action="profile" aria-label="Open profile">👤</button><span style="font-size:10px;color:var(--muted)">Aliens Company Workspace</span></div>
   </aside>
   <header class="topbar">
     <button class="collapse-btn" data-action="collapse" aria-label="Toggle sidebar"><i data-lucide="panel-left-close"></i></button>
@@ -125,12 +126,10 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <nav class="topnav" aria-label="Main navigation">
       <button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="cyborgs"><span><i data-lucide="users"></i></span>Cyborgs</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="salary"><span><i data-lucide="wallet"></i></span>Salary</button><button data-view="calendar"><span><i data-lucide="layout-dashboard"></i></span>Calendar</button>
     </nav>
-    <div class="top-actions"><span class="updated">◷ &nbsp;37 min ago</span><button class="icon-btn" data-action="toast" data-message="Messages panel">▤</button><button class="icon-btn" data-action="toast" data-message="Team panel"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="No new notifications"><i data-lucide="users"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">A</button></div>
+    <div class="top-actions"><span class="updated"><i data-lucide="clock-3"></i><span>37 min ago</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="list"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="No new notifications" aria-label="Notifications"><i data-lucide="activity"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">AL</button></div>
   </header>
-  <header class="mobile-brand"><div class="mb-left"><span class="brandmark"></span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div><button data-action="launcher" aria-label="Open app menu"><i data-lucide="grid-2x2"></i></button> <button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
-  <nav class="mobile-bottom" aria-label="Mobile navigation">
-    <button data-action="launcher"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health"><span><i data-lucide="activity"></i></span>Health</button>
-  </nav>
+  <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="focus-menu-search" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
+  <nav class="mobile-bottom" aria-label="Mobile navigation"><button data-action="launcher" aria-label="Open apps menu"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health" title="Is everything running well?"><span><i data-lucide="activity"></i></span>Is everything...</button></nav>
   <main class="main" id="mainContent">
     <section class="view active" id="view-dashboard">
       <div class="page-head"><div><h1>Dashboard</h1><p>Your telecom operations, network health and team activity at a glance.</p><div class="statusline"><i></i> Source: <b style="color:var(--blue)">TelcoNet demo workspace</b> · Sample data</div></div><div class="page-actions"><button class="soft-btn" data-action="toast" data-message="Calendar view selected">▦ Calendar</button><button class="soft-btn" data-action="toast" data-message="Health metrics refreshed">↻ Web refresh</button><button class="soft-btn" data-action="toast" data-message="Latest data is displayed">Latest data</button></div></div>
@@ -163,16 +162,63 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   </main>
 </div>
 <section class="signin" id="signin">
-  <div class="signin-copy"><div class="signin-logo"><span class="brandmark"></span><span><b>Aliens TelcoNet</b><small style="display:block;color:#999;font-size:11px">ALIENS COMPANY</small></span></div><div class="eyebrow">COMPANY INTELLIGENCE</div><h1>Welcome to<br>Aliens TelcoNet</h1><p>Open governed dashboards, workflow quality and delivery intelligence for your company.</p><div class="checks"><span>Private company workspace</span><span>Shared Aliens identity</span><span>Secure session</span></div></div>
+  <div class="signin-copy"><div class="signin-logo"><span class="brandmark"></span><span><b>Aliens TelcoNet</b><small style="display:block;color:#999;font-size:11px">ALIENS COMPANY</small></span></div><div class="eyebrow">COMPANY INTELLIGENCE</div><h1>Welcome back to<br>Aliens TelcoNet</h1><p>Open governed dashboards, workflow quality and delivery intelligence for your company.</p><div class="checks"><span>Private company workspace</span><span>Shared Aliens identity</span><span>Secure session</span></div></div>
   <form class="signin-card" id="signinForm"><button type="button" class="back-home" data-action="back-home">← Back to dashboard</button><div class="eyebrow">ALIENS ID</div><h2>Sign in</h2><p>Use your work email and password.</p><label for="email">Email</label><input id="email" type="email" placeholder="you@company.com" autocomplete="username" required><label for="password">Password</label><input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required><button class="signin-submit" type="submit">Continue to TelcoNet <span style="float:right"><i data-lucide="arrow-right"></i></span></button><div class="signin-note">Demo interface only · No credentials are sent or stored.</div></form>
 </section>
 <div class="overlay" id="overlay" data-action="close-pop"></div>
-<aside class="profile-pop" id="profilePop" aria-label="Account menu">
-  <div class="pop-head"><button class="close-pop" data-action="close-pop" aria-label="Close"><i data-lucide="x"></i></button><b style="font-size:12px">Aliens account</b><div class="pop-avatar">AL</div><h3>Welcome to TelcoNet!</h3><p>Workspace account</p><a class="manage" href="#" data-action="toast" data-message="Account management is not connected yet">Manage your Aliens Account</a></div>
-  <div class="language"><span>Language</span><div class="lang-options"><button data-lang="EN">EN</button><button class="active" data-lang="HL">HL</button><button data-lang="HI">HI</button></div></div>
-  <div class="pop-actions"><button data-action="toast" data-message="Add account flow is not connected">♙ &nbsp;Add account</button><button data-action="signout">⇥ &nbsp;Sign out</button></div>
-</aside>
-<section class="launcher" id="launcher"><div class="launcher-head"><button data-action="close-launcher" aria-label="Close app launcher"><i data-lucide="arrow-left"></i></button><h2>Aliens TelcoNet Apps</h2><span style="font-size:10px;color:var(--muted)">9 Apps</span></div><div class="launcher-grid"><button class="app-tile" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span><b>Score</b></button><button class="app-tile" data-action="toast" data-message="Project app coming soon"><span><i data-lucide="layout-grid"></i></span><b>Project</b></button><button class="app-tile" data-action="toast" data-message="Code app coming soon"><span><i data-lucide="workflow"></i></span><b>Code</b></button><button class="app-tile" data-action="toast" data-message="AI app coming soon"><span><i data-lucide="sparkles"></i></span><b>AI</b></button><button class="app-tile" data-action="toast" data-message="Drive app coming soon"><span><i data-lucide="folder"></i></span><b>Drive</b></button><button class="app-tile" data-action="toast" data-message="Admin app coming soon"><span><i data-lucide="settings"></i></span><b>Admin</b></button><button class="app-tile" data-action="toast" data-message="Notifications app coming soon"><span><i data-lucide="users"></i></span><b>Notifications</b></button><button class="app-tile" data-action="toast" data-message="Finance app coming soon"><span><i data-lucide="wallet"></i></span><b>Finance</b></button><button class="app-tile" data-action="toast" data-message="Calendar app coming soon"><span><i data-lucide="layout-dashboard"></i></span><b>Calendar</b></button></div></section>
+<aside class="profile-pop" id="profilePop" aria-label="Account menu" role="dialog" aria-modal="true"><div class="pop-head"><button class="close-pop" data-action="close-pop" aria-label="Close"><i data-lucide="x"></i></button><b style="font-size:12px">Aliens account</b><div class="pop-avatar">AL</div><h3>Hi, Aliens!</h3><p>Aliens Company workspace</p><a class="manage" href="#" data-action="toast" data-message="Account management is not connected yet">Manage your Aliens Account</a></div><div class="language"><span>Language</span><div class="lang-options"><button data-lang="EN">EN</button><button class="active" data-lang="HL">HL</button><button data-lang="HI">HI</button></div></div><div class="pop-actions"><button class="pop-wide" data-action="theme">☼ &nbsp;Switch appearance</button><button data-action="toast" data-message="Add account flow is not connected">♙ &nbsp;Add account</button><button data-action="signout">⇥ &nbsp;Sign out</button></div></aside>
+
+<section class="launcher" id="launcher" aria-label="Aliens apps" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="launcher-shell">
+    <header class="assistant-search">
+      <span class="assistant-bot" aria-hidden="true">🤖</span>
+      <input id="assistantSearch" type="search" placeholder="Ask Cyborg" aria-label="Ask Cyborg or search apps" autocomplete="off">
+      <button data-action="assistant-search" aria-label="Search apps">➤</button>
+    </header>
+    <div class="launcher-heading-row">
+      <button class="launcher-back" data-action="close-launcher" aria-label="Back to workspace">‹</button>
+      <div><h2>Aliens Apps</h2><p>26 Apps</p></div>
+    </div>
+    <div class="app-view-toggle" role="group" aria-label="App layout">
+      <button class="active" data-action="app-mode" data-mode="grid" aria-pressed="true"><span>▦</span> Grid</button>
+      <button data-action="app-mode" data-mode="list" aria-pressed="false"><span>☷</span> List</button>
+    </div>
+    <div class="launcher-content">
+      <div class="launcher-grid" id="appGrid"><button class="app-tile" data-action="toast" data-message="Base workspace is not connected yet" data-app-name="Base" aria-label="Base"><span class="app-icon tone-purple">▤</span><b>Base</b></button><button class="app-tile" data-view="dashboard" data-app-name="Score" aria-label="Score"><span class="app-icon tone-purple">▥</span><b>Score</b></button><button class="app-tile" data-view="reports" data-app-name="Project" aria-label="Project"><span class="app-icon tone-violet">▰</span><b>Project</b></button><button class="app-tile" data-action="toast" data-message="Code app is not connected yet" data-app-name="Code" aria-label="Code"><span class="app-icon tone-green">⌘</span><b>Code</b></button><button class="app-tile" data-action="toast" data-message="AI workspace is not connected yet" data-app-name="AI" aria-label="AI"><span class="app-icon tone-blue">▣</span><b>AI</b></button><button class="app-tile" data-action="toast" data-message="Drive app is not connected yet" data-app-name="Drive" aria-label="Drive"><span class="app-icon tone-orange">📁</span><b>Drive</b></button><button class="app-tile" data-action="toast" data-message="You're already viewing Aliens Apps" data-app-name="Apps" aria-label="Apps"><span class="app-icon tone-green">▦</span><b>Apps</b></button><button class="app-tile" data-view="salary" data-app-name="Admin" aria-label="Admin"><span class="app-icon tone-orange">◷</span><b>Admin</b></button><button class="app-tile" data-action="toast" data-message="Assistant service is not connected yet" data-app-name="Assistant" aria-label="Assistant"><span class="app-icon tone-violet">✦</span><b>Assistant</b></button><button class="app-tile" data-view="calendar" data-app-name="Clock" aria-label="Clock"><span class="app-icon tone-orange">◷</span><b>Clock</b></button><button class="app-tile" data-action="toast" data-message="School app is not connected yet" data-app-name="School" aria-label="School"><span class="app-icon tone-blue">▤</span><b>School</b></button><button class="app-tile" data-action="toast" data-message="Shopping app is not connected yet" data-app-name="Shopping" aria-label="Shopping"><span class="app-icon tone-orange">▣</span><b>Shopping</b></button><button class="app-tile" data-action="toast" data-message="Amazon app is not connected yet" data-app-name="Amazon" aria-label="Amazon"><span class="app-icon tone-cyan">↗</span><b>Amazon</b></button><button class="app-tile" data-action="toast" data-message="Music app is not connected yet" data-app-name="Music" aria-label="Music"><span class="app-icon tone-pink">♥</span><b>Music</b></button><button class="app-tile" data-action="toast" data-message="OTT app is not connected yet" data-app-name="OTT" aria-label="OTT"><span class="app-icon tone-green">▶</span><b>OTT</b></button><button class="app-tile" data-view="aliens" data-app-name="Ecosystem" aria-label="Ecosystem"><span class="app-icon tone-red">!</span><b>Ecosystem</b></button><button class="app-tile" data-action="toast" data-message="ID service is not connected yet" data-app-name="ID" aria-label="ID"><span class="app-icon tone-blue">▣</span><b>ID</b></button><button class="app-tile" data-action="toast" data-message="AirDrop service is not connected yet" data-app-name="AirDrop" aria-label="AirDrop"><span class="app-icon tone-orange">↗</span><b>AirDrop</b></button><button class="app-tile" data-action="toast" data-message="Messages are not connected yet" data-app-name="Messages" aria-label="Messages"><span class="app-icon tone-green">▰</span><b>Messages</b></button><button class="app-tile" data-view="cyborgs" data-app-name="Friends" aria-label="Friends"><span class="app-icon tone-violet">♧</span><b>Friends</b></button><button class="app-tile" data-action="toast" data-message="No new notifications" data-app-name="Notifications" aria-label="Notifications"><span class="app-icon tone-orange">♢</span><b>Notifications</b></button><button class="app-tile" data-view="aliens" data-app-name="Company" aria-label="Company"><span class="app-icon tone-orange">⌂</span><b>Company</b></button><button class="app-tile" data-view="salary" data-app-name="Finance" aria-label="Finance"><span class="app-icon tone-purple">₹</span><b>Finance</b></button><button class="app-tile" data-action="toast" data-message="Git app is not connected yet" data-app-name="Git" aria-label="Git"><span class="app-icon tone-orange">⌘</span><b>Git</b></button><button class="app-tile" data-action="toast" data-message="Store app is not connected yet" data-app-name="Store" aria-label="Store"><span class="app-icon tone-cyan">▱</span><b>Store</b></button><button class="app-tile" data-view="reports" data-app-name="Task" aria-label="Task"><span class="app-icon tone-orange">✦</span><b>Task</b></button></div>
+      <div class="launcher-list" id="appList" hidden>
+        <div class="list-letter">A</div>
+        <button class="menu-list-item" data-view="cyborgs" data-app-name="Activity"><span class="list-icon">◉</span><span><strong>Activity</strong><small>Cyborgs</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-action="toast" data-message="AI accounts and usage are not connected yet" data-app-name="AI accounts limits usage"><span class="list-icon">⚿</span><span><strong>AI accounts, limits and usage</strong><small>AI</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-action="toast" data-message="AI health and keys are not connected yet" data-app-name="AI health keys accounts"><span class="list-icon">⚿</span><span><strong>AI health, keys, accounts and every...</strong><small>AI</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-view="reports" data-app-name="AI Rank"><span class="list-icon">⑂</span><span><strong>AI Rank</strong><small>Repos</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-view="aliens" data-app-name="Aliens"><span class="list-icon">♙</span><span><strong>Aliens</strong><small>Aliens</small></span><span class="list-arrow">›</span></button>
+        <div class="list-letter">C</div>
+        <button class="menu-list-item" data-view="calendar" data-app-name="Calendar"><span class="list-icon">▦</span><span><strong>Calendar</strong><small>Workspace</small></span><span class="list-arrow">›</span></button>
+        <div class="list-letter">I</div>
+        <button class="menu-list-item" data-view="health" data-app-name="Is everything running well"><span class="list-icon">♡</span><span><strong>Is everything running well</strong><small>Health</small></span><span class="list-arrow">›</span></button>
+        <div class="list-letter">L</div>
+        <button class="menu-list-item" data-view="reports" data-app-name="Leaderboard"><span class="list-icon">▥</span><span><strong>Leaderboard</strong><small>Workflows</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-view="aliens" data-app-name="Learning"><span class="list-icon">▢</span><span><strong>Learning</strong><small>Aliens</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-view="health" data-app-name="Live heartbeat hardware work"><span class="list-icon">▤</span><span><strong>Live heartbeat, hardware and work</strong><small>Machine</small></span><span class="list-arrow">›</span></button>
+        <div class="list-letter">R</div>
+        <button class="menu-list-item" data-view="reports" data-app-name="Reports"><span class="list-icon">▥</span><span><strong>Reports</strong><small>Workspace</small></span><span class="list-arrow">›</span></button>
+        <div class="list-letter">S</div>
+        <button class="menu-list-item" data-view="salary" data-app-name="Salary"><span class="list-icon">₹</span><span><strong>Salary</strong><small>Finance</small></span><span class="list-arrow">›</span></button>
+        <button class="menu-list-item" data-view="dashboard" data-app-name="Score Dashboard"><span class="list-icon">▥</span><span><strong>Score</strong><small>Dashboard</small></span><span class="list-arrow">›</span></button>
+      </div>
+      <p class="launcher-empty" id="launcherEmpty" hidden>No matching apps found.</p>
+    </div>
+    <footer class="launcher-footer">
+      <button class="launcher-avatar" data-action="profile" aria-label="Open Aliens account">AL</button>
+      <div class="launcher-footer-actions">
+        <button data-action="toast" data-message="Team panel is not connected yet" aria-label="Team">♙</button>
+        <button data-action="toast" data-message="No new notifications" aria-label="Notifications">♧</button>
+        <button data-action="toast" data-message="Messages are not connected yet" aria-label="Messages">▢</button>
+        <button class="launcher-power" data-action="signout" aria-label="Sign out">⏻</button>
+      </div>
+    </footer>
+  </div>
+</section>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (()=> {
@@ -234,9 +280,8 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  renderIcons();
 
  // Animate dashboard entrances and chart bars without delaying navigation.
- const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}),{threshold:.08});
- document.querySelectorAll('.metric,.panel,.app-tile').forEach(el=>observer.observe(el));
- const originalShowView=showView;
+ if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}),{threshold:.08});document.querySelectorAll('.metric,.panel,.app-tile').forEach(el=>observer.observe(el));}else{document.querySelectorAll('.metric,.panel,.app-tile').forEach(el=>el.classList.add('is-visible'));}
 </script>
+<script src="telconet-ui.js" defer></script>
 </body>
 </html>
