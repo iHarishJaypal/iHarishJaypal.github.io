@@ -23,6 +23,10 @@
     const listMode = mode === "list";
     if (appGrid) appGrid.hidden = listMode;
     if (appList) appList.hidden = !listMode;
+    const title = $("#launcherTitle");
+    const count = $("#launcherCount");
+    if (title) title.textContent = listMode ? "TelcoNet Menu" : "Aliens Apps";
+    if (count) count.textContent = listMode ? "13 shortcuts" : "26 Apps";
     $$('[data-action="app-mode"]').forEach((button) => {
       const active = button.dataset.mode === (listMode ? "list" : "grid");
       button.classList.toggle("active", active);
@@ -34,20 +38,21 @@
 
   function filterApps() {
     const query = (searchInput?.value || "").trim().toLowerCase();
-    const tiles = $$(".app-tile", appGrid || document);
-    const rows = $$(".menu-list-item", appList || document);
+    const listMode = !!(appList && !appList.hidden);
+    const tiles = $(".app-tile", appGrid || document);
+    const rows = $(".menu-list-item", appList || document);
     let visible = 0;
     tiles.forEach((item) => {
       const haystack = (item.dataset.appName || item.textContent).toLowerCase();
       const match = !query || haystack.includes(query);
       item.hidden = !match;
-      if (match) visible += 1;
+      if (match && !listMode) visible += 1;
     });
     rows.forEach((item) => {
       const haystack = (item.dataset.appName || item.textContent).toLowerCase();
       const match = !query || haystack.includes(query);
       item.hidden = !match;
-      if (match && appList && !appList.hidden) visible += 1;
+      if (match && listMode) visible += 1;
     });
     if (emptyState) emptyState.hidden = visible > 0;
     return visible;
