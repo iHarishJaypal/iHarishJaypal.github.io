@@ -500,3 +500,7 @@ body.light .wordmark small{color:#65738a}
 @media(max-width:420px){
   .signin-card{padding:24px 18px}
 }
+@media(max-width:420px){
+  .password-field input{padding-right:64px}
+  .password-toggle{right:6px;min-width:42px;padding:6px 4px;font-size:10px}
+}
