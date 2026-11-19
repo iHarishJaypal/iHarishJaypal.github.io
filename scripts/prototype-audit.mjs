@@ -69,6 +69,18 @@ test("active navigation exposes the current destination to assistive technology"
   assert.match(html.slice(mobileNavStart, mobileNavEnd), /data-view="dashboard" aria-current="page"/);
 });
 
+test("desktop workspace links use a named navigation landmark", () => {
+  const navStart = html.indexOf('<nav class="side-scroll" aria-label="Workspace navigation">');
+  assert.ok(navStart >= 0, "workspace links must be inside a named navigation landmark");
+  const navEnd = html.indexOf("</nav>", navStart);
+  assert.ok(navEnd > navStart, "workspace navigation landmark must close");
+  const navMarkup = html.slice(navStart, navEnd);
+  assert.equal((navMarkup.match(/class="side-link/g) || []).length, 9,
+    "workspace navigation should retain all nine reference links");
+  assert.match(navMarkup, /aria-current="page"/,
+    "workspace navigation should expose the current destination");
+});
+
 test("every navigation destination has a real prototype view", () => {
   const destinations = [...new Set([...html.matchAll(/data-view="([^"]+)"/g)].map((match) => match[1]))];
   destinations.forEach((destination) => {

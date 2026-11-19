@@ -585,6 +585,19 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
 
 
 
+test("desktop workspace sidebar exposes a named navigation landmark", async () => {
+  const { context, page } = await openPage({ width: 1440, height: 900 });
+  try {
+    const navigation = page.getByRole("navigation", { name: "Workspace navigation" });
+    assert.equal(await navigation.count(), 1, "workspace sidebar should expose one named navigation landmark");
+    assert.equal(await navigation.getByRole("link").count(), 9, "workspace navigation should retain all nine links");
+    assert.equal(await navigation.getByRole("link", { name: /Dashboard/ }).getAttribute("aria-current"), "page");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});
+
 test("all sidebar and top navigation destinations open their matching views", async () => {
   const { context, page } = await openPage({ width: 1440, height: 900 });
   try {
