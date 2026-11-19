@@ -231,6 +231,25 @@ test("mobile header and primary navigation preserve TelcoNet identity and contro
   assert.match(css, /safe-area-inset-bottom/);
 });
 
+ 
+test("browser chrome theme color follows the active dashboard and SignIn surface", () => {
+  assert.match(html, /<meta name="theme-color" content="#08090d">/);
+  const syncStart = html.indexOf("function syncThemeColor()");
+  const controlsStart = html.indexOf("function syncThemeControls()");
+  const toggleStart = html.indexOf("function toggleTheme()");
+  const signinStart = html.indexOf("function showSignin()");
+  const backHomeStart = html.indexOf("function backHome()");
+  const showLauncherStart = html.indexOf("function showLauncher()");
+  assert.ok(syncStart >= 0 && controlsStart > syncStart && toggleStart > controlsStart);
+  assert.match(html.slice(syncStart, controlsStart), /meta\[name="theme-color"\]/);
+  assert.match(html.slice(syncStart, controlsStart), /signinVisible\?'#07080b'/);
+  assert.match(html.slice(syncStart, controlsStart), /classList\.contains\('light'\)\?'#e8f4ff':'#08090d'/);
+  assert.match(html.slice(controlsStart, toggleStart), /syncThemeColor\(\)/);
+  assert.match(html.slice(signinStart, backHomeStart), /syncThemeColor\(\)/);
+  assert.match(html.slice(backHomeStart, showLauncherStart), /syncThemeColor\(\)/);
+});
+
+
 
 test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
   const tokenBlock = (selector) => {
