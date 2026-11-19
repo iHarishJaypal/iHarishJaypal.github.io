@@ -419,9 +419,9 @@ body.sidebar-collapsed .main{margin-left:68px}
   .top-actions .avatar-btn{width:36px;height:36px}
 }
 @media(max-width:1180px) and (min-width:1101px){
-  .topbar{padding:0 12px;gap:8px}
-  .search{max-width:210px;min-width:110px}
-  .topnav{min-width:300px;flex:1 1 300px}
+  .topbar{padding:0 10px;gap:6px}
+  .search{max-width:195px;min-width:105px}
+  .topnav{min-width:285px;flex:1 1 285px}
   .topnav button{min-width:0;flex:1;padding:8px 7px}
   .top-actions{gap:2px;padding:4px}
   .top-actions .icon-btn{width:34px;height:34px}
