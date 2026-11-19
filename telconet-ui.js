@@ -59,7 +59,7 @@
       const haystack = (item.dataset.appName || item.textContent || "").toLocaleLowerCase();
       const match = !query || haystack.includes(query);
       item.hidden = !match;
-      if (match) visible += 1;
+      if (match && !listMode) visible += 1;
     });
 
     rows.forEach((item) => {
