@@ -75,3 +75,12 @@ Use **"Aliens Brand"** as the shorthand for this visual system and interaction p
 - SignIn is a local prototype only. No real credentials are sent or stored, and no production authentication service is connected.
 
 **Project status: IN PROGRESS.** Do not start the production WebApp, Dart app, or Python app as part of this prototype work.
+
+
+## Latest refinement run — 2026-11-19
+- The supplied mobile-menu video was inspected frame-by-frame. Compact Grid mode now shows the first eight Aliens Apps and a single **Dashboard** preview card under Score Menu; the count remains 39. List mode exposes the complete alphabetical 39-entry menu, and More Apps opens the 26-app grid.
+- The first eight app tiles now use local SVG icon definitions chosen to match the visible Base, Score, Project, Code, AI, Drive, Apps, and Admin concepts in the video.
+- Light-theme TelcoNet wordmark contrast was corrected. The SignIn demo now includes email-or-username, password visibility, local-only keep-signed-in checkbox, and explicit placeholder actions for password recovery, Google sign-in, and account creation. The no-real-credentials warning remains visible; no authentication backend was added.
+- The source audit passed on commit `779d37fe3e6464bb85c98ceca4597b91ccf551b6`, and the GitHub Pages build/deployment completed successfully for that commit.
+- The Playwright browser audit on the preceding verified revision completed successfully and produced 12 screenshots. The new browser audit for commit `779d37fe3e6464bb85c98ceca4597b91ccf551b6` passed its static stage but remained in progress during Chromium system-dependency installation at the time of this record. Do not treat the new responsive run as passed until its browser job completes.
+- The connected browser extension context remains unavailable. CI Playwright is the available real-browser verification path. `score.base.software` remains inaccessible through a genuine available access path.
