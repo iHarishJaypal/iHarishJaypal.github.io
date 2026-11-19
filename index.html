@@ -93,7 +93,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <button class="rail-btn dock-score" title="TelcoNet" data-action="toast" data-message="TelcoNet shortcut is a prototype placeholder."><i data-lucide="layout-dashboard"></i></button>
     <button class="rail-btn dock-home" title="Home" data-action="toast" data-message="Home shortcut is a prototype placeholder."><i data-lucide="house"></i></button>
     <button class="rail-btn dock-knowledge" title="Knowledge" data-action="toast" data-message="Knowledge space is a prototype placeholder."><i data-lucide="book-open"></i></button>
-    <button class="rail-btn active dock-workspace" title="Workspace" data-view="dashboard"><i data-lucide="network"></i></button>
+    <button class="rail-btn active dock-workspace" title="Workspace" data-view="dashboard" aria-current="page"><i data-lucide="network"></i></button>
     <button class="rail-btn dock-projects" title="Projects" data-action="toast" data-message="Projects are coming soon"><i data-lucide="folder-kanban"></i></button>
     <div class="rail-spacer"></div>
     <button class="rail-btn dock-theme" title="Toggle theme" data-action="theme"><i data-lucide="moon"></i></button>
@@ -106,7 +106,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <button class="new-btn" data-action="toast" data-message="Create menu is a prototype placeholder.">＋ &nbsp;New</button>
     <div class="side-scroll">
       <div class="group-label">DASHBOARD</div>
-      <a class="side-link active" href="#dashboard" data-view="dashboard"><span class="side-icon"><i data-lucide="layout-dashboard"></i></span><span><strong>Dashboard</strong><small>Company score overview</small></span></a>
+      <a class="side-link active" href="#dashboard" data-view="dashboard" aria-current="page"><span class="side-icon"><i data-lucide="layout-dashboard"></i></span><span><strong>Dashboard</strong><small>Company score overview</small></span></a>
       <div class="group-label">HEALTH</div>
       <a class="side-link" href="#health" data-view="health"><span class="side-icon"><i data-lucide="heart-pulse"></i></span><span><strong>Cyborg System Health</strong><small>Is everything running well</small></span></a>
       <a class="side-link" href="#reports" data-view="reports"><span class="side-icon"><i data-lucide="chart-no-axes-column"></i></span><span><strong>All reports</strong><small>Team, health and project reports</small></span></a>
@@ -124,7 +124,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <button class="collapse-btn" data-action="collapse" aria-label="Collapse sidebar" aria-expanded="true" aria-controls="workspaceSidebar"><i data-lucide="panel-left-close"></i></button>
     <label class="search"><i data-lucide="search"></i> <input id="searchDesktop" placeholder="Search Aliens TelcoNet" aria-label="Search Aliens TelcoNet"></label>
     <nav class="topnav" aria-label="Main navigation">
-      <button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="cyborgs"><span><i data-lucide="users"></i></span>Cyborgs</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="salary"><span><i data-lucide="wallet"></i></span>Salary</button><button data-view="calendar"><span><i data-lucide="calendar-days"></i></span>Calendar</button>
+      <button class="active" data-view="dashboard" aria-current="page"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="cyborgs"><span><i data-lucide="users"></i></span>Cyborgs</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="salary"><span><i data-lucide="wallet"></i></span>Salary</button><button data-view="calendar"><span><i data-lucide="calendar-days"></i></span>Calendar</button>
     </nav>
     <div class="top-actions"><span class="updated" title="Static sample data; live refresh is not connected." aria-label="Demo snapshot"><i data-lucide="clock-3"></i><span>Demo snapshot</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="message-circle"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">AL</button></div>
   </header>
@@ -309,7 +309,14 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  function showView(name){
   if(!views.includes(name))name='dashboard';
   $$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
-  $$('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  $('[data-view]').forEach(b=>{
+   const active=b.dataset.view===name;
+   b.classList.toggle('active',active);
+   if(b.matches('.rail [data-view],#workspaceSidebar [data-view],.topnav [data-view],.mobile-bottom [data-view]')){
+    if(active)b.setAttribute('aria-current','page');
+    else b.removeAttribute('aria-current');
+   }
+  });
   $('#app').style.display='block';
   $('#signin').classList.remove('show');
   $('#launcher').classList.remove('show');
