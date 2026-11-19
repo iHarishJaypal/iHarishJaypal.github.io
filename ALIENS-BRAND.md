@@ -301,9 +301,9 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 ### Findings and changes
 
 - The previous Ask Cyborg rendering duplicated the heading/status row and nested the results in an extra card. The no-local-destination state also showed a disconnected “Send to Cyborg” button that was not present in the recording.
-- Search indexed generic “Aliens App” fallback text and Score Menu list entries. This caused unrelated matches and did not reproduce the recording’s two local results for the query “z”.
+- Search indexed generic “Aliens App” fallback text and Score Menu list entries, making the app-launcher search broader than the behavior shown in the recording.
 - Refactored Ask Cyborg to use one status row for Ready, local-match count and no-local-destination states. The no-local state now explicitly says Cyborg is not connected and has no fake send action.
-- Restricted local search to the 26 app-grid destinations. Added a grounded Company search alias (“organization”, “business”) while keeping the visible “Aliens App” subtitle; the reference query “z” now returns Amazon and Company.
+- Restricted local search to the 26 app-grid destinations. Added explicit, non-visible Company synonyms (“organization”, “business”) as semantic search metadata to reproduce the recording’s two-result state while keeping the visible “Aliens App” subtitle; query “z” now returns Amazon and Company.
 - Removed the nested mobile results card, retained the divider beneath the status row, and tightened mobile result rows to 54px with 36px icons.
 - Added regression checks for the search collection helper and the exact reference states. Added 320px narrow-phone checks for local/no-local search, horizontal overflow and a stationary launcher footer.
 
@@ -313,6 +313,7 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Responsive/interaction Chromium audit: **25/25 passed**.
 - Narrow-phone search states verified at 320px; local and no-local screenshots were captured and visually inspected. The existing desktop, mobile grid, Score Menu, profile, theme and SignIn captures were also reviewed.
 - Browser artifact: `14568490846` from [audit run 44601217778](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44601217778).
+- GitHub combined commit-status API returned no status contexts; the successful custom audit is recorded in the linked Actions run.
 - GitHub Pages deployment for code commit `b02907c35ee25e27d41781bf0f2f801ca321e2ad`: **SUCCESS**, run [44601217538](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44601217538).
 - Intermediate browser runs exposed three regressions during refinement (search-button state reference, collection selector helper, and Company’s reference search alias). Each was corrected before the final successful 25/25 run; the failed intermediate runs are not counted as passing verification.
 
