@@ -212,3 +212,15 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - No new authenticated or independent access route appeared for `score.base.software` or the published Pages URL. The connected browser extension also remains unavailable; CI Playwright remains the available browser verification path. No live-site or pixel-perfect parity claim is made.
 
 **Project status: IN PROGRESS.** External reference-site access and independent public-page verification remain blocked; do not approve the prototype as complete until those gaps can be closed.
+
+
+## Run 14 — Light-theme secondary text contrast (2026-11-19)
+
+- A contrast spot-check found the light-theme `--muted` token (`#667187`) dipped below WCAG AA's 4.5:1 threshold on the lavender end of the workspace background gradient. Updated it to `#606b7f`; this is a small color-only refinement and leaves the layout, hierarchy, chart data, menu behavior, and reference structure unchanged.
+- Verified the updated light muted token at **4.58:1 or higher** against all three workspace gradient stops and the `--surface`, `--surface2`, and `--surface3` backgrounds. Dark muted text remains **5.24:1 or higher** against its four theme surfaces.
+- Added a dependency-free contrast regression test to `scripts/prototype-audit.mjs`, including support for both three- and six-digit CSS hex colors. The latest static workflow job [44542097520](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44542097520) passed **18/18 tests**.
+- The responsive/interaction job in the same run was still initializing its browser container when this note was written; it is not being reported as passed. The previous complete Playwright run [44536236268](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44536236268) passed **21/21 browser checks**, including desktop and phone viewport widths.
+- GitHub Pages deployment for the new code was still queued/in progress at the time of this note; the prior deployed HEAD and deployment history remain recorded above.
+- The 26-app grid, 39 unique Score Menu entries, compact mobile preview, Ask Cyborg states, navigation, profile, themes, and prototype-only SignIn remain preserved. No production authentication or future WebApp/Dart/Python implementation was introduced.
+
+**Project status: IN PROGRESS.** The external `score.base.software` reference and independent public-page access remain unavailable, and the latest browser/deployment jobs still need their final results. No pixel-perfect or final-approval claim is made.
