@@ -105,6 +105,15 @@ test("desktop search, chart ranges and selector collections are safe", () => {
   assert.match(html, /\$\$\('\[data-lang\]'\)\.forEach/);
 });
 
+test("activity chart renders day-axis ticks and aligns normalized bars with the sample scale", () => {
+  assert.ok(html.includes('<g id="chartXAxis" aria-hidden="true"></g>'));
+  assert.ok(html.includes("const plotLeft=35,plotWidth=955,baseline=220,scale=1.95;"));
+  assert.ok(html.includes("const dayTicks=range===7?[1,2,3,4,5,6,7]:range===30?[1,5,10,15,20,25,30]:[1,15,30,45,60,75,90];"));
+  assert.ok(html.includes("padStart(2,"));
+  assert.ok(html.includes("Illustrative sample activity index:"));
+  assert.ok(css.includes(".chart .axis-label{font-size:8px"));
+});
+
 test("product, company, switcher and prototype SignIn labels stay distinct", () => {
   assert.match(html, /<title>TelcoNet — Network Operations Workspace \| ALIENS COMPANY<\/title>/);
   assert.match(html, /TelcoNet<small>ALIENS COMPANY<\/small>/);

@@ -145,9 +145,23 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator('[data-action="chart-range"][data-range="7"]').click();
     assert.equal(await page.locator(".chart").getAttribute("data-sample-range"), "7");
     assert.equal(await page.locator('[data-action="chart-range"][data-range="7"]').getAttribute("aria-pressed"), "true");
+    assert.deepEqual(await page.locator("#chartXAxis .axis-label").allTextContents(), ["01", "02", "03", "04", "05", "06", "07"]);
+    assert.match(await page.locator(".chart").getAttribute("aria-label"), /normalized 0–100 sample index/);
 
     await page.locator('[data-action="chart-range"][data-range="90"]').click();
     assert.equal(await page.locator(".chart").getAttribute("data-sample-range"), "90");
+    assert.deepEqual(await page.locator("#chartXAxis .axis-label").allTextContents(), ["01", "15", "30", "45", "60", "75", "90"]);
+    const chartGeometry = await page.locator(".chart").evaluate((svg) => {
+      const bounds = svg.getBoundingClientRect();
+      const labels = [...svg.querySelectorAll("#chartXAxis .axis-label")].map((node) => node.getBoundingClientRect());
+      const highestBar = Math.min(...[...svg.querySelectorAll("#chartBars .bar")].map((node) => Number(node.getAttribute("y"))));
+      return {
+        labelsInside: labels.every((rect) => rect.left >= bounds.left - 1 && rect.right <= bounds.right + 1 && rect.top >= bounds.top - 1 && rect.bottom <= bounds.bottom + 1),
+        highestBar
+      };
+    });
+    assert.equal(chartGeometry.labelsInside, true, "day labels must remain inside the chart viewport");
+    assert.equal(chartGeometry.highestBar, 25, "the maximum normalized bar must align with the 2.5M top gridline");
 
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);

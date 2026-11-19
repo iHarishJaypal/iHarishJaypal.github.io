@@ -143,7 +143,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
         <article class="metric"><label>PEAK DAY</label><strong>909,995</strong><small>2026-10-22</small></article>
         <article class="metric"><label>LONGEST STREAK</label><strong>190</strong><small>Consecutive days</small></article>
       </div>
-      <article class="panel"><div class="panel-head"><div><h2>Activity by trend</h2><p>Company activity across the selected time period</p></div><div><button class="soft-btn" data-action="chart-range" data-range="7" aria-pressed="false">7 day</button> <button class="soft-btn active" data-action="chart-range" data-range="30" aria-pressed="true">30 day</button> <button class="soft-btn" data-action="chart-range" data-range="90" aria-pressed="false">90 day</button></div></div><div class="chart-wrap"><svg class="chart" viewBox="0 0 1000 245" preserveAspectRatio="none" role="img" aria-label="Activity bar chart"><g class="gridline"><path d="M35 25H990M35 75H990M35 125H990M35 175H990M35 220H990"/></g><g id="chartBars"></g><g><text x="2" y="29">2.5M</text><text x="2" y="79">2M</text><text x="2" y="129">1.5M</text><text x="2" y="179">500K</text><text x="2" y="224">0</text></g></svg></div></article>
+      <article class="panel"><div class="panel-head"><div><h2>Activity by trend</h2><p>Company activity across the selected time period</p></div><div><button class="soft-btn" data-action="chart-range" data-range="7" aria-pressed="false">7 day</button> <button class="soft-btn active" data-action="chart-range" data-range="30" aria-pressed="true">30 day</button> <button class="soft-btn" data-action="chart-range" data-range="90" aria-pressed="false">90 day</button></div></div><div class="chart-wrap"><svg class="chart" viewBox="0 0 1000 245" preserveAspectRatio="none" role="img" aria-label="Activity bar chart"><g class="gridline"><path d="M35 25H990M35 75H990M35 125H990M35 175H990M35 220H990"/></g><g id="chartBars"></g><g id="chartXAxis" aria-hidden="true"></g><g><text x="2" y="29">2.5M</text><text x="2" y="79">2M</text><text x="2" y="129">1.5M</text><text x="2" y="179">500K</text><text x="2" y="224">0</text></g></svg></div></article>
       <div class="lower-grid">
         <article class="panel"><div class="panel-head"><div><h2>Recent activity</h2><p>Latest workspace events</p></div><button class="soft-btn" data-view="reports">View all</button></div>
           <div class="activity-row"><span class="activity-icon"><i data-lucide="layout-dashboard"></i></span><span><strong>Dashboard data refreshed</strong><small>Company score overview updated</small></span><time>Just now</time></div>
@@ -341,27 +341,47 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   90:[8,10,7,14,12,18,16,22,19,26,24,21,30,27,35,32,42,38,48,44,52,47,61,57,68,100,73,82,69,91]
  };
  function drawChart(range=30){
-  const g=$('#chartBars');
-  if(!g)return;
+  const g=$('#chartBars'),axis=$('#chartXAxis');
+  if(!g||!axis)return;
   g.innerHTML='';
+  axis.innerHTML='';
   const values=chartSamples[range]||chartSamples[30];
   const svg=g.closest('svg');
-  svg?.setAttribute('aria-label','Activity sample chart for '+range+' days');
+  svg?.setAttribute('aria-label','Illustrative sample activity by day across a '+range+'-day period; bar heights use a normalized 0–100 sample index.');
   svg?.setAttribute('data-sample-range',String(range));
-  const step=945/values.length;
+  const plotLeft=35,plotWidth=955,baseline=220,scale=1.95;
+  const step=plotWidth/values.length;
   const ns='http://www.w3.org/2000/svg';
   values.forEach((v,i)=>{
    const rect=document.createElementNS(ns,'rect');
-   rect.setAttribute('x',35+i*step+Math.max(3,step*.08));
-   rect.setAttribute('y',220-v*1.72);
+   const height=v*scale;
+   rect.setAttribute('x',plotLeft+i*step+Math.max(3,step*.08));
+   rect.setAttribute('y',baseline-height);
    rect.setAttribute('width',Math.max(4,step*.78));
-   rect.setAttribute('height',v*1.72);
+   rect.setAttribute('height',height);
    rect.setAttribute('class','bar');
    rect.setAttribute('rx','4');
+   const title=document.createElementNS(ns,'title');
+   title.textContent='Illustrative sample activity index: '+v+' of 100';
+   rect.appendChild(title);
    g.appendChild(rect);
   });
+  const dayTicks=range===7?[1,2,3,4,5,6,7]:range===30?[1,5,10,15,20,25,30]:[1,15,30,45,60,75,90];
+  dayTicks.forEach(day=>{
+   const rawX=plotLeft+((day-1)/(range-1))*plotWidth;
+   const x=Math.max(55,Math.min(980,rawX));
+   const label=document.createElementNS(ns,'text');
+   label.setAttribute('class','axis-label');
+   label.setAttribute('x',x);
+   label.setAttribute('y','236');
+   label.setAttribute('text-anchor','end');
+   label.setAttribute('transform','rotate(-45 '+x+' 236)');
+   label.dataset.day=String(day);
+   label.textContent=String(day).padStart(2,'0');
+   axis.appendChild(label);
+  });
  }
- drawChart(30);
+drawChart(30);
  document.addEventListener('click',e=>{const view=e.target.closest('[data-view]');if(view){e.preventDefault();showView(view.dataset.view);return;}const action=e.target.closest('[data-action]');if(!action)return;if(action.tagName==='A')e.preventDefault();switch(action.dataset.action){case'profile':openProfile();break;case'close-pop':closeProfile();break;case'theme':toggleTheme();break;case'collapse':{const collapsed=document.body.classList.toggle('sidebar-collapsed');const sidebar=$('#workspaceSidebar');if(sidebar){sidebar.setAttribute('aria-hidden',collapsed?'true':'false');sidebar.inert=collapsed;}action.setAttribute('aria-expanded',collapsed?'false':'true');action.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');toast(collapsed?'Sidebar collapsed':'Sidebar expanded');break;}case'toast':toast(action.dataset.message);break;case'signout':showSignin();break;case'back-home':backHome();break;case'chart-range':{const range=Number(action.dataset.range);drawChart([7,30,90].includes(range)?range:30);$$('[data-action="chart-range"]').forEach(b=>{const active=b===action;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false');});toast(range+' day sample view');break;}}});
  $$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{$$('[data-lang]').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});b.classList.add('active');b.setAttribute('aria-pressed','true');toast('Language switching is not connected in this prototype. Selected preview: '+b.dataset.lang+'.');}));
  $('#signinForm').addEventListener('submit',e=>{

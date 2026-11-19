@@ -115,8 +115,19 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Removed the redundant Score Menu top border. The app-grid bottom border remains the single separator, while the existing spacing is preserved.
 - Added a dependency-free source regression check and a Playwright browser assertion that verify the compact menu has exactly one divider.
 - Preserved all 26 app tiles, all 39 Score Menu entries, the existing Ask Cyborg states, SignIn behavior, and the product/company naming hierarchy.
-- Static audit run `44508076305` passed all 12 checks, including the new single-divider regression test. The responsive Chromium job in the same run is still installing Chromium system dependencies, so its browser assertion has not run yet. Pages deployment run `44508142884` succeeded for documentation commit `42f46090ac3567dffb2ad75ec17c9c5699e1f820`.
+- Static audit run `44508076305` passed all 12 checks, including the new single-divider regression test. The responsive Chromium job in the same run also completed successfully; both jobs passed. Pages deployment run `44508302156` succeeded for documentation commit `dada94ec1a6c6026783ea8b89832aacf374907dd`.
 - The reference label `Which tool, model and effort finish work b…` remains abbreviated in the existing source. Its unseen continuation was not guessed.
 - `score.base.software` and the connected browser extension remain unavailable; visual parity is not claimed.
 
 **Project status: IN PROGRESS.**
+
+## Run 9 refinements — 2026-11-19
+- Re-inspected the current main branch, recent commits, source files, and workflow results before editing. The latest existing responsive Chromium run 44508076305 had completed successfully in both static and browser jobs; its 15 screenshots were downloaded and reviewed.
+- Re-opened the seven original Library screenshots and sampled the 23.25-second mobile-menu recording. The current desktop shell, top navigation, profile popover, mobile launcher states, footer controls, and simplified SignIn presentation remain aligned with the supplied references. The current compact menu still shows eight app tiles, the Dashboard preview, and the 39 count; the full 26-app grid and 39-entry list remain intact.
+- The dashboard chart had no visible horizontal/day axis labels, while the reference chart shows angled period labels. Added short day-number ticks for 7-, 30-, and 90-day sample ranges. Generic day numbers are used rather than fabricated calendar dates.
+- Corrected the normalized sample bar scale so a 100/100 bar reaches the chart's 2.5M top gridline. Added SVG titles and an accessible description clarifying that the chart uses illustrative normalized sample values, not live telemetry.
+- Extended static and Playwright browser audits to verify tick labels for 7 and 90 days, chart accessibility text, label bounds, and top-gridline alignment. The 30-day tick set is also guarded by the static renderer check.
+- The previous run's static and responsive Chromium jobs both passed; this run's new chart changes are pending their own CI results.
+- score.base.software remains inaccessible through the available access path. No connected browser extension is available; CI Playwright remains the real-browser verification route.
+
+**Project status: IN PROGRESS.** The prototype is not approved complete; production WebApp, Dart app, Python app, and production authentication remain out of scope.

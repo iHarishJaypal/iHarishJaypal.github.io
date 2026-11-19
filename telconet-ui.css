@@ -506,3 +506,6 @@ body.light .wordmark small{color:#65738a}
 @media(max-width:420px){
   .signin-card input{font-size:13px}
 }
+
+/* Compact day ticks keep the sample chart legible without inventing calendar dates. */
+.chart .axis-label{font-size:8px;letter-spacing:.1px;opacity:.82}
