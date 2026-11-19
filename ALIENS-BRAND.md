@@ -199,3 +199,16 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - No new app code was committed because the latest code and responsive audit are green and no grounded visual regression was found. Existing 26-app grid, 39-entry Score Menu, mobile flow, desktop geometry, profile, themes, and prototype SignIn remain unchanged.
 
 **Project status: IN PROGRESS.** External reference-site access and independent published-page verification remain blocked. Do not claim pixel-perfect parity or final approval until those access/verification gaps are resolved.
+
+
+## Run 13 — Artifact-level visual and CI re-verification (2026-11-19)
+
+- Re-inspected `main` before writing this audit note. HEAD was `76660db4895a43a9000d457c8b1f118c63899a0f`; the latest code-bearing commit remains `c8f0c98f22e8cf90a076c7dba78d8981a3586847`. The intervening `76660db` commit changes this audit document only.
+- Downloaded and visually reviewed the 15-image Playwright artifact `14536006747` from audit run [44536236268](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44536236268). It includes desktop light/dark dashboard, desktop profile and SignIn, compact launcher, Ask Cyborg ready/local/no-match states, full app grid, 39-entry Score Menu and bottom-of-list scrolling, mobile profile, and 360px light/dark dashboard. No new reference-grounded visual regression was found, so no UI code was changed.
+- Rechecked the actual job logs: static audit **17/17 passed**; responsive/interaction audit **21/21 passed**. Desktop viewport checks passed at 1512, 1440, 1280, 1180, 1100, 1024, 920, and 851px. Mobile shell checks passed at 320, 360, 375, 414, and 430px. Navigation destinations, all Score Menu routes, placeholder actions, accessible control names, reduced-motion behavior, menu flow, and narrow-phone SignIn placeholder fit passed.
+- The 320px SignIn measurement reports 136px usable input width and 123px placeholder width; the placeholder fits with 13px remaining.
+- GitHub Pages deployment for the current documentation HEAD `76660db` completed successfully in run [44537682739](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44537682739). The code-bearing HEAD `c8f0c98` has successful static and browser audit jobs and a successful Pages deployment.
+- The reference screenshots and 23.253-second mobile recording were already reviewed and catalogued in Run 12. This run did not repeat or reinterpret their content; it reviewed the latest rendered browser artifact against the existing findings.
+- No new authenticated or independent access route appeared for `score.base.software` or the published Pages URL. The connected browser extension also remains unavailable; CI Playwright remains the available browser verification path. No live-site or pixel-perfect parity claim is made.
+
+**Project status: IN PROGRESS.** External reference-site access and independent public-page verification remain blocked; do not approve the prototype as complete until those gaps can be closed.
