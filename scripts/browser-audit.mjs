@@ -357,7 +357,7 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
       const style = getComputedStyle(input);
       return input.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
     });
-    assert.ok(passwordSpace >= 110, "narrow SignIn password field must leave readable placeholder space");
+    assert.ok(passwordSpace >= 130, "narrow SignIn password field must leave readable placeholder space");
     await page.waitForFunction(() => document.activeElement?.id === "email");
     await capture(page, "mobile-signin-prototype.png");
     assert.equal(await page.locator(".signin-field svg.icon-at-sign").count(), 1);
