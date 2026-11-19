@@ -399,7 +399,7 @@ body.menu-open{overflow:hidden}
 }
 
 /* Collapsing the workspace sidebar must reclaim the content width. */
-body.sidebar-collapsed .workspace{transform:translateX(-100%)}
+body.sidebar-collapsed .workspace{transform:translateX(-100%);visibility:hidden;pointer-events:none}
 body.sidebar-collapsed .topbar{left:68px}
 body.sidebar-collapsed .main{margin-left:68px}
 
