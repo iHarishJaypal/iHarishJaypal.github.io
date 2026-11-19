@@ -93,7 +93,7 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 ## Known verification blockers
 - `score.base.software` remains inaccessible through the currently available web access path. Do not claim pixel-perfect parity until a genuine access path is available.
 - The connected browser extension context is unavailable. CI Playwright is the available real Chromium verification path; previous expanded runs passed.
-- The GitHub Pages build/deployment workflow succeeded for commit `2aa525e1e9b7430574ace00380e24676c09bbfa1`. The latest deployment for commit `4ed9b5bbc2abc679133aef3666a22dab3731a7be` is still in progress, and the published site remains inaccessible through the available web access tool.
+- The GitHub Pages build/deployment workflow succeeded for commit `a0d9bd6d5cae8d4d69ed76b42fd703d3ed52eaed`. The latest deployment for commit `68eb0c251ccbe43b4ef57d9cc67b15a5cc97ab03` is still in progress, and the published site remains inaccessible through the available web access tool.
 - SignIn remains a local prototype only. It does not send or store credentials and does not connect to an authentication provider.
 
 **Project status: IN PROGRESS.** Do not start the production WebApp, Dart app, or Python app as part of this prototype work.
@@ -105,5 +105,7 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - SignIn submission clears both fields and restores the password to hidden. Leaving SignIn without submitting also clears both fields, so demo values do not remain in the page.
 - Fixed SignIn text contrast when the workspace is in light mode; the reference SignIn surface remains dark and legible. Reduced mobile card padding at narrow widths so the password placeholder retains readable space.
 - Expanded browser checks for the demo snapshot label, language-preview feedback, SignIn icon presence, submit/cancel field cleanup, 320px SignIn contrast and input width, focus, and horizontal overflow.
-- Latest source audit run `44492116894` passed its static stage on commit `4ed9b5bbc2abc679133aef3666a22dab3731a7be`. Its responsive Chromium stage is still installing system dependencies; do not claim that latest browser stage passed until it completes.
-- Latest Pages build/deployment run `44492116938` is still in progress.
+- Audit run `44492116894` completed successfully on commit `4ed9b5bbc2abc679133aef3666a22dab3731a7be`; both static and responsive Chromium jobs passed. Artifact `14513915687` contains 15 screenshots, including the light-mode 320px SignIn state after the contrast and spacing fix.
+- A final narrow-phone refinement reduced the password field's reserved right padding to 64px so the `Enter your password` placeholder has more room. The browser regression assertion now requires at least 130px of text space.
+- Latest source audit run `44492434144` passed its static stage on commit `68eb0c251ccbe43b4ef57d9cc67b15a5cc97ab03`; the responsive Chromium job is currently running through system-dependency installation. Do not claim that latest browser stage passed until it completes.
+- Latest Pages build/deployment run `44492433985` is currently in progress for the same code commit.
