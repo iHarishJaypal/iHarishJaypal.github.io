@@ -176,14 +176,12 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator("#signin.show").waitFor();
     await capture(page, "desktop-signin-prototype.png");
     assert.match(await page.locator(".signin-note").textContent(), /Do not enter real credentials/);
-    await page.locator("#keepSignedIn").check();
-    assert.equal(await page.locator("#keepSignedIn").isChecked(), true);
-    await page.locator(".signin-label-row [data-action='toast']").click();
-    assert.match(await page.locator("#toast").textContent(), /Password recovery is not connected/);
-    await page.locator(".signin-google").click();
-    assert.match(await page.locator("#toast").textContent(), /Google sign-in is not connected/);
-    await page.locator(".signin-create button").click();
-    assert.match(await page.locator("#toast").textContent(), /Account creation is not connected/);
+    assert.equal(await page.locator("#signinForm input").count(), 2, "reference SignIn should contain only email and password fields");
+    assert.equal(await page.locator("#email").getAttribute("type"), "email");
+    assert.equal(await page.locator("#email").getAttribute("placeholder"), "you@company.com");
+    assert.equal(await page.locator("#keepSignedIn").count(), 0);
+    assert.equal(await page.locator(".signin-google").count(), 0);
+    assert.equal(await page.locator(".signin-create").count(), 0);
 
     const password = page.locator("#password");
     const visibility = page.locator('[data-action="password-visibility"]');
