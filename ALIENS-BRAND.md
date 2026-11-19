@@ -325,3 +325,38 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Pixel-perfect parity is not claimed; inaccessible reference service and independent live-page verification remain open items.
 
 **Project status: IN PROGRESS — NOT APPROVED COMPLETE.** Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+
+## Run 20 — Accessible disclosure relationships and launcher state (2026-11-20)
+
+### Reference and repository review
+
+- Re-inspected the latest `main` branch, current HTML/CSS/JavaScript, static and Playwright audit scripts, recent commits, Actions runs, and the current Pages deployment before editing.
+- Re-opened the supplied desktop/mobile reference screenshots and the 23.253-second mobile-menu recording. Sampled the recording at 0, 3, 6, 9, 12, 15, 18, 21, and 23 seconds.
+- Compared the final Chromium captures for desktop dark/light dashboards, profile popover, SignIn, compact launcher, full 26-app grid, 39-entry Score Menu, Ask Cyborg ready/local/no-local states, and 320px SignIn/mobile layout. No speculative visual changes were warranted.
+
+### Findings and changes
+
+- The desktop rail's App Launcher trigger did not receive an `aria-expanded` update; only the mobile footer launcher was synchronized. Updated launcher state synchronization so every launcher trigger reports expanded/collapsed state when the dialog opens and closes.
+- Added explicit `aria-controls` relationships for all five profile triggers, both launcher triggers, the mobile search trigger, the Ask Cyborg input, and its search button.
+- Exposed the dynamic Ask Cyborg results as a named `Cyborg search results` region while preserving its polite live-update behavior.
+- These are semantic/accessibility changes only. No CSS, visual geometry, app inventory, Score Menu labels, routes, or SignIn behavior was changed.
+- Added static and Chromium regression coverage for initial and updated `aria-expanded` states, controlled-region IDs, the named results region, and desktop/mobile trigger behavior.
+
+### Verification
+
+- Static prototype audit: **24/24 passed**.
+- Responsive/interaction Chromium audit: **26/26 passed** in [Actions run 44605588011](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44605588011).
+- Browser artifact **14570248386** contains 19 screenshots. The contact sheet and key desktop/mobile captures were visually inspected; the semantic changes did not alter the layout.
+- GitHub Pages build and deployment for final `main` HEAD `27df8222e2a59a225b00003be79224af3f00da6b`: **SUCCESS**, run [44605588222](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44605588222).
+- GitHub's combined commit-status API returned no status contexts; the successful custom Actions audit above is the verification source.
+- Intermediate audit attempts exposed an initial selector-collection mistake and stale exact-markup assertions. Follow-up commits corrected the runtime selector use and updated the regression checks. Only the final successful 24/24 static and 26/26 browser run is counted as passing verification.
+
+### Outstanding blockers
+
+- `score.base.software` remains inaccessible through the available access path; no new genuine access route was found, so it was not retried.
+- The connected browser extension still has no originating browser context.
+- GitHub Pages deployment succeeded, but an independent open of `https://iharishjaypal.github.io/` through the available web access path still returned “not accessible”.
+- Pixel-perfect parity is not claimed.
+
+**Project status: IN PROGRESS — NOT APPROVED COMPLETE.** The 26-app grid, 39 Score Menu entries, mobile launcher flow, desktop shell, profile, themes, and prototype SignIn remain preserved. Production WebApp, Dart app, Python app, and production authentication remain out of scope.
