@@ -502,9 +502,14 @@ body.light .wordmark small{color:#65738a}
   font-weight:600;
 }
 .signin-card .keep-signed-in input{
+  flex:0 0 15px;
   width:15px;
   height:15px;
   margin:0;
+  padding:0;
+  border:0;
+  border-radius:4px;
+  background:#17181c;
   accent-color:#7867ed;
 }
 .signin-divider{
