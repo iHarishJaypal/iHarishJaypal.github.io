@@ -147,6 +147,8 @@ test("Ask Cyborg mirrors the recorded app-search result states", () => {
   assert.ok(appScript.includes('collect(".app-tile", appGrid, "app");'));
   assert.doesNotMatch(appScript, /collect\("\.menu-list-item"/);
   assert.match(appScript, /const searchText = \[name, element\.dataset\.searchTerms \|\| ""\]/);
+  assert.match(appScript, /\$\$\(selector, root \|\| document\)\.forEach/);
+  assert.doesNotMatch(appScript, /(?<!\$)\$\([^)]*\)\.forEach/);
   assert.match(appScript, /item\.searchText\.includes\(query\)/);
   assert.match(html, /data-app-subtitle="Aliens App" data-search-terms="Aliens App"/);
   assert.match(appScript, /No local destination; Cyborg is not connected\./);

@@ -138,7 +138,7 @@
     const seen = new Set();
 
     const collect = (selector, root, type) => {
-      $(selector, root || document).forEach((element) => {
+      $$(selector, root || document).forEach((element) => {
         const name = (element.dataset.appName || element.textContent || "").trim();
         const key = name.toLocaleLowerCase();
         if (!key || seen.has(key)) return;
