@@ -76,7 +76,7 @@ async function openPage(viewport) {
       runtimeErrors.push(message.text());
     }
   });
-  await page.route(/fonts\\.(googleapis|gstatic)\\.com/, (route) => route.abort());
+  await page.route(/fonts\\.(googleapis|gstatic)\\.com/, (route) => route.fulfill({ status: 200, contentType: "text/css", body: "" }));
   await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
   await page.waitForFunction(() =>
     document.querySelector("#launcher")?.getAttribute("aria-hidden") === "true" &&
