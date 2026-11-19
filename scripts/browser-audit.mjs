@@ -148,6 +148,10 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     assert.deepEqual(await page.locator("#chartXAxis .axis-label").allTextContents(), ["01", "02", "03", "04", "05", "06", "07"]);
     assert.match(await page.locator(".chart").getAttribute("aria-label"), /normalized 0–100 sample index/);
 
+    await page.locator('[data-action="chart-range"][data-range="30"]').click();
+    assert.equal(await page.locator(".chart").getAttribute("data-sample-range"), "30");
+    assert.deepEqual(await page.locator("#chartXAxis .axis-label").allTextContents(), ["01", "05", "10", "15", "20", "25", "30"]);
+
     await page.locator('[data-action="chart-range"][data-range="90"]').click();
     assert.equal(await page.locator(".chart").getAttribute("data-sample-range"), "90");
     assert.deepEqual(await page.locator("#chartXAxis .axis-label").allTextContents(), ["01", "15", "30", "45", "60", "75", "90"]);
