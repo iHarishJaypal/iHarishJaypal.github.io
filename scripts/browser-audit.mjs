@@ -442,8 +442,8 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
 test("all sidebar and top navigation destinations open their matching views", async () => {
   const { context, page } = await openPage({ width: 1440, height: 900 });
   try {
-    const destinations = ["dashboard", "health", "reports", "cyborgs", "aliens", "salary", "calendar"];
-    for (const destination of destinations) {
+    const sidebarDestinations = ["dashboard", "health", "reports", "aliens", "salary", "calendar"];
+    for (const destination of sidebarDestinations) {
       const link = page.locator('#workspaceSidebar [data-view="' + destination + '"]');
       assert.equal(await link.count(), 1, "expected one sidebar link for " + destination);
       await link.click();
