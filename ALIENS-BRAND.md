@@ -49,3 +49,9 @@ Use **"Aliens Brand"** as the shorthand for this visual system and interaction p
 - Search has three explicit prototype states: ready suggestions, local destination matches, and a no-local-destination state. Do not imply a live Cyborg/AI service where none is connected.
 - Keep the mobile launcher footer actions visible, and preserve the four-column app grid on narrow phone screens.
 - Modal menus must support Escape, keyboard focus containment, focus restoration, and background scroll locking.
+
+## Desktop geometry from the final TelcoNet reference
+- Keep the left icon rail at 68px.
+- Keep the workspace sidebar at approximately 300px, beginning immediately after the rail.
+- Align the desktop top bar and main content at 368px from the viewport's left edge.
+- The company switcher label is **Aliens TelcoNet**; the wordmark hierarchy remains **TelcoNet** with **ALIENS COMPANY** beneath it.
