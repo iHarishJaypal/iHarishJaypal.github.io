@@ -340,6 +340,11 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     assert.equal(await visibleCount(page.locator("#appList .menu-list-item")), 39);
     assert.equal(await page.locator("#appGrid").isVisible(), false);
 
+    const footer = page.locator(".launcher-footer");
+    assert.equal(await footer.isVisible(), true);
+    const footerTopBeforeScroll = await footer.evaluate((node) => node.getBoundingClientRect().top);
+    const footerBottom = await footer.evaluate((node) => node.getBoundingClientRect().bottom);
+
     const content = page.locator("#launcherContent");
     const scrollMetrics = await content.evaluate((node) => ({
       clientHeight: node.clientHeight,
@@ -354,13 +359,8 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
       return item.top >= parent.top - 1 && item.bottom <= parent.bottom + 1;
     });
     assert.equal(lastItemVisible, true, "the last Score Menu item must be reachable by scrolling");
-    const footerTopAfterScroll = await page.locator(".launcher-footer").evaluate((node) => node.getBoundingClientRect().top);
+    const footerTopAfterScroll = await footer.evaluate((node) => node.getBoundingClientRect().top);
     assert.equal(footerTopAfterScroll, footerTopBeforeScroll, "launcher footer must remain stationary while Score Menu content scrolls");
-
-    const footer = page.locator(".launcher-footer");
-    assert.equal(await footer.isVisible(), true);
-    const footerTopBeforeScroll = await footer.evaluate((node) => node.getBoundingClientRect().top);
-    const footerBottom = await footer.evaluate((node) => node.getBoundingClientRect().bottom);
     assert.ok(footerBottom <= 844, "launcher footer must remain inside the phone viewport");
     await assertNoHorizontalOverflow(page, "390px Score Menu");
 
