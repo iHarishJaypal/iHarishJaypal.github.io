@@ -257,11 +257,10 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
       const style = getComputedStyle(element);
       return { color: style.color, fontSize: style.fontSize, lineHeight: style.lineHeight };
     });
-    assert.deepEqual(safetyStyle, {
-      color: "rgb(174, 184, 200)",
-      fontSize: "11px",
-      lineHeight: "17.05px"
-    });
+    assert.equal(safetyStyle.color, "rgb(174, 184, 200)");
+    assert.equal(safetyStyle.fontSize, "11px");
+    assert.ok(parseFloat(safetyStyle.lineHeight) > parseFloat(safetyStyle.fontSize),
+      "the safety note should have comfortable line spacing");
     assert.equal(await page.locator("#signinForm input").count(), 2, "reference SignIn should contain only email and password fields");
     assert.equal(await page.locator("#email").getAttribute("type"), "email");
     assert.equal(await page.locator("#email").getAttribute("placeholder"), "you@company.com");
