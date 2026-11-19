@@ -239,12 +239,15 @@ test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
     return match[1];
   };
   const token = (declarations, name) => {
-    const match = declarations.match(new RegExp(name + "\\s*:\\s*(#[0-9a-f]{6})", "i"));
+    const match = declarations.match(new RegExp(name + "\\s*:\\s*(#(?:[0-9a-f]{3}|[0-9a-f]{6}))", "i"));
     assert.ok(match, "missing color token: " + name);
     return match[1];
   };
   const luminance = (hex) => {
-    const channels = [1, 3, 5].map((offset) => parseInt(hex.slice(offset, offset + 2), 16) / 255);
+    const normalized = hex.length === 4
+      ? "#" + [...hex.slice(1)].map((channel) => channel + channel).join("")
+      : hex;
+    const channels = [1, 3, 5].map((offset) => parseInt(normalized.slice(offset, offset + 2), 16) / 255);
     const linear = channels.map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
     return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
   };
