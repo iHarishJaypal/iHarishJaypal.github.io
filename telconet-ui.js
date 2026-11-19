@@ -143,11 +143,13 @@
         const key = name.toLocaleLowerCase();
         if (!key || seen.has(key)) return;
         seen.add(key);
-        const icon = $(".app-icon,.list-icon", element)?.textContent?.trim() || "•";
+        const iconElement = $(".app-icon,.list-icon", element);
+        const icon = iconElement?.textContent?.trim() || "•";
+        const iconTone = Array.from(iconElement?.classList || []).find((className) => className.startsWith("tone-")) || "";
         const detail = $("small", element)?.textContent?.trim() || element.dataset.appSubtitle || "";
         const subtitle = detail || (type === "app" ? "Aliens App" : "Workspace");
         const searchText = [name, element.dataset.searchTerms || ""].filter(Boolean).join(" ").toLocaleLowerCase();
-        items.push({ name, subtitle, searchText, icon, source: element, type });
+        items.push({ name, subtitle, searchText, icon, iconTone, source: element, type });
       });
     };
 
@@ -219,16 +221,22 @@
     matches.forEach((item, index) => {
       const button = createElement("button", "assistant-result");
       button.type = "button";
+      button.setAttribute("aria-label", item.name + ", " + item.subtitle);
       button.dataset.resultIndex = String(index);
+      const iconClass = item.iconTone ? "assistant-result-icon " + item.iconTone : "assistant-result-icon";
+      const icon = createElement("span", iconClass, item.icon);
+      icon.setAttribute("aria-hidden", "true");
       button.append(
-        createElement("span", "assistant-result-icon", item.icon),
+        icon,
         createElement("span", "assistant-result-copy")
       );
       $(".assistant-result-copy", button).append(
         createElement("strong", "", item.name),
         createElement("small", "", item.subtitle)
       );
-      button.append(createElement("span", "assistant-result-arrow", "›"));
+      const arrow = createElement("span", "assistant-result-arrow", "›");
+      arrow.setAttribute("aria-hidden", "true");
+      button.append(arrow);
       results.append(button);
     });
     assistantResults.append(results);

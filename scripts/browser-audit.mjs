@@ -947,3 +947,53 @@ test("keyboard focus rings are visible on desktop and mobile controls in both th
     await mobile.context.close();
   }
 });
+
+
+test("Ask Cyborg local matches reuse app-grid icon tones and concise accessible names", async () => {
+  const mobile = await openPage({ width: 390, height: 844 });
+  try {
+    await mobile.page.locator('.mobile-brand [data-action="focus-menu-search"]').click();
+    await mobile.page.locator("#assistantSearch").fill("z");
+    const results = mobile.page.locator(".assistant-result");
+    await results.first().waitFor();
+    assert.equal(await results.count(), 2);
+    const names = await results.evaluateAll((rows) =>
+      rows.map((row) => row.getAttribute("aria-label"))
+    );
+    assert.deepEqual(names, ["Amazon, Aliens App", "Company, Aliens App"]);
+
+    const styles = await results.evaluateAll((rows) => rows.map((row) => {
+      const name = row.querySelector(".assistant-result-copy strong").textContent.trim();
+      const source = [...document.querySelectorAll(".app-tile")]
+        .find((tile) => tile.dataset.appName === name)
+        ?.querySelector(".app-icon");
+      const icon = row.querySelector(".assistant-result-icon");
+      return {
+        name,
+        sourceTone: [...(source?.classList || [])].find((token) => token.startsWith("tone-")),
+        resultTone: [...(icon?.classList || [])].find((token) => token.startsWith("tone-")),
+        sourceBackground: source ? getComputedStyle(source).backgroundImage : "",
+        resultBackground: icon ? getComputedStyle(icon).backgroundImage : "",
+        sourceColor: source ? getComputedStyle(source).color : "",
+        resultColor: icon ? getComputedStyle(icon).color : "",
+        iconHidden: icon?.getAttribute("aria-hidden"),
+        arrowHidden: row.querySelector(".assistant-result-arrow")?.getAttribute("aria-hidden")
+      };
+    }));
+    assert.deepEqual(styles.map((item) => item.name), ["Amazon", "Company"]);
+    for (const item of styles) {
+      assert.ok(item.sourceTone, item.name + " source tile should have a tone");
+      assert.equal(item.resultTone, item.sourceTone, item.name + " result should reuse its source tone");
+      assert.equal(item.resultBackground, item.sourceBackground, item.name + " result background should match its app tile");
+      assert.equal(item.resultColor, item.sourceColor, item.name + " result glyph should match its app tile");
+      assert.equal(item.iconHidden, "true", "decorative result icon should be hidden from the accessible name");
+      assert.equal(item.arrowHidden, "true", "decorative result chevron should be hidden from the accessible name");
+    }
+
+    await capture(mobile.page, "mobile-search-local-match-icons.png");
+    await assertNoHorizontalOverflow(mobile.page, "mobile local-match icon refinement");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await mobile.context.close();
+  }
+});

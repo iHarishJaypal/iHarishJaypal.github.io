@@ -570,3 +570,15 @@ a:focus-visible {
   outline: 2px solid var(--blue);
   outline-offset: 2px;
 }
+
+
+/* Ask Cyborg result icons reuse the same tone as their source Aliens App tiles. */
+.assistant-result-icon[class*="tone-"]{border-color:transparent;box-shadow:0 4px 10px rgba(50,75,125,.08),inset 0 1px 0 rgba(255,255,255,.55);font-family:'Space Grotesk',sans-serif;font-weight:700}
+.assistant-result-icon.tone-purple{background:linear-gradient(145deg,#e9dcff,#b89bff);color:#6d35cf}
+.assistant-result-icon.tone-violet{background:linear-gradient(145deg,#e8dcff,#a98cff);color:#6236c5}
+.assistant-result-icon.tone-blue{background:linear-gradient(145deg,#dff2ff,#9ed7f6);color:#2576ba}
+.assistant-result-icon.tone-green{background:linear-gradient(145deg,#e1f9d9,#a9e98c);color:#238c50}
+.assistant-result-icon.tone-orange{background:linear-gradient(145deg,#fff0df,#ffc18f);color:#d66c31}
+.assistant-result-icon.tone-red{background:linear-gradient(145deg,#ffe4e6,#f5a0a7);color:#c63d54}
+.assistant-result-icon.tone-cyan{background:linear-gradient(145deg,#ddf8fa,#9fe2e8);color:#258e9e}
+.assistant-result-icon.tone-pink{background:linear-gradient(145deg,#ffe4ef,#f8a9c9);color:#bd4779}

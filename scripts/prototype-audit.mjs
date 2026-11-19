@@ -385,3 +385,14 @@ test("buttons and navigation links define a theme-aware keyboard focus ring", ()
   assert.match(rule[1], /outline:\s*2px solid var\(--blue\)/);
   assert.match(rule[1], /outline-offset:\s*2px/);
 });
+
+
+test("Ask Cyborg local results preserve source app icon tones and concise accessible names", () => {
+  assert.ok(appScript.includes('const iconTone = Array.from(iconElement?.classList || []).find((className) => className.startsWith("tone-")) || "";'));
+  assert.ok(appScript.includes('button.setAttribute("aria-label", item.name + ", " + item.subtitle);'));
+  assert.ok(appScript.includes('icon.setAttribute("aria-hidden", "true");'));
+  assert.ok(appScript.includes('arrow.setAttribute("aria-hidden", "true");'));
+  ["purple", "violet", "blue", "green", "orange", "red", "cyan", "pink"].forEach((tone) => {
+    assert.ok(css.includes(".assistant-result-icon.tone-" + tone + "{"), "result icon must preserve the " + tone + " tone");
+  });
+});
