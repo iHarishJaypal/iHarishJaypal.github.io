@@ -87,13 +87,23 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The SignIn prototype was simplified to match the supplied reference more closely: work email, password with Show/Hide, a return-to-dashboard control, and the clear no-real-credentials notice. Unsupported Forgot Password, keep-signed-in, Google sign-in, and account-creation controls were removed. No authentication backend or credential storage was added.
 - Browser audit coverage now checks the compact mobile header and four-item navigation at 320, 360, 375, 414, and 430 CSS pixels, including header/nav geometry, theme switching, the header search entry point, and horizontal overflow. The desktop profile screenshot waits for transient toast feedback to clear.
 - The dependency-free source audit passed on commit `461a8ac5aca2d4067365aa1306846e34193ba613`. The GitHub Pages build and deployment also succeeded for that commit.
-- The latest responsive Chromium audit run is `44489321992`. Its static stage passed; its browser stage was still installing Chromium system dependencies at the time of this record. Do not claim the expanded responsive suite has passed until that job completes.
-- An earlier full Chromium browser audit, run `44478137693`, completed successfully and generated 12 screenshots covering desktop dark/light dashboards, profile and SignIn, the mobile compact menu, full app grid, Score Menu, and Ask Cyborg states. Those screenshots were inspected during this run.
+- Responsive Chromium audit run `44489321992` completed successfully on commit `461a8ac5aca2d4067365aa1306846e34193ba613`; both static and browser jobs passed. Artifact `14513055550` contains 14 screenshots covering desktop dark/light dashboards, profile and SignIn, mobile dashboards, compact menu, full app grid, Score Menu, Ask Cyborg states, and mobile profile. Those screenshots were inspected.
+- Responsive Chromium audit run `44491843499` completed successfully on commit `b29bbbb2c900c25631d55b9755f0c9b2f6d4ff10`; its artifact contains 15 screenshots, including the narrow-phone SignIn prototype.
 
 ## Known verification blockers
 - `score.base.software` remains inaccessible through the currently available web access path. Do not claim pixel-perfect parity until a genuine access path is available.
-- The connected browser extension context is unavailable. CI Playwright provides a real Chromium verification path, but the latest expanded responsive run is still pending.
-- The GitHub Pages build/deployment workflow succeeded for commit `461a8ac5aca2d4067365aa1306846e34193ba613`, but the published site could not be opened through the available web access tool in this run.
+- The connected browser extension context is unavailable. CI Playwright is the available real Chromium verification path; previous expanded runs passed.
+- The GitHub Pages build/deployment workflow succeeded for commit `2aa525e1e9b7430574ace00380e24676c09bbfa1`. The latest deployment for commit `4ed9b5bbc2abc679133aef3666a22dab3731a7be` is still in progress, and the published site remains inaccessible through the available web access tool.
 - SignIn remains a local prototype only. It does not send or store credentials and does not connect to an authentication provider.
 
 **Project status: IN PROGRESS.** Do not start the production WebApp, Dart app, or Python app as part of this prototype work.
+
+## Run 7 refinements — 2026-11-19
+- Replaced the static top-bar `37 min ago` label with `Demo snapshot` and a tooltip explaining that live refresh is not connected.
+- The language selector now explicitly says language switching is not connected; EN/HL/HI selection is only a visual preview, not a translated interface.
+- Added the reference SignIn field icons (`@` and lock) using the local SVG icon map.
+- SignIn submission clears both fields and restores the password to hidden. Leaving SignIn without submitting also clears both fields, so demo values do not remain in the page.
+- Fixed SignIn text contrast when the workspace is in light mode; the reference SignIn surface remains dark and legible. Reduced mobile card padding at narrow widths so the password placeholder retains readable space.
+- Expanded browser checks for the demo snapshot label, language-preview feedback, SignIn icon presence, submit/cancel field cleanup, 320px SignIn contrast and input width, focus, and horizontal overflow.
+- Latest source audit run `44492116894` passed its static stage on commit `4ed9b5bbc2abc679133aef3666a22dab3731a7be`. Its responsive Chromium stage is still installing system dependencies; do not claim that latest browser stage passed until it completes.
+- Latest Pages build/deployment run `44492116938` is still in progress.
