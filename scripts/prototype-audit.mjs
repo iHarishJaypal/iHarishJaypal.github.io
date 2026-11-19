@@ -117,6 +117,7 @@ test("responsive rules include phone columns, safe areas and compact desktop bre
   assert.match(css, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
   assert.match(css, /safe-area-inset-top/);
   assert.match(css, /safe-area-inset-bottom/);
+  assert.match(css, /body\\.light \\.rail\\{background:#ebf7fd/);
   assert.match(css, /max-width:1500px/);
   assert.match(css, /max-width:920px/);
   assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length, "CSS braces must balance");
