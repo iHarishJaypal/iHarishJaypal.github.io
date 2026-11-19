@@ -234,12 +234,12 @@ test("mobile header and primary navigation preserve TelcoNet identity and contro
 
 test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
   const tokenBlock = (selector) => {
-    const match = html.match(new RegExp(selector + String.raw`\\s*\\{([^}]*)\\}`));
+    const match = html.match(new RegExp(selector + "\\s*\\{([^}]*)\\}"));
     assert.ok(match, "missing theme token block: " + selector);
     return match[1];
   };
-  const token = (block, name) => {
-    const match = block.match(new RegExp(name + String.raw`\\s*:\\s*(#[0-9a-f]{6})`, "i"));
+  const token = (declarations, name) => {
+    const match = declarations.match(new RegExp(name + "\\s*:\\s*(#[0-9a-f]{6})", "i"));
     assert.ok(match, "missing color token: " + name);
     return match[1];
   };
@@ -254,7 +254,7 @@ test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
   };
   const dark = tokenBlock(":root");
   const light = tokenBlock("body\\.light");
-  const gradient = css.match(/body\\.light\\{background:linear-gradient\\([^}]+\\)\\}/)?.[0] ?? "";
+  const gradient = css.match(/body\.light\{background:linear-gradient\([^}]+\)\}/)?.[0] ?? "";
   const gradientStops = [...gradient.matchAll(/#[0-9a-f]{6}/gi)].map((match) => match[0]);
   assert.ok(gradientStops.length >= 3, "light workspace gradient stops must be available for contrast checks");
   const lightBackgrounds = [
