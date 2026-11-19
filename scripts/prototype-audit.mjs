@@ -416,5 +416,11 @@ test("SignIn safety notice is associated with both credential fields", () => {
   };
   assert.ok(fieldTag("email").includes('aria-describedby="signinSafetyNote"'));
   assert.ok(fieldTag("password").includes('aria-describedby="signinSafetyNote"'));
-  assert.ok(css.includes(".signin-card .signin-note{\\n  color:#aeb8c8;\\n  font-size:11px;\\n  line-height:1.55;"));
+  const noteRuleStart = css.lastIndexOf(".signin-card .signin-note{");
+  const noteRuleEnd = css.indexOf("}", noteRuleStart);
+  const noteRule = css.slice(noteRuleStart, noteRuleEnd);
+  assert.ok(noteRuleStart >= 0 && noteRuleEnd > noteRuleStart, "missing SignIn safety-note style");
+  assert.ok(noteRule.includes("color:#aeb8c8;"));
+  assert.ok(noteRule.includes("font-size:11px;"));
+  assert.ok(noteRule.includes("line-height:1.55;"));
 });
