@@ -451,12 +451,14 @@ test("all sidebar and top navigation destinations open their matching views", as
       assert.equal(await page.locator(".view.active").count(), 1, "exactly one view should be active");
       assert.equal(await page.locator(".view.active").getAttribute("id"), "view-" + destination);
       assert.equal(await link.getAttribute("class").then((value) => value.includes("active")), true);
+      assert.equal(await link.getAttribute("aria-current"), "page", "active sidebar link should expose aria-current");
       await assertNoHorizontalOverflow(page, destination + " view");
     }
 
     for (const destination of ["dashboard", "cyborgs", "aliens", "salary", "calendar"]) {
       await page.locator('.topnav [data-view="' + destination + '"]').click();
       assert.equal(await page.locator(".view.active").getAttribute("id"), "view-" + destination);
+      assert.equal(await page.locator('.topnav [data-view="' + destination + ']').getAttribute("aria-current"), "page", "active top navigation item should expose aria-current");
     }
     assert.deepEqual(runtimeErrors, []);
   } finally {
