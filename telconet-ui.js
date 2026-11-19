@@ -91,6 +91,8 @@
 
     launcher.classList.toggle("list-mode", listMode);
     launcher.classList.remove("all-apps");
+    const allHead = $("#launcherAllHead");
+    if (allHead) allHead.hidden = true;
     previousMenuMode = listMode ? "list" : "grid";
 
     $$('[data-action="app-mode"]').forEach((button) => {
@@ -112,6 +114,8 @@
     if (!launcher) return;
     launcher.classList.remove("list-mode", "searching");
     launcher.classList.add("all-apps");
+    const allHead = $("#launcherAllHead");
+    if (allHead) allHead.hidden = false;
     if (searchInput) searchInput.value = "";
     if (searchClear) searchClear.hidden = true;
     if (assistantResults) assistantResults.hidden = true;
@@ -261,7 +265,11 @@
 
   function enterSearch() {
     if (!launcher?.classList.contains("show")) openLauncher();
-    if (launcher?.classList.contains("all-apps")) launcher.classList.remove("all-apps");
+    if (launcher?.classList.contains("all-apps")) {
+      launcher.classList.remove("all-apps");
+      const allHead = $("#launcherAllHead");
+      if (allHead) allHead.hidden = true;
+    }
     setSearchMode(true);
     searchInput?.focus({ preventScroll: true });
   }
