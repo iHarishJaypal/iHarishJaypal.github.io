@@ -51,10 +51,13 @@
     const last = items[items.length - 1];
     const active = document.activeElement;
 
-    if (event.shiftKey && (active === first || !container.contains(active))) {
+    if (active === container || !container.contains(active)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus({ preventScroll: true });
+    } else if (event.shiftKey && active === first) {
       event.preventDefault();
       last.focus({ preventScroll: true });
-    } else if (!event.shiftKey && (active === last || !container.contains(active))) {
+    } else if (!event.shiftKey && active === last) {
       event.preventDefault();
       first.focus({ preventScroll: true });
     }
