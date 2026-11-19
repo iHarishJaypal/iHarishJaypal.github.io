@@ -57,6 +57,11 @@ Use **"Aliens Brand"** as the shorthand for this visual system and interaction p
 - The company switcher label is **Aliens TelcoNet**; the wordmark hierarchy remains **TelcoNet** with **ALIENS COMPANY** beneath it.
 
 
+## Mobile launcher detail confirmed from the supplied video
+- Compact Grid mode shows the first eight Aliens Apps and one **Dashboard** preview card under **Score Menu**, while retaining the total count of **39**.
+- Switching to **List** reveals all 39 alphabetically grouped Score Menu entries. The full 26-app grid remains behind **More Apps**.
+- The compact preview is not the full list; do not display all 39 rows until List mode is selected.
+
 ## Current verification record — 2026-11-19
 - The seven supplied reference screenshots and the mobile-menu video were reviewed. The screenshots remain the visual source of truth; the video defines the mobile launcher flow.
 - The prototype retains the 26-app grid, 39 unique alphabetical Score Menu entries, compact eight-app preview, More Apps flow, Grid/List modes, and the three Ask Cyborg prototype states.
