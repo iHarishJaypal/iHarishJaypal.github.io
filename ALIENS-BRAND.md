@@ -266,3 +266,13 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The connected browser extension still has no originating browser context. The external `score.base.software` reference remains inaccessible through the available access path; no live-site or pixel-perfect parity claim is made.
 
 **Project status: IN PROGRESS.** The external reference-site access and independent public-page verification blockers remain open. No production WebApp, Dart app, Python app, or production authentication has been started.
+
+
+### Run 17 verification addendum
+
+- The first implementation commit `ce945447907eebd9430500fca70e143783bf0cc3` had an overly strict CSS-selector regex in the new static test (it did not allow the whitespace used in the stylesheet). Its static job failed and its Pages deployment was cancelled by the follow-up push. Corrected the test to allow optional whitespace in commit `a9672a12f421017f7cb0fbf3114f24c81039f935`; the corrected run passed **21/21 static checks** and **24/24 Chromium checks** in [audit run 44577365044](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44577365044).
+- Moved the focused-state screenshot capture to before activating the skip link in commit `ffcd7717c6c10dece7dddbc55d2ad893f5b77919`. Final audit [44577744008](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44577744008) passed **21/21 static checks** and **24/24 Chromium checks**. The 390px focused skip-link screenshot was inspected in artifact **14556133185**; the link and three-pixel focus ring are visible at the top without changing the dashboard layout. The desktop and mobile tests also confirmed first-Tab order, activation, focus transfer to main content, and no horizontal overflow.
+- GitHub Pages deployment for the final code/test commit succeeded in [run 44577743259](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44577743259).
+- The browser-extension context remains unavailable. No new access route to `score.base.software` or independent public-page inspection became available, so the external reference and live-site parity remain unverified.
+
+**Project status: IN PROGRESS.** Skip navigation is implemented and tested; external reference-site access and independent public-page verification remain open blockers.
