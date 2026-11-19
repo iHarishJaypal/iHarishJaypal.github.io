@@ -41,3 +41,11 @@ Use **"Aliens Brand"** as the shorthand for this visual system and interaction p
 - Use realistic sample data only when clearly labelled as sample/demo data.
 - Preserve existing project files and conventions; do not replace unrelated content.
 - Treat supplied screenshots and the supplied mobile-menu video as the visual reference for this brand system.
+
+## Supplied mobile-menu video details
+- The default mobile launcher is a compact overview: an **Ask Cyborg** search bar, a Grid/List switch, an **Aliens Apps** preview of the first eight apps, a **More Apps** action, and the **Score Menu** list with its visible count of 39.
+- **More Apps** opens the full 26-app grid with a back control. Returning from that view restores the compact overview.
+- **List** mode presents the 39 alphabetically grouped Score Menu destinations; **Grid** returns to the compact app preview.
+- Search has three explicit prototype states: ready suggestions, local destination matches, and a no-local-destination state. Do not imply a live Cyborg/AI service where none is connected.
+- Keep the mobile launcher footer actions visible, and preserve the four-column app grid on narrow phone screens.
+- Modal menus must support Escape, keyboard focus containment, focus restoration, and background scroll locking.
