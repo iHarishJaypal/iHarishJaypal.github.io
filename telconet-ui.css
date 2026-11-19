@@ -480,3 +480,17 @@ body.light .wordmark small{color:#65738a}
   #signin.show{min-height:100dvh;overflow:auto;align-items:flex-start}
   #signin.show .signin-card{margin:0 auto}
 }
+
+/* SignIn input affordances follow the supplied @ and lock field treatment. */
+.signin-field{position:relative}
+.signin-field>svg,.password-field>svg{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  width:17px;
+  height:17px;
+  color:#818a9b;
+  pointer-events:none;
+}
+.signin-field input,.password-field input{padding-left:44px}
