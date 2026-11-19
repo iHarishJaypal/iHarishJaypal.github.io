@@ -186,6 +186,8 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     assert.equal(await page.locator("#signinForm input").count(), 2, "reference SignIn should contain only email and password fields");
     assert.equal(await page.locator("#email").getAttribute("type"), "email");
     assert.equal(await page.locator("#email").getAttribute("placeholder"), "you@company.com");
+    assert.equal(await page.locator(".signin-field svg.icon-at-sign").count(), 1);
+    assert.equal(await page.locator(".password-field svg.icon-lock").count(), 1);
     assert.equal(await page.locator("#keepSignedIn").count(), 0);
     assert.equal(await page.locator(".signin-google").count(), 0);
     assert.equal(await page.locator(".signin-create").count(), 0);
@@ -329,6 +331,19 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     await page.keyboard.press("Escape");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");
     await assertNoHorizontalOverflow(page, "320px after dialogs");
+
+    await page.locator(".mobile-brand [data-action='profile']").click();
+    await page.locator("#profilePop.show").waitFor();
+    await page.locator('#profilePop [data-action="signout"]').click();
+    await page.locator("#signin.show").waitFor();
+    assert.equal(await page.locator(".signin-copy").isVisible(), false, "mobile SignIn should prioritize the form card");
+    assert.equal(await page.locator(".signin-card").isVisible(), true);
+    assert.equal(await page.evaluate(() => document.activeElement?.id), "email");
+    assert.equal(await page.locator(".signin-field svg.icon-at-sign").count(), 1);
+    assert.equal(await page.locator(".password-field svg.icon-lock").count(), 1);
+    await assertNoHorizontalOverflow(page, "320px SignIn");
+    await page.locator('[data-action="back-home"]').click();
+    assert.equal(await page.locator("#view-dashboard").evaluate((node) => node.classList.contains("active")), true);
     assert.deepEqual(runtimeErrors, []);
   } finally {
     await context.close();
