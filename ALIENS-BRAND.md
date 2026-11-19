@@ -376,10 +376,13 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Added a two-pixel, two-pixel-offset focus ring to buttons and anchors using the active `--blue` theme token. This is keyboard-modality-only and does not change layout geometry or mouse interaction. Search inputs retain their existing wrapper focus ring; SignIn inputs retain their existing field treatment; the skip link retains its stronger dedicated outline.
 - Added static and Chromium regression coverage for the desktop rail launcher, workspace navigation link, mobile search trigger and Ask Cyborg search button. The browser test checks `:focus-visible`, ring width/style, theme accent color and horizontal overflow in desktop dark and mobile light themes.
 
-### Verification state
+### Verification
 
-- The code and test changes are committed together; final static and Chromium results are recorded only after the corresponding GitHub Actions run completes.
-- GitHub Pages deployment, if triggered by the code change, will be recorded separately from browser verification.
+- Static prototype audit: **25/25 passed** in [Actions run 44622862960](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44622862960).
+- Responsive and interaction Chromium/Playwright audit: **27/27 passed** in the same run.
+- Browser artifact **14578746115** contains 21 screenshots. The new desktop and mobile keyboard-focus captures were inspected; the two-pixel theme-accent rings are visible on the workspace link and Ask Cyborg search button without shifting layout.
+- GitHub Pages build and deployment for code HEAD `e48726d5ea770f321cd10f5ee18e44453e8227e8`: **SUCCESS**, [run 44622862564](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44622862564).
+- The first implementation commit's static assertion was over-escaped and failed before the browser job could start. The assertion was corrected in `e48726d5ea770f321cd10f5ee18e44453e8227e8`; only the final 25/25 static and 27/27 Chromium run is counted as passing.
 
 ### Outstanding blockers
 
@@ -394,3 +397,5 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 ### Run 21 verification correction
 
 - The first static-test commit over-escaped the whitespace tokens in its new regular-expression assertion. Replaced the appended assertion with a correctly escaped pattern in this follow-up commit. No application runtime code or styling was changed by this test correction; only the final corrected Actions run is counted as verification.
+
+- Browser extension retry still fails because no originating browser context is available. The external `score.base.software` reference and independent public-page opening remain blocked; no pixel-perfect parity claim is made.
