@@ -107,6 +107,42 @@ async function assertNoHorizontalOverflow(page, label) {
   );
 }
 
+async function waitForToastToClear(page) {
+  await page.waitForFunction(() =>
+    !document.querySelector("#toast")?.classList.contains("show")
+  );
+}
+
+async function assertVisibleControlsHaveNames(page, label) {
+  const missing = await page.evaluate(() => {
+    const isVisible = (element) => {
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== "none" && style.visibility !== "hidden" &&
+        rect.width > 0 && rect.height > 0 && !element.closest("[hidden]");
+    };
+    const buttonName = (element) =>
+      (element.getAttribute("aria-label") || element.getAttribute("title") ||
+        element.innerText || "").trim();
+    const inputName = (element) => {
+      const explicit = element.getAttribute("aria-label") || element.getAttribute("title");
+      const label = element.id
+        ? document.querySelector('label[for="' + CSS.escape(element.id) + '"]')
+        : element.closest("label");
+      return (explicit || label?.innerText || "").trim();
+    };
+    return {
+      buttons: [...document.querySelectorAll("button")].filter(isVisible)
+        .filter((element) => !buttonName(element))
+        .map((element) => element.outerHTML.slice(0, 180)),
+      inputs: [...document.querySelectorAll("input,textarea,select")].filter(isVisible)
+        .filter((element) => !inputName(element))
+        .map((element) => ({ id: element.id, type: element.type, placeholder: element.placeholder }))
+    };
+  });
+  assert.deepEqual(missing, { buttons: [], inputs: [] }, label + " contains unnamed visible controls");
+}
+
 async function visibleCount(locator) {
   return locator.evaluateAll((items) =>
     items.filter((item) => getComputedStyle(item).display !== "none" &&
@@ -169,6 +205,7 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
 
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    await waitForToastToClear(page);
     await capture(page, "desktop-dashboard-light.png");
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), false);
@@ -400,6 +437,59 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
   }
 });
 
+
+
+test("all sidebar and top navigation destinations open their matching views", async () => {
+  const { context, page } = await openPage({ width: 1440, height: 900 });
+  try {
+    const destinations = ["dashboard", "health", "reports", "cyborgs", "aliens", "salary", "calendar"];
+    for (const destination of destinations) {
+      const link = page.locator('#workspaceSidebar [data-view="' + destination + '"]');
+      assert.equal(await link.count(), 1, "expected one sidebar link for " + destination);
+      await link.click();
+      assert.equal(await page.locator(".view.active").count(), 1, "exactly one view should be active");
+      assert.equal(await page.locator(".view.active").getAttribute("id"), "view-" + destination);
+      assert.equal(await link.getAttribute("class").then((value) => value.includes("active")), true);
+      await assertNoHorizontalOverflow(page, destination + " view");
+    }
+
+    for (const destination of ["dashboard", "cyborgs", "aliens", "salary", "calendar"]) {
+      await page.locator('.topnav [data-view="' + destination + '"]').click();
+      assert.equal(await page.locator(".view.active").getAttribute("id"), "view-" + destination);
+    }
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});
+
+test("visible controls have accessible names and reduced motion is respected", async () => {
+  const { context, page } = await openPage({ width: 390, height: 844 });
+  try {
+    await assertVisibleControlsHaveNames(page, "mobile dashboard");
+    const motion = await page.locator(".metric").first().evaluate((element) => ({
+      transition: getComputedStyle(element).transitionDuration,
+      animation: getComputedStyle(document.querySelector(".view.active")).animationName
+    }));
+    assert.equal(motion.transition, "0s", "reduced-motion preference should disable transitions");
+    assert.equal(motion.animation, "none", "reduced-motion preference should disable page animations");
+
+    await page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await assertVisibleControlsHaveNames(page, "mobile launcher");
+    await page.keyboard.press("Escape");
+    assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");
+
+    await page.locator(".mobile-brand [data-action='profile']").click();
+    await page.locator("#profilePop.show").waitFor();
+    await assertVisibleControlsHaveNames(page, "mobile profile popover");
+    await page.locator('#profilePop [data-action="signout"]').click();
+    await page.locator("#signin.show").waitFor();
+    await assertVisibleControlsHaveNames(page, "mobile SignIn");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});
 
 test("mobile header, brand hierarchy and primary navigation fit common phone widths", async (t) => {
   for (const width of [320, 360, 375, 414, 430]) {
