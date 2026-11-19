@@ -119,6 +119,7 @@
     if (searchInput) searchInput.value = "";
     if (searchClear) searchClear.hidden = true;
     if (assistantResults) assistantResults.hidden = true;
+    window.requestAnimationFrame(() => $("#launcherAllHead .launcher-back")?.focus({ preventScroll: true }));
   }
 
   function backToSummary() {
@@ -126,6 +127,7 @@
     setMode(previousMenuMode);
     launcher.classList.remove("all-apps");
     launcherContent?.scrollTo({ top: 0, behavior: "smooth" });
+    window.requestAnimationFrame(() => $('.launcher-summary-head [data-action="more-apps"]')?.focus({ preventScroll: true }));
   }
 
   function buildSearchableItems() {
