@@ -952,8 +952,17 @@ test("keyboard focus rings are visible on desktop and mobile controls in both th
 test("Ask Cyborg local matches reuse app-grid icon tones and concise accessible names", async () => {
   const mobile = await openPage({ width: 390, height: 844 });
   try {
+    await mobile.page.locator('.mobile-brand [data-action="theme"]').click();
     await mobile.page.locator('.mobile-brand [data-action="focus-menu-search"]').click();
     await mobile.page.locator("#assistantSearch").fill("z");
+    const nativeCancel = await mobile.page.locator("#assistantSearch").evaluate((input) => {
+      const style = getComputedStyle(input, "::-webkit-search-cancel-button");
+      return { appearance: style.webkitAppearance, display: style.display };
+    });
+    assert.ok(nativeCancel.appearance === "none" || nativeCancel.display === "none",
+      "browser-native search cancel decoration must be hidden");
+    assert.equal(await mobile.page.locator(".assistant-clear").count(), 1);
+    assert.equal(await mobile.page.locator(".assistant-clear").isVisible(), true);
     const results = mobile.page.locator(".assistant-result");
     await results.first().waitFor();
     assert.equal(await results.count(), 2);

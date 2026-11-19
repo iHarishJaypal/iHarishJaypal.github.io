@@ -582,3 +582,18 @@ a:focus-visible {
 .assistant-result-icon.tone-red{background:linear-gradient(145deg,#ffe4e6,#f5a0a7);color:#c63d54}
 .assistant-result-icon.tone-cyan{background:linear-gradient(145deg,#ddf8fa,#9fe2e8);color:#258e9e}
 .assistant-result-icon.tone-pink{background:linear-gradient(145deg,#ffe4ef,#f8a9c9);color:#bd4779}
+
+
+/* Ask Cyborg uses its own clear button; suppress the browser's duplicate search-field decoration. */
+.assistant-search input[type="search"]{
+  appearance:none;
+  -webkit-appearance:none;
+}
+.assistant-search input[type="search"]::-webkit-search-cancel-button,
+.assistant-search input[type="search"]::-webkit-search-decoration,
+.assistant-search input[type="search"]::-webkit-search-results-button,
+.assistant-search input[type="search"]::-webkit-search-results-decoration{
+  display:none;
+  appearance:none;
+  -webkit-appearance:none;
+}

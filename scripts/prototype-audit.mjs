@@ -396,3 +396,10 @@ test("Ask Cyborg local results preserve source app icon tones and concise access
     assert.ok(css.includes(".assistant-result-icon.tone-" + tone + "{"), "result icon must preserve the " + tone + " tone");
   });
 });
+
+
+test("Ask Cyborg exposes one custom clear control without browser-native search decoration", () => {
+  assert.match(css, /\.assistant-search input\[type="search"\]\s*\{[^}]*appearance:\s*none;[^}]*-webkit-appearance:\s*none;/);
+  assert.match(css, /::-webkit-search-cancel-button[\s\S]*?display:\s*none;/);
+  assert.match(css, /::-webkit-search-results-decoration[\s\S]*?display:\s*none;/);
+});
