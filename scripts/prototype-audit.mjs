@@ -305,7 +305,10 @@ test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
 });
 
 test("desktop and mobile search fields retain visible focus-within affordances", () => {
-  assert.match(css, /\\.search:focus-within,\\s*\\.assistant-search:focus-within\\s*\\{[^}]*border-color:\\s*var\\(--blue\\)/s);
-  assert.match(css, /\\.assistant-search:focus-within\\s*\\{[^}]*box-shadow:\\s*var\\(--shadow\\),\\s*0\\s+0\\s+0\\s+3px\\s+color-mix\\(/s);
-  assert.match(css, /\\.search:focus-within,\\s*\\.assistant-search:focus-within/);
+  const focusStart = css.indexOf(".search:focus-within,");
+  assert.ok(focusStart >= 0, "desktop and mobile search wrappers must define a focus state");
+  const focusStyles = css.slice(focusStart);
+  assert.ok(focusStyles.includes("border-color: var(--blue);"), "focused search wrappers must use the active theme accent");
+  assert.ok(focusStyles.includes("box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);"));
+  assert.ok(focusStyles.includes("box-shadow: var(--shadow), 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);"));
 });
