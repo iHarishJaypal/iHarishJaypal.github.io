@@ -276,6 +276,9 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     assert.equal(await page.evaluate(() => document.activeElement?.classList.contains("launcher-avatar")), true);
 
     await page.keyboard.press("Escape");
+    await page.waitForFunction(() => !document.querySelector("#launcher")?.classList.contains("searching"));
+    assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
+    await page.keyboard.press("Escape");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");
     await assertNoHorizontalOverflow(page, "320px after dialogs");
     assert.deepEqual(runtimeErrors, []);
