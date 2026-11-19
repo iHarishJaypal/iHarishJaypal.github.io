@@ -175,6 +175,14 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator("#signin.show").waitFor();
     await capture(page, "desktop-signin-prototype.png");
     assert.match(await page.locator(".signin-note").textContent(), /Do not enter real credentials/);
+    await page.locator("#keepSignedIn").check();
+    assert.equal(await page.locator("#keepSignedIn").isChecked(), true);
+    await page.locator(".signin-label-row [data-action='toast']").click();
+    assert.match(await page.locator("#toast").textContent(), /Password recovery is not connected/);
+    await page.locator(".signin-google").click();
+    assert.match(await page.locator("#toast").textContent(), /Google sign-in is not connected/);
+    await page.locator(".signin-create button").click();
+    assert.match(await page.locator("#toast").textContent(), /Account creation is not connected/);
 
     const password = page.locator("#password");
     const visibility = page.locator('[data-action="password-visibility"]');
@@ -210,6 +218,8 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     await page.locator("#launcher.show").waitFor();
     await capture(page, "mobile-compact-menu.png");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
+    assert.equal(await visibleCount(page.locator("#appList .menu-list-item")), 1, "compact Grid mode must show only the Dashboard Score Menu preview");
+    assert.equal(await page.locator("#appList .menu-list-item:visible").getAttribute("data-app-name"), "Dashboard");
     await page.locator("#assistantSearch").click();
     await capture(page, "mobile-ask-cyborg-ready.png");
     await page.keyboard.press("Escape");
