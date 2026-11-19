@@ -434,3 +434,38 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - No pixel-perfect parity claim is made.
 
 **Project status: IN PROGRESS — NOT APPROVED COMPLETE.** The 26-app grid, 39-entry Score Menu, company/product hierarchy, desktop shell, mobile navigation, profile, themes and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+
+## Run 23 — SignIn prototype safety guidance and accessible descriptions (2026-11-20)
+
+### Repository and reference review
+
+- Re-inspected the latest `main` branch, recent commits, recursive repository tree, `index.html`, `telconet-ui.css`, `telconet-ui.js`, static/browser audit scripts and the GitHub Actions workflow. The code review began from `8a35680ff627bd5d8439f495a9a97bed60fd2bbd`; no completed app-grid, Score Menu, navigation or dashboard work was rebuilt.
+- Opened the seven supplied Aliens reference screenshots covering SignIn, desktop dark/light dashboard, profile popover, top navigation, compact mobile navigation and mobile footer.
+- Materialized and sampled the supplied 23.253-second mobile-menu video at 0, 3, 6, 9, 12, 15, 18, 21 and 23 seconds. The compact 8-app preview, 26-app grid, 39-entry Score Menu, Grid/List modes, Ask Cyborg Ready/local/no-local states and fixed footer remain aligned with the recording.
+- The connected browser tab-list retry is still blocked because the originating browser context is unavailable. `score.base.software` and the published Pages URL were each retried through the available web path and remain inaccessible there.
+
+### Implementation
+
+- The existing SignIn warning was visible but was not programmatically associated with the email or password field. Both fields now reference the same safety note with `aria-describedby`; the note has a stable ID and `role="note"`.
+- Improved the warning's readability from the previous small muted treatment to 11px text with a lighter neutral color and comfortable line-height. It remains centered within the existing SignIn card; no new card, authentication flow or credential handling was introduced.
+- Preserved the client-only form behavior: submit prevents navigation/network submission, clears demo values, resets password visibility and displays the prototype-only confirmation.
+- Added static and Chromium regression assertions for the note's semantics, both field associations and readable style.
+
+### Verification
+
+- Static prototype audit: **28/28 passed** in [Actions run 44635492723](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44635492723).
+- Responsive and interaction Chromium/Playwright audit: **28/28 passed** in the same run. It includes the existing 320px SignIn check, mobile launcher/search/profile flows, desktop navigation, chart ranges, theme persistence, focus behavior and placeholder-action checks.
+- Browser artifact **14584435873** contains 22 screenshots. Desktop and mobile SignIn, compact mobile menu, full app grid and local Ask Cyborg results were downloaded and visually inspected. The safety note remains readable without shifting the reference card geometry; the existing 8-app/26-app/39-entry states remain intact.
+- GitHub Pages build and deployment for code HEAD `c7f5975c1c37ca65df2a3c1cd6130a28444f3eda`: **SUCCESS**, [run 44635493218](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44635493218).
+- The first implementation audit exposed an over-escaped static-test regex; the next revision exposed a brittle newline assertion. Both test-only issues were corrected. The final corrected run above passed in full; no intermediate failed run is counted as successful verification.
+- GitHub's combined commit-status API still returns no status contexts; the successful custom Actions workflow is the verification source.
+
+### Remaining blockers
+
+- `score.base.software` remains inaccessible through the available web access path.
+- The connected browser extension still requires its originating browser context.
+- Independent public opening of `https://iharishjaypal.github.io/` remains unavailable through the web access path, despite successful GitHub Pages deployment.
+- No pixel-perfect parity claim is made.
+
+**Project status: IN PROGRESS — NOT APPROVED COMPLETE.** The 26-app grid, 39-entry Score Menu, product/company hierarchy, desktop shell, mobile navigation, profile, themes and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
