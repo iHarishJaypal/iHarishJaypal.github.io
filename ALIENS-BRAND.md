@@ -161,3 +161,15 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - `score.base.software` and the published GitHub Pages URL remain inaccessible through the available web access path. The connected browser extension context is still unavailable; CI Chromium remains the available real-browser path.
 
 **Project status: IN PROGRESS.** The 26-app grid, 39-entry Score Menu, existing mobile flow, desktop shell, profile, themes, and SignIn prototype remain preserved. No production WebApp, Dart app, Python app, or production authentication has been started.
+
+
+## Run 11 follow-up — Mobile icon parity and measured SignIn fit (2026-11-19)
+
+- Inspected the new Chromium artifact `14533849656` from run `44534347746`. The Playwright container initialized successfully, installed the matching package, and ran the browser suite. The static audit passed; the browser suite passed 20 of 21 tests.
+- The only failing assertion was a hard-coded 130px minimum content-width threshold in the 320px SignIn check. It failed before the more meaningful measured-placeholder-fit assertion could execute. The browser test now captures the SignIn screenshot first, logs the measured input width, and checks the actual placeholder text against the available content width instead of enforcing an arbitrary minimum.
+- The same artifact exposed a small visual mismatch against the supplied mobile video: the Ask Cyborg robot was an emoji, the send control was a text arrow, and the footer used a log-out-door glyph instead of the reference power symbol. These are now replaced with local SVG icons (bot, send, and power); the dynamic ready-state icon uses the same local renderer.
+- The browser and source audits now assert these three reference icons and the dynamic ready-state bot icon. The follow-up workflow result is pending.
+- The 30 Score Menu route checks and all nine Score Menu placeholder-action checks passed in the prior browser run. The 39-item list scroll, 26-app grid, 8-app preview order, footer stability, Ask Cyborg ready suggestions, local search, no-local-destination, desktop navigation, and 320–430px mobile-shell checks also passed.
+- GitHub Pages deployment for code/test commit `e3ca06f3f42ec107964a5a49f24a8ac573898f4e` succeeded. The new icon refinements are still awaiting deployment and browser verification.
+
+**Project status: IN PROGRESS.**

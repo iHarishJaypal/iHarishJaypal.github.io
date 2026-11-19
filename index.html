@@ -210,10 +210,10 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
 <section class="launcher" id="launcher" aria-label="TelcoNet app menu" aria-hidden="true" role="dialog" aria-modal="true" tabindex="-1">
   <div class="launcher-shell">
     <header class="assistant-search">
-      <span class="assistant-bot" aria-hidden="true">🤖</span>
+      <span class="assistant-bot" aria-hidden="true"><i data-lucide="bot"></i></span>
       <input id="assistantSearch" type="search" placeholder="Ask Cyborg" aria-label="Ask Cyborg or search local destinations" autocomplete="off">
       <button class="assistant-clear" data-action="clear-search" aria-label="Clear search" hidden>×</button>
-      <button data-action="assistant-search" aria-label="Search local destinations or ask Cyborg">➤</button>
+      <button data-action="assistant-search" aria-label="Search local destinations or ask Cyborg"><i data-lucide="send"></i></button>
     </header>
     <section class="assistant-results" id="assistantResults" aria-live="polite" hidden></section>
     <div class="launcher-content" id="launcherContent">
@@ -296,7 +296,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
         <button data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button>
         <button data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button>
         <button data-action="toast" data-message="Messages are not connected yet" aria-label="Messages"><i data-lucide="message-circle"></i></button>
-        <button class="launcher-power" data-action="signout" aria-label="Sign out"><i data-lucide="log-out"></i></button>
+        <button class="launcher-power" data-action="signout" aria-label="Sign out"><i data-lucide="power"></i></button>
       </div>
     </footer>
   </div>
@@ -459,9 +459,12 @@ drawChart(30);
  "sparkles":'<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l1 2.5 2.5 1-2.5 1L19 23l-1-2.5-2.5-1 2.5-1z"/>',
  "log-out":'<path d="M10 17l5-5-5-5m5 5H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/>',
  "x":'<path d="m18 6-12 12M6 6l12 12"/>',
- "arrow-left":'<path d="M19 12H5m7 7-7-7 7-7"/>'
+ "arrow-left":'<path d="M19 12H5m7 7-7-7 7-7"/>',
+ "power":'<path d="M12 2v10"/><path d="M18.4 6.6a8 8 0 1 1-12.8 0"/>',
+ "send":'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>'
  };
  function renderIcons(root=document){root.querySelectorAll('i[data-lucide]').forEach(el=>{const name=el.closest('[data-action="theme"]')?.dataset.iconName||el.getAttribute('data-lucide');const paths=ICONS[name]||'<circle cx="12" cy="12" r="8"/>';const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.8');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');svg.setAttribute('aria-hidden','true');svg.classList.add('lucide');svg.classList.add('icon-'+name);svg.innerHTML=paths;el.replaceWith(svg);});}
+ window.updateTelcoIcons = renderIcons;
  renderIcons();
  window.updateTelcoThemeIcons=()=>{
   const light=document.body.classList.contains('light');

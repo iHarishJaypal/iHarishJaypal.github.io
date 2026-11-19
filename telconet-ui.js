@@ -183,8 +183,10 @@
 
     if (!query) {
       const ready = createElement("div", "assistant-ready");
+      const readyIcon = createElement("span", "assistant-ready-icon");
+      readyIcon.innerHTML = '<i data-lucide="bot"></i>';
       ready.append(
-        createElement("span", "assistant-ready-icon", "🤖"),
+        readyIcon,
         createElement("div", "assistant-ready-copy")
       );
       $(".assistant-ready-copy", ready).append(
@@ -205,6 +207,7 @@
       });
 
       assistantResults.append(ready, suggestions);
+      window.updateTelcoIcons?.(assistantResults);
       return;
     }
 
