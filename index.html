@@ -166,23 +166,16 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   <form class="signin-card" id="signinForm" autocomplete="off">
     <button type="button" class="back-home" data-action="back-home">← Back to dashboard</button>
     <div class="eyebrow">ALIENS ID</div>
-    <h2>Welcome back</h2>
-    <p>Sign in to TelcoNet</p>
-    <label for="email">Email or Username</label>
-    <input id="email" type="text" placeholder="Enter your email or username" autocomplete="off" required>
-    <div class="signin-label-row">
-      <label for="password">Password</label>
-      <button class="signin-text-link" type="button" data-action="toast" data-message="Password recovery is not connected in this prototype.">Forgot Password?</button>
-    </div>
+    <h2>Sign in</h2>
+    <p>Use your work email and password.</p>
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="you@company.com" autocomplete="off" required>
+    <label for="password">Password</label>
     <div class="password-field">
       <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" required>
       <button class="password-toggle" type="button" data-action="password-visibility" aria-controls="password" aria-pressed="false">Show</button>
     </div>
-    <label class="keep-signed-in" for="keepSignedIn"><input id="keepSignedIn" type="checkbox"> Keep me signed in</label>
     <button class="signin-submit" type="submit">Sign in to TelcoNet <span style="float:right"><i data-lucide="arrow-right"></i></span></button>
-    <div class="signin-divider"><span>OR</span></div>
-    <button class="signin-google" type="button" data-action="toast" data-message="Google sign-in is not connected in this prototype."><span class="google-mark" aria-hidden="true">G</span>Continue with Google</button>
-    <p class="signin-create">New to TelcoNet? <button type="button" data-action="toast" data-message="Account creation is not connected in this prototype.">Create an account</button></p>
     <div class="signin-note">Prototype only · Do not enter real credentials. Nothing is sent or stored.</div>
   </form>
 </section>
