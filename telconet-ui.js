@@ -75,8 +75,7 @@
     const count = $("#launcherCount");
     if (count) {
       const total = listMode ? rows.length : tiles.length;
-      const unit = listMode ? "shortcuts" : "apps";
-      count.textContent = query ? visible + " of " + total + " " + unit : total + " " + unit;
+      count.textContent = query ? visible + " of " + total : listMode ? String(total) : total + " Apps";
     }
     return visible;
   }
@@ -87,7 +86,7 @@
     if (appList) appList.hidden = !listMode;
 
     const title = $("#launcherTitle");
-    if (title) title.textContent = listMode ? "TelcoNet Menu" : "Aliens Apps";
+    if (title) title.textContent = listMode ? "Score Menu" : "Aliens Apps";
 
     $$('[data-action="app-mode"]').forEach((button) => {
       const active = button.dataset.mode === (listMode ? "list" : "grid");
