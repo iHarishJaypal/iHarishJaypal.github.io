@@ -150,7 +150,7 @@ test("Ask Cyborg mirrors the recorded app-search result states", () => {
   assert.match(appScript, /\$\$\(selector, root \|\| document\)\.forEach/);
   assert.doesNotMatch(appScript, /(?<!\$)\$\([^)]*\)\.forEach/);
   assert.match(appScript, /item\.searchText\.includes\(query\)/);
-  assert.match(html, /data-app-subtitle="Aliens App" data-search-terms="Aliens App"/);
+  assert.match(html, /data-app-subtitle="Aliens App" data-search-terms="Aliens App organization business"/);
   assert.match(appScript, /No local destination; Cyborg is not connected\./);
   assert.doesNotMatch(appScript, /send-to-cyborg|assistant-results-head|assistant-no-match/);
   assert.match(css, /@media\(max-width:850px\)\{[\s\S]*?\.assistant-ready\{[^}]*border-bottom:1px solid var\(--line\)/);
