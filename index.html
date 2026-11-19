@@ -293,8 +293,8 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  const views=['dashboard','health','reports','cyborgs','aliens','salary','calendar'];
  function showView(name){
   if(!views.includes(name))name='dashboard';
-  $('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
-  $('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  $$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
+  $$('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
   $('#app').style.display='block';
   $('#signin').classList.remove('show');
   $('#launcher').classList.remove('show');
@@ -306,7 +306,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  function openProfile(){$('#profilePop').classList.add('show');$('#overlay').classList.add('show');}
  function closeProfile(){$('#profilePop').classList.remove('show');$('#overlay').classList.remove('show');}
  let toastTimer;function toast(message){const t=$('#toast');t.textContent=message||'Coming soon';t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300);}
- function syncThemeControls(){const light=document.body.classList.contains('light');$('[data-action="theme"]').forEach(b=>{const label=light?'Switch to dark theme':'Switch to light theme';b.setAttribute('aria-pressed',light?'true':'false');b.setAttribute('aria-label',label);b.setAttribute('title',label);b.dataset.iconName=light?'sun':'moon';});window.updateTelcoThemeIcons?.();}
+ function syncThemeControls(){const light=document.body.classList.contains('light');$$('[data-action="theme"]').forEach(b=>{const label=light?'Switch to dark theme':'Switch to light theme';b.setAttribute('aria-pressed',light?'true':'false');b.setAttribute('aria-label',label);b.setAttribute('title',label);b.dataset.iconName=light?'sun':'moon';});window.updateTelcoThemeIcons?.();}
  function toggleTheme(){document.body.classList.toggle('light');try{localStorage.setItem('score-theme',document.body.classList.contains('light')?'light':'dark');}catch(_){}syncThemeControls();}
  try{if(localStorage.getItem('score-theme')==='light')document.body.classList.add('light');}catch(_){}
  syncThemeControls();
@@ -341,8 +341,8 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   });
  }
  drawChart(30);
- document.addEventListener('click',e=>{const view=e.target.closest('[data-view]');if(view){e.preventDefault();showView(view.dataset.view);return;}const action=e.target.closest('[data-action]');if(!action)return;if(action.tagName==='A')e.preventDefault();switch(action.dataset.action){case'profile':openProfile();break;case'close-pop':closeProfile();break;case'theme':toggleTheme();break;case'collapse':{const collapsed=document.body.classList.toggle('sidebar-collapsed');const sidebar=$('#workspaceSidebar');if(sidebar){sidebar.setAttribute('aria-hidden',collapsed?'true':'false');sidebar.inert=collapsed;}action.setAttribute('aria-expanded',collapsed?'false':'true');action.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');toast(collapsed?'Sidebar collapsed':'Sidebar expanded');break;}case'toast':toast(action.dataset.message);break;case'signout':showSignin();break;case'back-home':backHome();break;case'chart-range':{const range=Number(action.dataset.range);drawChart([7,30,90].includes(range)?range:30);$('[data-action="chart-range"]').forEach(b=>{const active=b===action;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false');});toast(range+' day sample view');break;}}});
- $('[data-lang]').forEach(b=>b.addEventListener('click',()=>{$('[data-lang]').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});b.classList.add('active');b.setAttribute('aria-pressed','true');toast('Language preference: '+b.dataset.lang);}));
+ document.addEventListener('click',e=>{const view=e.target.closest('[data-view]');if(view){e.preventDefault();showView(view.dataset.view);return;}const action=e.target.closest('[data-action]');if(!action)return;if(action.tagName==='A')e.preventDefault();switch(action.dataset.action){case'profile':openProfile();break;case'close-pop':closeProfile();break;case'theme':toggleTheme();break;case'collapse':{const collapsed=document.body.classList.toggle('sidebar-collapsed');const sidebar=$('#workspaceSidebar');if(sidebar){sidebar.setAttribute('aria-hidden',collapsed?'true':'false');sidebar.inert=collapsed;}action.setAttribute('aria-expanded',collapsed?'false':'true');action.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');toast(collapsed?'Sidebar collapsed':'Sidebar expanded');break;}case'toast':toast(action.dataset.message);break;case'signout':showSignin();break;case'back-home':backHome();break;case'chart-range':{const range=Number(action.dataset.range);drawChart([7,30,90].includes(range)?range:30);$$('[data-action="chart-range"]').forEach(b=>{const active=b===action;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false');});toast(range+' day sample view');break;}}});
+ $$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{$$('[data-lang]').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});b.classList.add('active');b.setAttribute('aria-pressed','true');toast('Language preference: '+b.dataset.lang);}));
  $('#signinForm').addEventListener('submit',e=>{e.preventDefault();toast('Demo only — connect a secure authentication backend to sign in.');});
  function search(input){
   if(!input)return;
