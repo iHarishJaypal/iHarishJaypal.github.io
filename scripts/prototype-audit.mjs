@@ -303,3 +303,9 @@ test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
       "dark muted text must meet 4.5:1 contrast on " + background);
   });
 });
+
+test("desktop and mobile search fields retain visible focus-within affordances", () => {
+  assert.match(css, /\\.search:focus-within,\\s*\\.assistant-search:focus-within\\s*\\{[^}]*border-color:\\s*var\\(--blue\\)/s);
+  assert.match(css, /\\.assistant-search:focus-within\\s*\\{[^}]*box-shadow:\\s*var\\(--shadow\\),\\s*0\\s+0\\s+0\\s+3px\\s+color-mix\\(/s);
+  assert.match(css, /\\.search:focus-within,\\s*\\.assistant-search:focus-within/);
+});

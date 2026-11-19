@@ -520,3 +520,13 @@ body.light .wordmark small{color:#65738a}
 /* Desktop account popover follows the supplied taller reference panel. */
 @media(min-width:851px){.profile-pop{min-height:460px}}
 @media(max-width:850px){.profile-pop{min-height:0}}
+
+/* Search inputs suppress their own outline; keep the enclosing field visibly focused without changing its layout. */
+.search:focus-within,
+.assistant-search:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);
+}
+.assistant-search:focus-within {
+  box-shadow: var(--shadow), 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);
+}

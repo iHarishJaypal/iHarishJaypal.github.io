@@ -699,3 +699,51 @@ test("mobile header, brand hierarchy and primary navigation fit common phone wid
     });
   }
 });
+
+test("desktop and mobile search fields show a visible ring when focused", async () => {
+  const desktop = await openPage({ width: 1440, height: 900 });
+  try {
+    await desktop.page.locator("#searchDesktop").focus();
+    const state = await desktop.page.locator(".search").evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        focused: element.contains(document.activeElement),
+        borderColor: style.borderTopColor,
+        boxShadow: style.boxShadow
+      };
+    });
+    assert.equal(state.focused, true, "desktop search input should receive focus");
+    assert.notEqual(state.boxShadow, "none", "desktop search wrapper should show a focus ring");
+    assert.match(state.boxShadow, /0px 0px 0px 3px/, "desktop search focus ring should be three pixels");
+    await capture(desktop.page, "desktop-search-keyboard-focus.png");
+  } finally {
+    await desktop.context.close();
+  }
+
+  const mobile = await openPage({ width: 390, height: 844 });
+  try {
+    await mobile.page.locator(".mobile-brand [data-action='theme']").click();
+    assert.equal(await mobile.page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    await mobile.page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await mobile.page.keyboard.press("Tab");
+    assert.equal(await mobile.page.evaluate(() => document.activeElement?.id), "assistantSearch");
+    const state = await mobile.page.locator(".assistant-search").evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        focused: element.contains(document.activeElement),
+        focusVisible: document.activeElement.matches(":focus-visible"),
+        borderColor: style.borderTopColor,
+        boxShadow: style.boxShadow
+      };
+    });
+    assert.equal(state.focused, true, "Ask Cyborg search input should receive keyboard focus");
+    assert.equal(state.focusVisible, true, "Ask Cyborg search input should expose keyboard modality");
+    assert.notEqual(state.boxShadow, "none", "Ask Cyborg search wrapper should show a focus ring");
+    assert.match(state.boxShadow, /0px 0px 0px 3px/, "Ask Cyborg search focus ring should be three pixels");
+    await assertNoHorizontalOverflow(mobile.page, "390px focused Ask Cyborg search");
+    await capture(mobile.page, "mobile-ask-cyborg-keyboard-focus.png");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await mobile.context.close();
+  }
+});
