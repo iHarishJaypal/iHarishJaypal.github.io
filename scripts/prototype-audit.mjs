@@ -230,3 +230,53 @@ test("mobile header and primary navigation preserve TelcoNet identity and contro
   assert.match(css, /safe-area-inset-top/);
   assert.match(css, /safe-area-inset-bottom/);
 });
+
+
+test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
+  const tokenBlock = (selector) => {
+    const match = html.match(new RegExp(selector + String.raw`\\s*\\{([^}]*)\\}`));
+    assert.ok(match, "missing theme token block: " + selector);
+    return match[1];
+  };
+  const token = (block, name) => {
+    const match = block.match(new RegExp(name + String.raw`\\s*:\\s*(#[0-9a-f]{6})`, "i"));
+    assert.ok(match, "missing color token: " + name);
+    return match[1];
+  };
+  const luminance = (hex) => {
+    const channels = [1, 3, 5].map((offset) => parseInt(hex.slice(offset, offset + 2), 16) / 255);
+    const linear = channels.map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+  };
+  const contrast = (foreground, background) => {
+    const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+    return (values[0] + 0.05) / (values[1] + 0.05);
+  };
+  const dark = tokenBlock(":root");
+  const light = tokenBlock("body\\.light");
+  const gradient = css.match(/body\\.light\\{background:linear-gradient\\([^}]+\\)\\}/)?.[0] ?? "";
+  const gradientStops = [...gradient.matchAll(/#[0-9a-f]{6}/gi)].map((match) => match[0]);
+  assert.ok(gradientStops.length >= 3, "light workspace gradient stops must be available for contrast checks");
+  const lightBackgrounds = [
+    ...gradientStops,
+    token(light, "--surface"),
+    token(light, "--surface2"),
+    token(light, "--surface3")
+  ];
+  const darkBackgrounds = [
+    token(dark, "--bg"),
+    token(dark, "--surface"),
+    token(dark, "--surface2"),
+    token(dark, "--surface3")
+  ];
+  const lightMuted = token(light, "--muted");
+  const darkMuted = token(dark, "--muted");
+  lightBackgrounds.forEach((background) => {
+    assert.ok(contrast(lightMuted, background) >= 4.5,
+      "light muted text must meet 4.5:1 contrast on " + background);
+  });
+  darkBackgrounds.forEach((background) => {
+    assert.ok(contrast(darkMuted, background) >= 4.5,
+      "dark muted text must meet 4.5:1 contrast on " + background);
+  });
+});
