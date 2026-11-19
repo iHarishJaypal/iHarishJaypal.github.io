@@ -812,3 +812,66 @@ test("keyboard skip link moves focus directly to main content on desktop and mob
     }
   }
 });
+
+
+test("desktop and mobile disclosure triggers expose their controlled regions", async () => {
+  const desktop = await openPage({ width: 1440, height: 900 });
+  try {
+    const launcherTrigger = desktop.page.locator('.rail [data-action="launcher"]');
+    assert.equal(await launcherTrigger.getAttribute("aria-controls"), "launcher");
+    assert.equal(await launcherTrigger.getAttribute("aria-expanded"), "false");
+    await launcherTrigger.click();
+    await desktop.page.locator("#launcher.show").waitFor();
+    assert.equal(await launcherTrigger.getAttribute("aria-expanded"), "true",
+      "desktop rail launcher must expose its expanded state");
+    assert.equal(await desktop.page.locator("#assistantResults").getAttribute("role"), "region");
+    assert.equal(await desktop.page.getByRole("region", { name: "Cyborg search results" }).count(), 1);
+
+    await desktop.page.keyboard.press("Escape");
+    await desktop.page.waitForFunction(() =>
+      document.querySelector('.rail [data-action="launcher"]')?.getAttribute("aria-expanded") === "false"
+    );
+
+    const profileTrigger = desktop.page.locator('.topbar [data-action="profile"]');
+    assert.equal(await profileTrigger.getAttribute("aria-controls"), "profilePop");
+    assert.equal(await profileTrigger.getAttribute("aria-expanded"), "false");
+    await profileTrigger.click();
+    await desktop.page.locator("#profilePop.show").waitFor();
+    assert.equal(await profileTrigger.getAttribute("aria-expanded"), "true");
+    await desktop.page.locator('#profilePop [data-action="close-pop"]').click();
+    await desktop.page.waitForFunction(() =>
+      document.querySelector('.topbar [data-action="profile"]')?.getAttribute("aria-expanded") === "false"
+    );
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await desktop.context.close();
+  }
+
+  const mobile = await openPage({ width: 390, height: 844 });
+  try {
+    const searchTrigger = mobile.page.locator('.mobile-brand [data-action="focus-menu-search"]');
+    assert.equal(await searchTrigger.getAttribute("aria-controls"), "launcher");
+    assert.equal(await searchTrigger.getAttribute("aria-expanded"), "false");
+    await searchTrigger.click();
+    await mobile.page.locator("#launcher.show.searching").waitFor();
+    assert.equal(await searchTrigger.getAttribute("aria-expanded"), "true");
+    assert.equal(await mobile.page.locator("#assistantSearch").getAttribute("aria-controls"), "assistantResults");
+
+    const searchButton = mobile.page.locator('.assistant-search [data-action="assistant-search"]');
+    assert.equal(await searchButton.getAttribute("aria-controls"), "assistantResults");
+    assert.equal(await searchButton.getAttribute("aria-expanded"), "true");
+    await mobile.page.locator("#assistantSearch").fill("zz");
+    assert.match(await mobile.page.getByRole("region", { name: "Cyborg search results" }).textContent(),
+      /No local destination; Cyborg is not connected/);
+    assert.equal(await mobile.page.locator("#assistantResults").getAttribute("aria-live"), "polite");
+    await mobile.page.keyboard.press("Escape");
+    await mobile.page.keyboard.press("Escape");
+    await mobile.page.keyboard.press("Escape");
+    await mobile.page.waitForFunction(() =>
+      document.querySelector('.mobile-brand [data-action="focus-menu-search"]')?.getAttribute("aria-expanded") === "false"
+    );
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await mobile.context.close();
+  }
+});

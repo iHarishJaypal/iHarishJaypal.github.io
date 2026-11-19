@@ -352,3 +352,23 @@ test("keyboard skip link is first in the app shell and targets main content", ()
   assert.match(css, /\.skip-link\s*\{[^}]*position:\s*fixed/);
   assert.match(css, /\.skip-link:focus\s*\{[^}]*transform:\s*translateY\(0\)/);
 });
+
+
+test("launcher, profile and Ask Cyborg triggers expose their controlled regions", () => {
+  const buttonTags = [...html.matchAll(/<button\\b[^>]*>/g)].map((match) => match[0]);
+  const checkTriggers = (action, target) => {
+    const triggers = buttonTags.filter((tag) => tag.includes('data-action="' + action + '"'));
+    assert.ok(triggers.length > 0, "expected " + action + " trigger");
+    triggers.forEach((tag) => {
+      assert.ok(tag.includes('aria-controls="' + target + '"'), action + " must identify its controlled region");
+      assert.ok(tag.includes('aria-expanded="false"'), action + " must start collapsed");
+    });
+  };
+  checkTriggers("launcher", "launcher");
+  checkTriggers("focus-menu-search", "launcher");
+  checkTriggers("profile", "profilePop");
+  checkTriggers("assistant-search", "assistantResults");
+  assert.match(html, /id="assistantSearch"[^>]*aria-controls="assistantResults"/);
+  assert.match(html, /id="assistantResults" role="region" aria-label="Cyborg search results" aria-live="polite"/);
+  assert.match(appScript, /\\$\\$\\('\\[data-action="launcher"\\]'\\)\\.forEach/);
+});

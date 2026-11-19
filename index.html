@@ -90,7 +90,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   <a class="skip-link" href="#mainContent">Skip to main content</a>
   <aside class="rail" aria-label="Quick apps">
     <div class="rail-logo" aria-label="TelcoNet">T</div>
-    <button class="rail-btn dock-launcher" title="App launcher" data-action="launcher"><i data-lucide="grid-2x2"></i></button>
+    <button class="rail-btn dock-launcher" title="App launcher" data-action="launcher" aria-controls="launcher" aria-expanded="false"><i data-lucide="grid-2x2"></i></button>
     <button class="rail-btn dock-score" title="TelcoNet" data-action="toast" data-message="TelcoNet shortcut is a prototype placeholder."><i data-lucide="layout-dashboard"></i></button>
     <button class="rail-btn dock-home" title="Home" data-action="toast" data-message="Home shortcut is a prototype placeholder."><i data-lucide="house"></i></button>
     <button class="rail-btn dock-knowledge" title="Knowledge" data-action="toast" data-message="Knowledge space is a prototype placeholder."><i data-lucide="book-open"></i></button>
@@ -98,7 +98,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <button class="rail-btn dock-projects" title="Projects" data-action="toast" data-message="Projects are coming soon"><i data-lucide="folder-kanban"></i></button>
     <div class="rail-spacer"></div>
     <button class="rail-btn dock-theme" title="Toggle theme" data-action="theme"><i data-lucide="moon"></i></button>
-    <button class="rail-btn dock-profile" title="Profile" data-action="profile"><i data-lucide="circle-user-round"></i></button>
+    <button class="rail-btn dock-profile" title="Profile" data-action="profile" aria-controls="profilePop" aria-expanded="false"><i data-lucide="circle-user-round"></i></button>
     <button class="rail-btn dock-settings" title="Settings" data-action="toast" data-message="Settings panel coming soon"><i data-lucide="settings"></i></button>
   </aside>
   <aside class="workspace" id="workspaceSidebar" aria-hidden="false">
@@ -119,7 +119,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
       <a class="side-link" href="#coverage" data-action="toast" data-message="Run Coverage is a prototype placeholder."><span class="side-icon"><i data-lucide="layout-grid"></i></span><span><strong>Run Coverage</strong><small>Scored run coverage</small></span></a>
       <a class="side-link" href="#detail" data-action="toast" data-message="Run Detail is a prototype placeholder."><span class="side-icon"><i data-lucide="list"></i></span><span><strong>Run Detail</strong><small>Execution run details</small></span></a>
     </nav>
-    <div class="side-bottom"><button class="profile-mini" data-action="profile" aria-label="Open profile">👤</button><span style="font-size:10px;color:var(--muted)">Aliens Company Workspace</span></div>
+    <div class="side-bottom"><button class="profile-mini" data-action="profile" aria-controls="profilePop" aria-expanded="false" aria-label="Open profile">👤</button><span style="font-size:10px;color:var(--muted)">Aliens Company Workspace</span></div>
   </aside>
   <header class="topbar">
     <button class="collapse-btn" data-action="collapse" aria-label="Collapse sidebar" aria-expanded="true" aria-controls="workspaceSidebar"><i data-lucide="panel-left-close"></i></button>
@@ -127,10 +127,10 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <nav class="topnav" aria-label="Main navigation">
       <button class="active" data-view="dashboard" aria-current="page"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="cyborgs"><span><i data-lucide="users"></i></span>Cyborgs</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="salary"><span><i data-lucide="wallet"></i></span>Salary</button><button data-view="calendar"><span><i data-lucide="calendar-days"></i></span>Calendar</button>
     </nav>
-    <div class="top-actions"><span class="updated" title="Static sample data; live refresh is not connected." aria-label="Demo snapshot"><i data-lucide="clock-3"></i><span>Demo snapshot</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="message-circle"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">AL</button></div>
+    <div class="top-actions"><span class="updated" title="Static sample data; live refresh is not connected." aria-label="Demo snapshot"><i data-lucide="clock-3"></i><span>Demo snapshot</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="message-circle"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button><button class="avatar-btn" data-action="profile" aria-controls="profilePop" aria-expanded="false" aria-label="Account menu">AL</button></div>
   </header>
-  <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"><i data-lucide="moon"></i></button><button data-action="focus-menu-search" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
-  <nav class="mobile-bottom" aria-label="Mobile navigation"><button data-action="launcher" aria-label="Open apps menu"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard" aria-current="page"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health" title="Is everything running well?"><span><i data-lucide="activity"></i></span>Is everything...</button></nav>
+  <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"><i data-lucide="moon"></i></button><button data-action="focus-menu-search" aria-controls="launcher" aria-expanded="false" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-controls="profilePop" aria-expanded="false" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
+  <nav class="mobile-bottom" aria-label="Mobile navigation"><button data-action="launcher" aria-controls="launcher" aria-expanded="false" aria-label="Open apps menu"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard" aria-current="page"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health" title="Is everything running well?"><span><i data-lucide="activity"></i></span>Is everything...</button></nav>
   <main class="main" id="mainContent" tabindex="-1">
     <section class="view active" id="view-dashboard">
       <div class="page-head"><div><h1>Dashboard</h1><p>Your telecom operations, network health and team activity at a glance.</p><div class="statusline"><i></i> Source: <b style="color:var(--blue)">TelcoNet demo workspace</b> · Sample data</div></div><div class="page-actions"><button class="soft-btn" data-view="calendar" aria-label="Open calendar view">▦ Calendar</button><button class="soft-btn" data-action="toast" data-message="Refresh is a prototype placeholder; sample data is unchanged.">↻ Web refresh</button><button class="soft-btn" data-action="toast" data-message="Demo snapshot shown; live data is not connected.">Latest data</button></div></div>
@@ -211,11 +211,11 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   <div class="launcher-shell">
     <header class="assistant-search">
       <span class="assistant-bot" aria-hidden="true"><i data-lucide="bot"></i></span>
-      <input id="assistantSearch" type="search" placeholder="Ask Cyborg" aria-label="Ask Cyborg or search local destinations" autocomplete="off">
+      <input id="assistantSearch" type="search" placeholder="Ask Cyborg" aria-label="Ask Cyborg or search local destinations" aria-controls="assistantResults" autocomplete="off">
       <button class="assistant-clear" data-action="clear-search" aria-label="Clear search" hidden>×</button>
-      <button data-action="assistant-search" aria-label="Search local destinations or ask Cyborg"><i data-lucide="send"></i></button>
+      <button data-action="assistant-search" aria-controls="assistantResults" aria-expanded="false" aria-label="Search local destinations or ask Cyborg"><i data-lucide="send"></i></button>
     </header>
-    <section class="assistant-results" id="assistantResults" aria-live="polite" hidden></section>
+    <section class="assistant-results" id="assistantResults" role="region" aria-label="Cyborg search results" aria-live="polite" hidden></section>
     <div class="launcher-content" id="launcherContent">
       <div class="app-view-toggle" role="group" aria-label="App menu layout">
         <button class="active" data-action="app-mode" data-mode="grid" aria-pressed="true"><span>▦</span> Grid</button>
@@ -291,7 +291,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
       <p class="launcher-empty" id="launcherEmpty" hidden>No matching destinations found.</p>
     </div>
     <footer class="launcher-footer">
-      <button class="launcher-avatar" data-action="profile" aria-label="Open Aliens account">AL</button>
+      <button class="launcher-avatar" data-action="profile" aria-controls="profilePop" aria-expanded="false" aria-label="Open Aliens account">AL</button>
       <div class="launcher-footer-actions">
         <button data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button>
         <button data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button>
