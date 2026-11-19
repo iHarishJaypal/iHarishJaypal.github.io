@@ -107,6 +107,14 @@ test("product, company, switcher and prototype SignIn labels stay distinct", () 
   assert.match(html, /<b>TelcoNet<\/b><small style="display:block;color:#999;font-size:11px">ALIENS COMPANY<\/small>/);
   assert.match(html, /placeholder="Search Aliens TelcoNet"/);
   assert.match(html, /Do not enter real credentials\. Nothing is sent or stored\./);
+  assert.match(html, /Forgot Password\?/);
+  assert.match(html, /Keep me signed in/);
+  assert.match(html, /Continue with Google/);
+  assert.match(html, /Create an account/);
+  assert.match(html, /Password recovery is not connected in this prototype/);
+  assert.match(html, /Google sign-in is not connected in this prototype/);
+  assert.match(css, /body\\.light \\.wordmark/);
+  assert.match(css, /#appList \\.menu-list-item:not\\(\\[data-app-name="Dashboard"\\]\\)/);
   assert.match(html, /autocomplete="off"/);
   assert.match(html, /autocomplete="new-password"/);
   assert.doesNotMatch(html, /Knowledge space selected|No new notifications/);
