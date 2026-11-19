@@ -286,7 +286,10 @@
     const open = launcher.classList.contains("show");
     launcher.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("menu-open", open);
-    if (menuButton) menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+    if (menuButton) {
+      menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+      menuButton.classList.toggle("active", open);
+    }
     $$('[data-action="focus-menu-search"]').forEach((button) =>
       button.setAttribute("aria-expanded", open && launcher.classList.contains("searching") ? "true" : "false")
     );
