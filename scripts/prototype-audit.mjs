@@ -239,7 +239,7 @@ test("muted theme text meets WCAG AA contrast on dashboard surfaces", () => {
     return match[1];
   };
   const token = (declarations, name) => {
-    const match = declarations.match(new RegExp(name + "\\s*:\\s*(#(?:[0-9a-f]{3}|[0-9a-f]{6}))", "i"));
+    const match = declarations.match(new RegExp(name + "\\s*:\\s*(#(?:[0-9a-f]{6}|[0-9a-f]{3}))", "i"));
     assert.ok(match, "missing color token: " + name);
     return match[1];
   };
