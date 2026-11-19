@@ -93,7 +93,7 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 ## Known verification blockers
 - `score.base.software` remains inaccessible through the currently available web access path. Do not claim pixel-perfect parity until a genuine access path is available.
 - The connected browser extension context is unavailable. CI Playwright is the available real Chromium verification path; previous expanded runs passed.
-- The GitHub Pages build/deployment workflow succeeded for commit `a0d9bd6d5cae8d4d69ed76b42fd703d3ed52eaed`. The latest deployment for commit `68eb0c251ccbe43b4ef57d9cc67b15a5cc97ab03` is still in progress, and the published site remains inaccessible through the available web access tool.
+- GitHub Pages deployment succeeded for commit `ef71a8c03296efdb62db682808243cf3c84a699f` (run `44492916737`). The published site could not be independently opened through the available web access tool.
 - SignIn remains a local prototype only. It does not send or store credentials and does not connect to an authentication provider.
 
 **Project status: IN PROGRESS.** Do not start the production WebApp, Dart app, or Python app as part of this prototype work.
@@ -107,5 +107,16 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Expanded browser checks for the demo snapshot label, language-preview feedback, SignIn icon presence, submit/cancel field cleanup, 320px SignIn contrast and input width, focus, and horizontal overflow.
 - Audit run `44492116894` completed successfully on commit `4ed9b5bbc2abc679133aef3666a22dab3731a7be`; both static and responsive Chromium jobs passed. Artifact `14513915687` contains 15 screenshots, including the light-mode 320px SignIn state after the contrast and spacing fix.
 - The narrow-phone SignIn field now reserves 64px for the Show control and uses a 13px input font at widths up to 420px. The browser audit measures the actual placeholder text width and asserts that the complete `Enter your password` placeholder fits.
-- Latest source audit run `44492760241` passed its static stage on code commit `ee16ecfd579d1011bece82cbe93815dc770ab247`; the responsive Chromium job is currently installing system dependencies. Do not claim that latest browser stage passed until it completes.
-- Latest Pages build/deployment run `44492759861` is currently in progress for code commit `ee16ecfd579d1011bece82cbe93815dc770ab247`.
+- Source and responsive Chromium audit run `44492760241` completed successfully on code commit `ee16ecfd579d1011bece82cbe93815dc770ab247`; both jobs passed. Its 15-image artifact was reviewed during the next audit.
+
+## Run 8 refinements — 2026-11-19
+- Reviewed the latest main branch (`ef71a8c03296efdb62db682808243cf3c84a699f`), the ten most recent commits, the source files, and the latest GitHub Actions results before making changes.
+- Inspected the successful Chromium artifact from run `44492760241` (desktop dark/light dashboards, desktop profile popover, compact mobile menu, full app grid, Score Menu bottom scroll, and SignIn). The compact mobile screenshot exposed two adjacent one-pixel borders between the eight-app preview and the Score Menu.
+- Removed the redundant Score Menu top border. The app-grid bottom border remains the single separator, while the existing spacing is preserved.
+- Added a dependency-free source regression check and a Playwright browser assertion that verify the compact menu has exactly one divider.
+- Preserved all 26 app tiles, all 39 Score Menu entries, the existing Ask Cyborg states, SignIn behavior, and the product/company naming hierarchy.
+- Current changes are committed to `main`; the new source and browser audit runs are triggered by the commits. Their final results must be checked before treating this refinement as verified.
+- The reference label `Which tool, model and effort finish work b…` remains abbreviated in the existing source. Its unseen continuation was not guessed.
+- `score.base.software` and the connected browser extension remain unavailable; visual parity is not claimed.
+
+**Project status: IN PROGRESS.**
