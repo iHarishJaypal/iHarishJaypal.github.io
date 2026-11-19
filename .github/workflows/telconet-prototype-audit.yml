@@ -1,0 +1,37 @@
+name: TelcoNet Prototype Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "telconet-ui.css"
+      - "telconet-ui.js"
+      - "scripts/**"
+      - ".github/workflows/telconet-prototype-audit.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "telconet-ui.css"
+      - "telconet-ui.js"
+      - "scripts/**"
+      - ".github/workflows/telconet-prototype-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-audit:
+    name: Static prototype checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run TelcoNet prototype audit
+        run: node scripts/prototype-audit.mjs
