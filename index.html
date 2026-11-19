@@ -309,7 +309,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  function showView(name){
   if(!views.includes(name))name='dashboard';
   $$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
-  $('[data-view]').forEach(b=>{
+  $$('[data-view]').forEach(b=>{
    const active=b.dataset.view===name;
    b.classList.toggle('active',active);
    if(b.matches('.rail [data-view],#workspaceSidebar [data-view],.topnav [data-view],.mobile-bottom [data-view]')){
