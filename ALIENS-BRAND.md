@@ -276,3 +276,16 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The browser-extension context remains unavailable. No new access route to `score.base.software` or independent public-page inspection became available, so the external reference and live-site parity remain unverified.
 
 **Project status: IN PROGRESS.** Skip navigation is implemented and tested; external reference-site access and independent public-page verification remain open blockers.
+
+
+## Run 18 — Workspace sidebar navigation landmark (2026-11-19)
+
+- Re-inspected the latest `main` branch, current source files, recent commits, static/browser audit scripts, workflow configuration, and recent Actions runs before editing. Starting HEAD was `136f6d148f5a0057d3d132771a552dcd4cb5bf8e`.
+- Re-opened the seven supplied reference screenshots and the 23.253-second mobile-menu video. Sampled the recording at 0, 3, 6, 9, 12, 15, 18, 21, and 23 seconds. The compact eight-app preview, More Apps grid, alphabetized 39-entry Score Menu, Ask Cyborg ready/local-match/no-local-destination states, and persistent footer remain consistent with the recorded flow.
+- The workspace sidebar's nine destination links were grouped in a generic `.side-scroll` container rather than a named navigation landmark. Changed that container to `<nav class="side-scroll" aria-label="Workspace navigation">` while preserving its class, link order, CSS hooks, and visual geometry. Screen-reader users can now discover the workspace destinations as a distinct navigation landmark alongside the main and mobile navigation landmarks.
+- Added a dependency-free static regression check and a Playwright browser check for the named landmark, all nine links, and the current Dashboard destination.
+- GitHub Actions audit [44588316918](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44588316918) completed successfully: **22/22 static checks passed** and the **responsive/interaction Chromium job passed**. GitHub Pages deployment [44588315856](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44588315856) completed successfully for the code commit.
+- Browser artifact **14562480927** contains 18 desktop/mobile screenshots. The contact sheet was visually reviewed after the semantic-only change; the dashboard, profile, SignIn, compact launcher, full app grid, Score Menu, and Ask Cyborg layouts remain visually unchanged.
+- The connected browser extension still reports no originating browser context. A direct public-page open of the GitHub Pages URL was also unavailable through the web access path. The external `score.base.software` reference has no newly available access route, so it was not retried. No pixel-perfect parity or final approval is claimed.
+
+**Project status: IN PROGRESS.** The workspace landmark improvement is implemented and verified. External reference-site access and independent public-page verification remain open blockers. No production WebApp, Dart app, Python app, or production authentication has been started.
