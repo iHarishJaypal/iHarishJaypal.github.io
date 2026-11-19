@@ -494,3 +494,9 @@ body.light .wordmark small{color:#65738a}
   pointer-events:none;
 }
 .signin-field input,.password-field input{padding-left:44px}
+
+/* Keep the reference SignIn surface dark and legible even when the workspace is in light mode. */
+.signin,.signin-card,.signin-card h2{color:#f5f6fa}
+@media(max-width:420px){
+  .signin-card{padding:24px 18px}
+}
