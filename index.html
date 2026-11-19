@@ -126,7 +126,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <nav class="topnav" aria-label="Main navigation">
       <button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="cyborgs"><span><i data-lucide="users"></i></span>Cyborgs</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="salary"><span><i data-lucide="wallet"></i></span>Salary</button><button data-view="calendar"><span><i data-lucide="calendar-days"></i></span>Calendar</button>
     </nav>
-    <div class="top-actions"><span class="updated"><i data-lucide="clock-3"></i><span>37 min ago</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="message-circle"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">AL</button></div>
+    <div class="top-actions"><span class="updated" title="Static sample data; live refresh is not connected." aria-label="Demo snapshot"><i data-lucide="clock-3"></i><span>Demo snapshot</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="message-circle"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="Notifications are not connected in this prototype." aria-label="Notifications"><i data-lucide="bell"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">AL</button></div>
   </header>
   <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"><i data-lucide="moon"></i></button><button data-action="focus-menu-search" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
   <nav class="mobile-bottom" aria-label="Mobile navigation"><button data-action="launcher" aria-label="Open apps menu"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health" title="Is everything running well?"><span><i data-lucide="activity"></i></span>Is everything...</button></nav>
@@ -191,7 +191,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   </div>
   <div class="language">
     <span>Language</span>
-    <div class="lang-options">
+    <div class="lang-options" role="group" aria-label="Language preview">
       <button data-lang="EN" aria-pressed="false">EN</button>
       <button class="active" data-lang="HL" aria-pressed="true">HL</button>
       <button data-lang="HI" aria-pressed="false">HI</button>
@@ -353,8 +353,15 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  }
  drawChart(30);
  document.addEventListener('click',e=>{const view=e.target.closest('[data-view]');if(view){e.preventDefault();showView(view.dataset.view);return;}const action=e.target.closest('[data-action]');if(!action)return;if(action.tagName==='A')e.preventDefault();switch(action.dataset.action){case'profile':openProfile();break;case'close-pop':closeProfile();break;case'theme':toggleTheme();break;case'collapse':{const collapsed=document.body.classList.toggle('sidebar-collapsed');const sidebar=$('#workspaceSidebar');if(sidebar){sidebar.setAttribute('aria-hidden',collapsed?'true':'false');sidebar.inert=collapsed;}action.setAttribute('aria-expanded',collapsed?'false':'true');action.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');toast(collapsed?'Sidebar collapsed':'Sidebar expanded');break;}case'toast':toast(action.dataset.message);break;case'signout':showSignin();break;case'back-home':backHome();break;case'chart-range':{const range=Number(action.dataset.range);drawChart([7,30,90].includes(range)?range:30);$$('[data-action="chart-range"]').forEach(b=>{const active=b===action;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active?'true':'false');});toast(range+' day sample view');break;}}});
- $$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{$$('[data-lang]').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});b.classList.add('active');b.setAttribute('aria-pressed','true');toast('Language preference: '+b.dataset.lang);}));
- $('#signinForm').addEventListener('submit',e=>{e.preventDefault();toast('Demo only — connect a secure authentication backend to sign in.');});
+ $$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{$$('[data-lang]').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');});b.classList.add('active');b.setAttribute('aria-pressed','true');toast('Language switching is not connected in this prototype. Selected preview: '+b.dataset.lang+'.');}));
+ $('#signinForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const email=$('#email'),password=$('#password'),toggle=$('[data-action="password-visibility"]');
+  if(email)email.value='';
+  if(password){password.value='';password.type='password';}
+  if(toggle){toggle.textContent='Show';toggle.setAttribute('aria-pressed','false');}
+  toast('Prototype only — demo credentials cleared; no sign-in request was sent.');
+ });
  function search(input){
   if(!input)return;
   const destinations=[
