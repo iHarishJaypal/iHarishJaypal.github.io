@@ -184,3 +184,18 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - score.base.software remains inaccessible through the available access path. The connected browser extension remains unavailable; CI Playwright is the available browser path.
 
 **Project status: IN PROGRESS.**
+
+
+
+## Run 12 — Full reference asset review and successful CI verification (2026-11-19)
+
+- Re-inspected the latest `main` branch before this run. HEAD was `c8f0c98f22e8cf90a076c7dba78d8981a3586847` (`Align account popover and correct mobile SignIn measurement`). The preceding commits already contain the latest mobile icon, measured SignIn layout, and profile-popover changes; no new UI code was needed in this run.
+- Reviewed all seven supplied reference screenshots from the Library: `image(20261115-054556).png`, `image(20261115-054622).png`, `image(20261115-054645).png`, `image(20261115-054719).png`, `image(20261115-054755).png`, `image(20261115-055306).png`, and `image(20261115-072554).png`. They cover the desktop workspace/sidebar, top navigation, dark and light dashboard/profile states, product wordmark strip, mobile bottom navigation, and SignIn presentation.
+- Re-sampled the supplied `20261115-0726-43.4686777.mp4` (23.253 seconds; 354×656) at 0, 3, 6, 9, 12, 15, 18, and 21 seconds. The observed sequence confirms the compact eight-app preview with the single Dashboard Score Menu preview, Ask Cyborg result list, More Apps full 26-app grid, Grid/List switching, the full 39-entry Score Menu, and the ready-state suggestions. Existing browser assertions cover these states, including narrow-phone layout and footer stability.
+- GitHub Actions audit run [44536236268](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44536236268) completed successfully on HEAD `c8f0c98`: both **Static prototype checks** and **Responsive and interaction checks** passed. The browser job uploaded screenshot artifact `14536006747`.
+- GitHub Pages build/deployment run [44536235088](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44536235088) completed successfully for the same HEAD.
+- Retried the connected browser extension; it still does not provide an originating browser context. The CI Playwright Chromium job is therefore the available live-browser verification path and has passed.
+- Tried opening the published Pages URL `https://iharishjaypal.github.io/` through the available web access path; it remains inaccessible to that path. `score.base.software` also remains inaccessible and no new authenticated browser path is available, so no claims about its live UI or independent public-site rendering are made.
+- No new app code was committed because the latest code and responsive audit are green and no grounded visual regression was found. Existing 26-app grid, 39-entry Score Menu, mobile flow, desktop geometry, profile, themes, and prototype SignIn remain unchanged.
+
+**Project status: IN PROGRESS.** External reference-site access and independent published-page verification remain blocked. Do not claim pixel-perfect parity or final approval until those access/verification gaps are resolved.
