@@ -525,6 +525,23 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     await page.keyboard.press("Tab");
     assert.equal(await page.evaluate(() => document.activeElement?.id), "assistantSearch");
 
+    const launcherFooterTop = await page.locator(".launcher-footer").evaluate((node) => node.getBoundingClientRect().top);
+    await page.locator("#assistantSearch").fill("z");
+    await page.locator('[data-action="assistant-search"]').click();
+    assert.deepEqual(await page.locator(".assistant-result-copy strong").allTextContents(), ["Amazon", "Company"]);
+    await assertNoHorizontalOverflow(page, "320px Ask Cyborg local matches");
+    await page.locator("#assistantSearch").fill("zz");
+    await page.locator('[data-action="assistant-search"]').click();
+    assert.match(await page.locator("#assistantResults").textContent(), /No local destination; Cyborg is not connected/);
+    await capture(page, "mobile-search-no-local-destination-320.png");
+    await assertNoHorizontalOverflow(page, "320px Ask Cyborg no local destination");
+    assert.equal(
+      await page.locator(".launcher-footer").evaluate((node) => node.getBoundingClientRect().top),
+      launcherFooterTop,
+      "launcher footer must remain stationary while Ask Cyborg results change"
+    );
+    await page.locator("#assistantSearch").fill("");
+
     await page.locator(".launcher-avatar").click();
     await page.locator("#profilePop.show").waitFor();
     await page.waitForFunction(() => document.activeElement?.classList.contains("close-pop"));
