@@ -297,7 +297,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  let toastTimer;function toast(message){const t=$('#toast');t.textContent=message||'Coming soon';t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300);}
  function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('score-theme',document.body.classList.contains('light')?'light':'dark');}
  if(localStorage.getItem('score-theme')==='light')document.body.classList.add('light');
- function showSignin(){closeProfile();$('#app').style.display='none';$('#signin').classList.add('show');}
+ function showSignin(){closeProfile();$('#launcher').classList.remove('show');$('#app').style.display='none';$('#signin').classList.add('show');}
  function backHome(){$('#app').style.display='block';$('#signin').classList.remove('show');}
  function showLauncher(){$('#launcher').classList.add('show');}
  function closeLauncher(){$('#launcher').classList.remove('show');}
