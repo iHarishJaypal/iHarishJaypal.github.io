@@ -299,6 +299,17 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     await page.locator("#launcher.show").waitFor();
     await capture(page, "mobile-compact-menu.png");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
+    const compactAppLabels = await page.locator("#appGrid .app-tile").evaluateAll((items) =>
+      items.slice(0, 8).map((item) => item.dataset.appName)
+    );
+    assert.deepEqual(compactAppLabels, ["Base", "Score", "Project", "Code", "AI", "Drive", "Apps", "Admin"]);
+    assert.deepEqual(
+      await page.locator(".launcher-footer-actions button").evaluateAll((items) =>
+        items.map((item) => item.getAttribute("aria-label"))
+      ),
+      ["Team", "Notifications", "Messages", "Sign out"],
+      "mobile launcher footer must retain the four reference actions"
+    );
     assert.equal(await visibleCount(page.locator("#appList .menu-list-item")), 1, "compact Grid mode must show only the Dashboard Score Menu preview");
     assert.equal(await page.locator("#appList .menu-list-item:visible").getAttribute("data-app-name"), "Dashboard");
     const compactDivider = await page.evaluate(() => ({
@@ -309,6 +320,9 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     assert.equal(compactDivider.scoreMenuTop, "0px", "Score Menu must not add a second divider");
     await page.locator("#assistantSearch").click();
     await capture(page, "mobile-ask-cyborg-ready.png");
+    assert.deepEqual(await page.locator(".assistant-suggestion").allTextContents(), [
+      "Open Project", "Show Reports", "Go to Cyborgs"
+    ]);
     await page.keyboard.press("Escape");
     await page.waitForFunction(() => !document.querySelector("#launcher")?.classList.contains("searching"));
     assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 8);
@@ -340,16 +354,28 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
       return item.top >= parent.top - 1 && item.bottom <= parent.bottom + 1;
     });
     assert.equal(lastItemVisible, true, "the last Score Menu item must be reachable by scrolling");
+    const footerTopAfterScroll = await page.locator(".launcher-footer").evaluate((node) => node.getBoundingClientRect().top);
+    assert.equal(footerTopAfterScroll, footerTopBeforeScroll, "launcher footer must remain stationary while Score Menu content scrolls");
 
     const footer = page.locator(".launcher-footer");
     assert.equal(await footer.isVisible(), true);
+    const footerTopBeforeScroll = await footer.evaluate((node) => node.getBoundingClientRect().top);
     const footerBottom = await footer.evaluate((node) => node.getBoundingClientRect().bottom);
     assert.ok(footerBottom <= 844, "launcher footer must remain inside the phone viewport");
     await assertNoHorizontalOverflow(page, "390px Score Menu");
 
     await page.locator("#assistantSearch").fill("Calendar");
+    await page.locator('[data-action="assistant-search"]').click();
     await capture(page, "mobile-search-local-match.png");
     assert.equal(await page.locator("#assistantResults").isVisible(), true);
+    assert.equal(await page.locator(".assistant-result").count(), 1);
+    await page.locator('[data-action="clear-search"]').click();
+    assert.equal(await page.locator("#assistantSearch").inputValue(), "");
+    assert.deepEqual(await page.locator(".assistant-suggestion").allTextContents(), [
+      "Open Project", "Show Reports", "Go to Cyborgs"
+    ]);
+    await page.locator("#assistantSearch").fill("Calendar");
+    await page.locator('[data-action="assistant-search"]').click();
     assert.equal(await page.locator(".assistant-result").count(), 1);
     await page.locator(".assistant-result").first().click();
     assert.equal(await page.locator("#view-calendar").evaluate((node) => node.classList.contains("active")), true);
@@ -364,6 +390,71 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     await page.keyboard.press("Escape");
     await page.keyboard.press("Escape");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});
+
+test("mobile navigation, every Score Menu route, and placeholder actions remain functional", async () => {
+  const { context, page } = await openPage({ width: 390, height: 844 });
+  try {
+    const mobileNav = page.locator(".mobile-bottom");
+    for (const destination of ["aliens", "health", "dashboard"]) {
+      await mobileNav.locator('[data-view="' + destination + '"]').click();
+      assert.equal(await page.locator(".view.active").getAttribute("id"), "view-" + destination);
+      assert.equal(await mobileNav.locator('[data-view="' + destination + '"]').getAttribute("aria-current"), "page");
+    }
+
+    const openListMenu = async () => {
+      await mobileNav.locator('[data-action="launcher"]').click();
+      await page.locator("#launcher.show").waitFor();
+      await page.locator("#assistantSearch").click();
+      await page.keyboard.press("Escape");
+      await page.waitForFunction(() =>
+        !document.querySelector("#launcher")?.classList.contains("searching")
+      );
+      const listMode = await page.locator("#launcher").evaluate((node) =>
+        node.classList.contains("list-mode")
+      );
+      if (!listMode) {
+        await page.locator('[data-action="app-mode"][data-mode="list"]').click();
+      }
+    };
+
+    await openListMenu();
+    const placeholderItems = await page.locator("#appList .menu-list-item[data-action='toast']").evaluateAll((items) =>
+      items.map((item) => ({ name: item.dataset.appName, message: item.dataset.message }))
+    );
+    for (let index = 0; index < placeholderItems.length; index += 1) {
+      await page.locator("#appList .menu-list-item[data-action='toast']").nth(index).click();
+      await page.waitForFunction((expected) =>
+        document.querySelector("#toast")?.textContent === expected,
+      placeholderItems[index].message);
+    }
+
+    const destinations = await page.locator("#appList .menu-list-item[data-view]").evaluateAll((items) =>
+      items.map((item) => ({ name: item.dataset.appName, view: item.dataset.view }))
+    );
+    assert.ok(destinations.length > 0, "Score Menu must expose navigable destinations");
+    for (let index = 0; index < destinations.length; index += 1) {
+      const destination = destinations[index];
+      await page.locator("#appList .menu-list-item[data-view]").nth(index).click();
+      assert.equal(
+        await page.locator(".view.active").getAttribute("id"),
+        "view-" + destination.view,
+        "Score Menu destination should open its matching view: " + destination.name
+      );
+      const mobileLink = mobileNav.locator('[data-view="' + destination.view + '"]');
+      if (await mobileLink.count()) {
+        assert.equal(await mobileLink.getAttribute("aria-current"), "page");
+      } else {
+        assert.equal(await mobileNav.locator('[aria-current="page"]').count(), 0);
+      }
+      if (index < destinations.length - 1) await openListMenu();
+    }
+
+    await assertNoHorizontalOverflow(page, "390px after all Score Menu routes");
     assert.deepEqual(runtimeErrors, []);
   } finally {
     await context.close();

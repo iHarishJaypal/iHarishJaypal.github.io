@@ -90,6 +90,22 @@ test("every declared action has a handler and toast placeholders explain their s
   toastControls.forEach((tag) => assert.match(tag, /data-message="[^"]+"/, "toast action needs a clear message"));
 });
 
+test("every declared data-action has a real delegated handler", () => {
+  const handlerCases = new Set(
+    [...inlineScripts, appScript].flatMap((source) =>
+      [...source.matchAll(/case\s*["']([^"']+)["']\s*:/g)].map((match) => match[1])
+    )
+  );
+  const declaredActions = [...new Set(
+    [...html.matchAll(/data-action="([^"]+)"/g)].map((match) => match[1])
+  )];
+
+  declaredActions.forEach((action) => {
+    assert.ok(handlerCases.has(action), "data-action has no switch handler: " + action);
+  });
+  assert.match(html, /\$\$\('\[data-lang\]'\)\.forEach/, "language preview buttons must keep their explicit click handler");
+});
+
 test("all referenced SVG icons exist in the local icon map", () => {
   const map = html.match(/const ICONS=\{([\s\S]*?)\n \};/);
   assert.ok(map, "missing local SVG icon map");
