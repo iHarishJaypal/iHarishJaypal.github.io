@@ -353,11 +353,16 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     assert.equal(await page.locator(".signin-card").isVisible(), true);
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
     assert.equal(await page.locator(".signin-card h2").evaluate((node) => getComputedStyle(node).color), "rgb(245, 246, 250)");
-    const passwordSpace = await page.locator("#password").evaluate((input) => {
+    const passwordMetrics = await page.locator("#password").evaluate((input) => {
       const style = getComputedStyle(input);
-      return input.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const available = input.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      context.font = style.font;
+      return { available, placeholderWidth: context.measureText(input.placeholder).width };
     });
-    assert.ok(passwordSpace >= 130, "narrow SignIn password field must leave readable placeholder space");
+    assert.ok(passwordMetrics.available >= 130, "narrow SignIn password field must leave readable placeholder space");
+    assert.ok(passwordMetrics.placeholderWidth <= passwordMetrics.available, "the full password placeholder must fit beside the Show control");
     await page.waitForFunction(() => document.activeElement?.id === "email");
     await capture(page, "mobile-signin-prototype.png");
     assert.equal(await page.locator(".signin-field svg.icon-at-sign").count(), 1);
