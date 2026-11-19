@@ -875,3 +875,75 @@ test("desktop and mobile disclosure triggers expose their controlled regions", a
     await mobile.context.close();
   }
 });
+
+
+test("keyboard focus rings are visible on desktop and mobile controls in both themes", async () => {
+  async function focusByKeyboard(page, locator, label) {
+    for (let index = 0; index < 100; index += 1) {
+      if (await locator.evaluate((element) => element === document.activeElement)) return;
+      await page.keyboard.press("Tab");
+    }
+    assert.fail(label + " did not receive keyboard focus within 100 Tab stops");
+  }
+
+  async function assertThemeAwareFocusRing(locator, label) {
+    const state = await locator.evaluate((element) => {
+      const style = getComputedStyle(element);
+      const probe = document.createElement("span");
+      probe.style.color = getComputedStyle(document.body).getPropertyValue("--blue").trim();
+      document.body.append(probe);
+      const accent = getComputedStyle(probe).color;
+      probe.remove();
+      return {
+        active: element === document.activeElement,
+        focusVisible: element.matches(":focus-visible"),
+        outlineStyle: style.outlineStyle,
+        outlineWidth: style.outlineWidth,
+        outlineColor: style.outlineColor,
+        accent
+      };
+    });
+    assert.equal(state.active, true, label + " should be the active element");
+    assert.equal(state.focusVisible, true, label + " should expose keyboard modality");
+    assert.equal(state.outlineStyle, "solid", label + " should have a solid focus ring");
+    assert.equal(state.outlineWidth, "2px", label + " should have a two-pixel focus ring");
+    assert.equal(state.outlineColor, state.accent, label + " should use the active theme accent");
+  }
+
+  const desktop = await openPage({ width: 1440, height: 900 });
+  try {
+    const railLauncher = desktop.page.locator('.rail [data-action="launcher"]');
+    await focusByKeyboard(desktop.page, railLauncher, "desktop rail launcher");
+    await assertThemeAwareFocusRing(railLauncher, "desktop rail launcher");
+
+    const sidebarLink = desktop.page.locator(".side-link").first();
+    await focusByKeyboard(desktop.page, sidebarLink, "desktop workspace link");
+    await assertThemeAwareFocusRing(sidebarLink, "desktop workspace link");
+    await capture(desktop.page, "desktop-keyboard-control-focus.png");
+    await assertNoHorizontalOverflow(desktop.page, "desktop keyboard focus");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await desktop.context.close();
+  }
+
+  const mobile = await openPage({ width: 390, height: 844 });
+  try {
+    await mobile.page.locator('.mobile-brand [data-action="theme"]').click();
+    assert.equal(await mobile.page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+
+    const searchTrigger = mobile.page.locator('.mobile-brand [data-action="focus-menu-search"]');
+    await focusByKeyboard(mobile.page, searchTrigger, "mobile search trigger");
+    await assertThemeAwareFocusRing(searchTrigger, "mobile search trigger");
+    await mobile.page.keyboard.press("Enter");
+    await mobile.page.locator("#launcher.show.searching").waitFor();
+
+    const searchButton = mobile.page.locator('.assistant-search [data-action="assistant-search"]');
+    await focusByKeyboard(mobile.page, searchButton, "mobile Ask Cyborg search button");
+    await assertThemeAwareFocusRing(searchButton, "mobile Ask Cyborg search button");
+    await capture(mobile.page, "mobile-keyboard-control-focus.png");
+    await assertNoHorizontalOverflow(mobile.page, "mobile keyboard focus");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await mobile.context.close();
+  }
+});

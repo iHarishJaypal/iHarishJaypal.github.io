@@ -360,3 +360,32 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Pixel-perfect parity is not claimed.
 
 **Project status: IN PROGRESS — NOT APPROVED COMPLETE.** The 26-app grid, 39 Score Menu entries, mobile launcher flow, desktop shell, profile, themes, and prototype SignIn remain preserved. Production WebApp, Dart app, Python app, and production authentication remain out of scope.
+
+
+## Run 21 — Theme-aware keyboard focus for controls (2026-11-20)
+
+### Repository and reference review
+
+- Re-read the current `main` branch, the dashboard HTML, shared UI CSS/JavaScript, static and Chromium audit scripts, workflow configuration, and recent commits before editing. Starting HEAD: `202f68c9212baf3acf22d8f2c6b9e40db2ea5736`.
+- Re-inspected the seven supplied Aliens reference screenshots and the 23.253-second mobile-menu video `20261115-0726-43.4686777.mp4`. Sampled the recording at 0, 3, 6, 9, 12, 15, 18, 21 and 23 seconds. Compared desktop dashboard dark/light, profile and SignIn captures, plus the mobile compact menu, full app grid, Score Menu and Ask Cyborg states. No speculative layout changes were warranted.
+- The connected browser extension was retried; it still has no originating browser context. No new access route to `score.base.software` was available, so the external site was not retried.
+
+### Finding and implementation
+
+- The shared stylesheet provided explicit focus treatment for search wrappers and the skip link, but no product-defined `:focus-visible` rule for the many buttons and navigation links. Those controls relied on browser-default focus rendering, which can vary across browsers and themes.
+- Added a two-pixel, two-pixel-offset focus ring to buttons and anchors using the active `--blue` theme token. This is keyboard-modality-only and does not change layout geometry or mouse interaction. Search inputs retain their existing wrapper focus ring; SignIn inputs retain their existing field treatment; the skip link retains its stronger dedicated outline.
+- Added static and Chromium regression coverage for the desktop rail launcher, workspace navigation link, mobile search trigger and Ask Cyborg search button. The browser test checks `:focus-visible`, ring width/style, theme accent color and horizontal overflow in desktop dark and mobile light themes.
+
+### Verification state
+
+- The code and test changes are committed together; final static and Chromium results are recorded only after the corresponding GitHub Actions run completes.
+- GitHub Pages deployment, if triggered by the code change, will be recorded separately from browser verification.
+
+### Outstanding blockers
+
+- `score.base.software` remains inaccessible through the available access path.
+- The connected browser extension still requires its originating browser context.
+- Independent public-page verification remains unavailable through the web access path despite prior successful Pages deployments.
+- Pixel-perfect parity is not claimed.
+
+**Project status: IN PROGRESS.** The 26-app grid, 39 Score Menu entries, company/product hierarchy, navigation, dashboard, themes, profile, mobile flow and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.

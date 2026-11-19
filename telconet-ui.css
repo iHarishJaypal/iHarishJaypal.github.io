@@ -562,3 +562,11 @@ body.light .wordmark small{color:#65738a}
   outline: 3px solid color-mix(in srgb, var(--blue) 75%, white);
   outline-offset: 3px;
 }
+
+
+/* Consistent keyboard-only focus indication for interactive controls. */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}

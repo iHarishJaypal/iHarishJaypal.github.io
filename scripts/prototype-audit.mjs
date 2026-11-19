@@ -377,3 +377,11 @@ test("launcher, profile and Ask Cyborg triggers expose their controlled regions"
   assert.ok(syncState.includes("$(") && syncState.includes('data-action="launcher"') && syncState.includes("aria-expanded"),
     "all launcher triggers must receive the current expanded state");
 });
+
+
+test("buttons and navigation links define a theme-aware keyboard focus ring", () => {
+  const rule = css.match(/button:focus-visible,\\s*a:focus-visible\\s*\\{([^}]*)\\}/);
+  assert.ok(rule, "buttons and links must have an authored focus-visible rule");
+  assert.match(rule[1], /outline:\\s*2px solid var\\(--blue\\)/);
+  assert.match(rule[1], /outline-offset:\\s*2px/);
+});
