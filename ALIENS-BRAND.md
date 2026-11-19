@@ -389,3 +389,8 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Pixel-perfect parity is not claimed.
 
 **Project status: IN PROGRESS.** The 26-app grid, 39 Score Menu entries, company/product hierarchy, navigation, dashboard, themes, profile, mobile flow and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+
+### Run 21 verification correction
+
+- The first static-test commit over-escaped the whitespace tokens in its new regular-expression assertion. Replaced the appended assertion with a correctly escaped pattern in this follow-up commit. No application runtime code or styling was changed by this test correction; only the final corrected Actions run is counted as verification.
