@@ -440,3 +440,121 @@ body.sidebar-collapsed .main{margin-left:68px}
 @media(max-width:420px){
   .launcher-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+
+
+/* The supplied mobile video shows a single Dashboard preview in compact Grid mode;
+   List mode expands the complete 39-entry Score Menu. */
+@media(max-width:850px){
+  .launcher:not(.list-mode):not(.all-apps):not(.searching) #appList .list-letter{
+    display:none!important;
+  }
+  .launcher:not(.list-mode):not(.all-apps):not(.searching) #appList .menu-list-item:not([data-app-name="Dashboard"]){
+    display:none!important;
+  }
+  .launcher:not(.list-mode):not(.all-apps):not(.searching) #appList .menu-list-item[data-app-name="Dashboard"]{
+    display:flex!important;
+  }
+  .launcher:not(.list-mode):not(.all-apps):not(.searching) #appGrid{
+    padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+  .launcher:not(.list-mode):not(.all-apps):not(.searching) .score-menu-head{
+    padding-top:18px;
+    border-top:1px solid var(--line);
+  }
+}
+
+/* Keep the TelcoNet wordmark readable on the light workspace surface. */
+body.light .wordmark{
+  background:linear-gradient(100deg,#18233b 0%,#1676a8 58%,#6253c7 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+body.light .wordmark small{color:#65738a}
+.app-icon svg{width:29px;height:29px;stroke-width:2.1}
+
+/* SignIn remains a local demo; secondary identity actions explain their unavailable state. */
+.signin-label-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:15px 0 7px;
+}
+.signin-label-row label{margin:0}
+.signin-text-link,.signin-create button{
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#9c8cff;
+  font:700 11px 'DM Sans',sans-serif;
+  cursor:pointer;
+}
+.signin-text-link:hover,.signin-create button:hover{color:#c1b7ff;text-decoration:underline}
+.signin-card .keep-signed-in{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:13px 0 2px;
+  color:#c1c3cc;
+  font-size:11px;
+  font-weight:600;
+}
+.signin-card .keep-signed-in input{
+  width:15px;
+  height:15px;
+  margin:0;
+  accent-color:#7867ed;
+}
+.signin-divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:18px 0 14px;
+  color:#8a8c96;
+  font-size:10px;
+  font-weight:800;
+}
+.signin-divider::before,.signin-divider::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:#30323a;
+}
+.signin-google{
+  width:100%;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border:1px solid #30323a;
+  border-radius:12px;
+  background:#17181c;
+  color:#e6e8ef;
+  font-size:12px;
+  font-weight:700;
+}
+.signin-google:hover{border-color:#5b83d8;background:#1c2029}
+.google-mark{
+  display:grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:#fff;
+  color:#4285f4;
+  font:800 14px Arial,sans-serif;
+}
+.signin-card .signin-create{
+  margin:16px 0 0;
+  text-align:center;
+  color:#a0a2ab;
+  font-size:11px;
+}
+.signin-card .signin-note{line-height:1.5}
+@media(max-width:850px){
+  #signin.show{min-height:100dvh;overflow:auto;align-items:flex-start}
+  #signin.show .signin-card{margin:0 auto}
+}
