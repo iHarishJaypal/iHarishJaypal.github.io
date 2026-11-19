@@ -244,6 +244,7 @@ test("browser chrome theme color follows the active dashboard and SignIn surface
   assert.match(html.slice(syncStart, controlsStart), /meta\[name="theme-color"\]/);
   assert.match(html.slice(syncStart, controlsStart), /signinVisible\?'#07080b'/);
   assert.match(html.slice(syncStart, controlsStart), /classList\.contains\('light'\)\?'#e8f4ff':'#08090d'/);
+  assert.match(html.slice(controlsStart, toggleStart), /\$\$\('\[data-action="theme"\]'\)\.forEach/);
   assert.match(html.slice(controlsStart, toggleStart), /syncThemeColor\(\)/);
   assert.match(html.slice(signinStart, backHomeStart), /syncThemeColor\(\)/);
   assert.match(html.slice(backHomeStart, showLauncherStart), /syncThemeColor\(\)/);
