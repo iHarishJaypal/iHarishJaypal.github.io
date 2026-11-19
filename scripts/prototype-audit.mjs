@@ -63,6 +63,10 @@ test("active navigation exposes the current destination to assistive technology"
   assert.match(html, /class="active" data-view="dashboard" aria-current="page"/);
   assert.match(html, /setAttribute\('aria-current','page'\)/);
   assert.match(html, /removeAttribute\('aria-current'\)/);
+  assert.match(html, /\$\$\('\[data-view\]'\)\.forEach/);
+  const mobileNavStart = html.indexOf('<nav class="mobile-bottom"');
+  const mobileNavEnd = html.indexOf("</nav>", mobileNavStart);
+  assert.match(html.slice(mobileNavStart, mobileNavEnd), /data-view="dashboard" aria-current="page"/);
 });
 
 test("every navigation destination has a real prototype view", () => {
