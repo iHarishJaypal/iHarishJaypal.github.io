@@ -291,6 +291,36 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
   }
 });
 
+
+test("browser chrome theme color follows persisted theme and prototype SignIn", async () => {
+  const { context, page } = await openPage({ width: 1440, height: 960 });
+  try {
+    const themeColor = page.locator('meta[name="theme-color"]');
+    assert.equal(await themeColor.getAttribute("content"), "#08090d");
+
+    await page.locator(".dock-theme").click();
+    assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    assert.equal(await themeColor.getAttribute("content"), "#e8f4ff");
+
+    await page.evaluate(() => localStorage.setItem("score-theme", "light"));
+    await page.reload({ waitUntil: "domcontentloaded" });
+    assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    assert.equal(await themeColor.getAttribute("content"), "#e8f4ff");
+
+    await page.locator(".avatar-btn").click();
+    await page.locator("#profilePop.show").waitFor();
+    await page.locator('#profilePop [data-action="signout"]').click();
+    await page.locator("#signin.show").waitFor();
+    assert.equal(await themeColor.getAttribute("content"), "#07080b");
+
+    await page.locator('[data-action="back-home"]').click();
+    assert.equal(await themeColor.getAttribute("content"), "#e8f4ff");
+  } finally {
+    await context.close();
+  }
+});
+
+
 test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu flow", async () => {
   const { context, page } = await openPage({ width: 390, height: 844 });
   try {
