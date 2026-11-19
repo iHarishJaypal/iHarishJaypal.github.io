@@ -140,6 +140,8 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
   const { context, page } = await openPage({ width: 1440, height: 960 });
   try {
     await capture(page, "desktop-dashboard-dark.png");
+    assert.equal(await page.locator(".updated").textContent(), "Demo snapshot");
+    assert.match(await page.locator(".updated").getAttribute("title"), /Static sample data/);
     await page.locator('[data-action="chart-range"][data-range="7"]').click();
     assert.equal(await page.locator(".chart").getAttribute("data-sample-range"), "7");
     assert.equal(await page.locator('[data-action="chart-range"][data-range="7"]').getAttribute("aria-pressed"), "true");
@@ -172,6 +174,11 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator(".avatar-btn").click();
     await page.locator("#profilePop.show").waitFor();
     await capture(page, "desktop-profile-popover.png");
+    await page.locator('#profilePop [data-lang="EN"]').click();
+    assert.equal(await page.locator('#profilePop [data-lang="EN"]').getAttribute("aria-pressed"), "true");
+    assert.match(await page.locator("#toast").textContent(), /Language switching is not connected/);
+    await page.locator('#profilePop [data-lang="HL"]').click();
+    assert.equal(await page.locator('#profilePop [data-lang="HL"]').getAttribute("aria-pressed"), "true");
     await page.locator('#profilePop [data-action="signout"]').click();
     await page.locator("#signin.show").waitFor();
     await capture(page, "desktop-signin-prototype.png");
@@ -195,7 +202,11 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator("#email").fill("demo@example.invalid");
     await password.fill("prototype-only");
     await page.locator('#signinForm button[type="submit"]').click();
-    assert.match(await page.locator("#toast").textContent(), /Demo only/);
+    assert.match(await page.locator("#toast").textContent(), /demo credentials cleared/);
+    assert.equal(await page.locator("#email").inputValue(), "", "demo email must be cleared after submit");
+    assert.equal(await password.inputValue(), "", "demo password must be cleared after submit");
+    assert.equal(await password.getAttribute("type"), "password", "password must be hidden after submit");
+    assert.equal(await visibility.textContent(), "Show");
     await page.locator('[data-action="back-home"]').click();
     assert.equal(await page.locator("#view-dashboard").evaluate((node) => node.classList.contains("active")), true);
     assert.deepEqual(runtimeErrors, []);
