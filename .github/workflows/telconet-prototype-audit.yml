@@ -38,7 +38,7 @@ jobs:
 
   browser-audit:
     name: Responsive and interaction checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: source-audit
     steps:
       - name: Check out repository
