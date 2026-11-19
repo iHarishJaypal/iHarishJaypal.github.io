@@ -119,6 +119,12 @@ test("product, company, switcher and prototype SignIn labels stay distinct", () 
   assert.match(html, /autocomplete="new-password"/);
   assert.doesNotMatch(html, /Knowledge space selected|No new notifications/);
   assert.match(html, /Notifications are not connected in this prototype\./);
+  assert.match(html, /Language switching is not connected in this prototype\. Selected preview:/);
+  assert.match(html, /class="lang-options" role="group" aria-label="Language preview"/);
+  assert.match(html, /class="updated" title="Static sample data; live refresh is not connected\." aria-label="Demo snapshot"/);
+  assert.match(html, /demo credentials cleared; no sign-in request was sent/);
+  assert.match(html, /if\(email\)email\.value='';/);
+  assert.match(html, /if\(password\)\{password\.value='';password\.type='password';\}/);
 });
 
 test("responsive rules include phone columns, safe areas and compact desktop breakpoints", () => {
