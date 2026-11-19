@@ -127,7 +127,7 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The dashboard chart had no visible horizontal/day axis labels, while the reference chart shows angled period labels. Added short day-number ticks for 7-, 30-, and 90-day sample ranges. Generic day numbers are used rather than fabricated calendar dates.
 - Corrected the normalized sample bar scale so a 100/100 bar reaches the chart's 2.5M top gridline. Added SVG titles and an accessible description clarifying that the chart uses illustrative normalized sample values, not live telemetry.
 - Extended static and Playwright browser audits to verify tick labels for 7 and 90 days, chart accessibility text, label bounds, and top-gridline alignment. The 30-day tick set is also guarded by the static renderer check.
-- The previous run's static and responsive Chromium jobs both passed; this run's new chart changes are pending their own CI results.
+- Static source audit and responsive Chromium checks both passed on commit `4c7d0be3914f8d298fc346745472c341da75493d` in workflow run `44514114935`. The 7-day and 90-day axis-label assertions, in-view label geometry, and 2.5M top-gridline alignment all passed. Artifact `14523623786` contains 15 screenshots; the updated desktop dashboard chart and compact mobile menu screenshots were inspected. GitHub Pages deployment run `44514114281` also succeeded for this commit.
 - score.base.software remains inaccessible through the available access path. No connected browser extension is available; CI Playwright remains the real-browser verification route.
 
 **Project status: IN PROGRESS.** The prototype is not approved complete; production WebApp, Dart app, Python app, and production authentication remain out of scope.
