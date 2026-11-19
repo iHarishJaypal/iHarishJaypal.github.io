@@ -408,7 +408,7 @@ body.sidebar-collapsed .main{margin-left:68px}
 }
 
 /* Tablet and compact-desktop layout audit. */
-@media(max-width:1360px) and (min-width:1181px){
+@media(max-width:1500px) and (min-width:1181px){
   .topbar{padding:0 16px;gap:10px}
   .search{max-width:210px;min-width:120px;flex:1 1 160px}
   .topnav{min-width:300px;flex:1 1 300px}
