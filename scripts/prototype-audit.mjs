@@ -29,6 +29,21 @@ test("the compact launcher and full Score Menu retain their reference counts", (
   assert.equal(gridItems.length, 26, "full Aliens Apps grid must contain 26 entries");
   assert.equal(menuItems.length, 39, "Score Menu must contain 39 entries");
   assert.equal(new Set(menuItems).size, 39, "Score Menu labels must be unique");
+  assert.deepEqual(menuItems, [...menuItems].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" })), "Score Menu labels must be alphabetically ordered");
+  const listStart = html.indexOf('<div class="launcher-list" id="appList"');
+  const listEnd = html.indexOf('<p class="launcher-empty"', listStart);
+  const listMarkup = html.slice(listStart, listEnd);
+  const listTokens = [...listMarkup.matchAll(/<div class="list-letter" data-list-group="([^"]+)">([^<]+)<\/div>|<button class="menu-list-item"[^>]*data-app-name="([^"]+)"/g)];
+  let currentGroup = "";
+  const groupedLabels = [];
+  listTokens.forEach((token) => {
+    if (token[1]) currentGroup = token[1];
+    else {
+      assert.equal(token[3][0].toUpperCase(), currentGroup, "menu item must be in its matching initial group: " + token[3]);
+      groupedLabels.push(token[3]);
+    }
+  });
+  assert.deepEqual(groupedLabels, menuItems, "alphabetical group headings must contain the expected entries in order");
   assert.ok(groups.length > 0, "Score Menu must have alphabetical group headings");
   assert.deepEqual(groups, [...groups].sort(), "Score Menu groups must be alphabetical");
   assert.equal(new Set(groups).size, groups.length, "Score Menu group headings must be unique");
