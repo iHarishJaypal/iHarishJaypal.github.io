@@ -138,9 +138,14 @@ test("HTML IDs remain unique", () => {
 });
 
 
+
 test("mobile header and primary navigation preserve TelcoNet identity and controls", () => {
-  const mobileHeader = html.match(/<header class="mobile-brand"[^>]*>[\\s\\S]*?<\\/header>/)?.[0] || "";
-  const mobileNav = html.match(/<nav class="mobile-bottom"[^>]*>[\\s\\S]*?<\\/nav>/)?.[0] || "";
+  const headerStart = html.indexOf('<header class="mobile-brand"');
+  const headerEnd = html.indexOf("</header>", headerStart);
+  const navStart = html.indexOf('<nav class="mobile-bottom"');
+  const navEnd = html.indexOf("</nav>", navStart);
+  const mobileHeader = headerStart >= 0 && headerEnd >= 0 ? html.slice(headerStart, headerEnd + 9) : "";
+  const mobileNav = navStart >= 0 && navEnd >= 0 ? html.slice(navStart, navEnd + 6) : "";
 
   assert.ok(mobileHeader, "expected the compact mobile header");
   assert.match(mobileHeader, /TelcoNet/);
@@ -148,13 +153,13 @@ test("mobile header and primary navigation preserve TelcoNet identity and contro
   assert.match(mobileHeader, /data-action="theme"/);
   assert.match(mobileHeader, /data-action="focus-menu-search"/);
   assert.match(mobileHeader, /data-action="profile"/);
-  assert.equal((mobileHeader.match(/<button\\b/g) || []).length, 3, "mobile header should expose theme, search and account controls");
+  assert.equal((mobileHeader.match(/<button\b/g) || []).length, 3, "mobile header should expose theme, search and account controls");
 
   assert.ok(mobileNav, "expected the primary mobile navigation");
-  assert.equal((mobileNav.match(/<button\\b/g) || []).length, 4, "mobile navigation should contain Menu, Dashboard, Aliens and Health");
+  assert.equal((mobileNav.match(/<button\b/g) || []).length, 4, "mobile navigation should contain Menu, Dashboard, Aliens and Health");
   assert.match(mobileNav, /data-action="launcher"/);
   ["dashboard", "aliens", "health"].forEach((view) => {
-    assert.match(mobileNav, new RegExp('data-view="' + view + '"'));
+    assert.ok(mobileNav.includes('data-view="' + view + '"'), "missing mobile navigation view: " + view);
   });
   assert.match(css, /safe-area-inset-top/);
   assert.match(css, /safe-area-inset-bottom/);
