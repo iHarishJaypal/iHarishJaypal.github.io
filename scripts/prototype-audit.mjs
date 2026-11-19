@@ -71,7 +71,7 @@ test("theme, menu and profile controls keep keyboard and dialog affordances", ()
   assert.match(appScript, /function focusable/);
   assert.match(appScript, /menuReturnFocus/);
   assert.match(appScript, /profileReturnFocus/);
-  assert.match(appScript, /body\.menu-open/);
+  assert.match(css, /body\.menu-open/);
   assert.match(appScript, /aria-expanded/);
 });
 
