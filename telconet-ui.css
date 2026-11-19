@@ -256,14 +256,6 @@ body.menu-open{overflow:hidden}
 .assistant-results[hidden]{display:none!important}
 .launcher.searching .launcher-content{display:none!important}
 .launcher.searching .assistant-results{display:flex}
-.assistant-results-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.assistant-results-head strong{font:700 16px 'Space Grotesk',sans-serif}
-.assistant-results-status{color:var(--muted);font-size:11px}
 .assistant-ready{
   display:flex;
   align-items:center;
@@ -285,7 +277,7 @@ body.menu-open{overflow:hidden}
 .assistant-ready-copy strong{font-size:13px}
 .assistant-ready-copy small{color:var(--muted);font-size:11px}
 .assistant-suggestions{display:flex;flex-wrap:wrap;gap:8px}
-.assistant-suggestion,.assistant-send{
+.assistant-suggestion{
   min-height:36px;
   padding:8px 12px;
   border:1px solid var(--line);
@@ -294,7 +286,7 @@ body.menu-open{overflow:hidden}
   color:var(--text);
   font:700 11px 'DM Sans',sans-serif;
 }
-.assistant-suggestion:hover,.assistant-send:hover{border-color:color-mix(in srgb,var(--blue) 45%,var(--line));color:var(--blue)}
+.assistant-suggestion:hover{border-color:color-mix(in srgb,var(--blue) 45%,var(--line));color:var(--blue)}
 .assistant-result-list{display:grid;gap:8px}
 .assistant-result{
   width:100%;
@@ -323,16 +315,6 @@ body.menu-open{overflow:hidden}
 .assistant-result-copy strong{display:block;font-size:12px;line-height:1.35}
 .assistant-result-copy small{display:block;margin-top:3px;color:var(--muted);font-size:10px}
 .assistant-result-arrow{color:var(--muted);font-size:22px}
-.assistant-no-match{
-  padding:22px 14px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:var(--surface);
-  text-align:center;
-}
-.assistant-no-match strong{font:700 15px 'Space Grotesk',sans-serif}
-.assistant-no-match p{margin:7px auto 14px;max-width:420px;color:var(--muted);font-size:12px;line-height:1.5}
-.assistant-send{background:linear-gradient(110deg,#56b7ee,#615de6);border:0;color:white}
 .assistant-search .assistant-clear{
   width:34px;height:34px;flex:0 0 34px;
   border:1px solid var(--line);
@@ -531,6 +513,30 @@ body.light .wordmark small{color:#65738a}
   box-shadow: var(--shadow), 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);
 }
 
+
+
+/* The mobile recording uses one Ask Cyborg status row, not a nested results card. */
+@media(max-width:850px){
+  .assistant-results{
+    max-width:none;
+    padding:10px 8px 12px;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    gap:12px;
+  }
+  .assistant-ready{
+    padding:10px 8px 14px;
+    border:0;
+    border-bottom:1px solid var(--line);
+    border-radius:0;
+    background:transparent;
+  }
+  .assistant-ready-icon{width:40px;height:40px;flex-basis:40px}
+  .assistant-ready-copy strong{font-size:14px}
+  .assistant-ready-copy small{font-size:10.5px}
+}
 
 /* Let keyboard users bypass the repeated app navigation without changing the reference layout. */
 .skip-link {

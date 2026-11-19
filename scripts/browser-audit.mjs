@@ -403,29 +403,37 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     assert.ok(footerBottom <= 844, "launcher footer must remain inside the phone viewport");
     await assertNoHorizontalOverflow(page, "390px Score Menu");
 
-    await page.locator("#assistantSearch").fill("Calendar");
+    await page.locator("#assistantSearch").fill("z");
     await page.locator('[data-action="assistant-search"]').click();
     await capture(page, "mobile-search-local-match.png");
     assert.equal(await page.locator("#assistantResults").isVisible(), true);
-    assert.equal(await page.locator(".assistant-result").count(), 1);
+    assert.equal(await page.locator(".assistant-results-head").count(), 0);
+    assert.equal(await page.locator(".assistant-ready").count(), 1);
+    assert.equal(await page.locator(".assistant-ready-copy strong").textContent(), "Ask Cyborg");
+    assert.equal(await page.locator(".assistant-ready-copy small").textContent(), "2 local matches");
+    assert.deepEqual(await page.locator(".assistant-result-copy strong").allTextContents(), ["Amazon", "Company"]);
+    assert.deepEqual(await page.locator(".assistant-result-copy small").allTextContents(), ["Aliens App", "Aliens App"]);
     await page.locator('[data-action="clear-search"]').click();
     assert.equal(await page.locator("#assistantSearch").inputValue(), "");
     assert.deepEqual(await page.locator(".assistant-suggestion").allTextContents(), [
       "Open Project", "Show Reports", "Go to Cyborgs"
     ]);
-    await page.locator("#assistantSearch").fill("Calendar");
+    assert.equal(await page.locator(".assistant-ready").count(), 1);
+    await page.locator("#assistantSearch").fill("z");
     await page.locator('[data-action="assistant-search"]').click();
-    assert.equal(await page.locator(".assistant-result").count(), 1);
-    await page.locator(".assistant-result").first().click();
-    assert.equal(await page.locator("#view-calendar").evaluate((node) => node.classList.contains("active")), true);
+    assert.equal(await page.locator(".assistant-result").count(), 2);
+    await page.locator(".assistant-result").nth(1).click();
+    assert.equal(await page.locator("#view-aliens").evaluate((node) => node.classList.contains("active")), true);
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");
 
     await page.locator('.mobile-bottom [data-action="launcher"]').click();
-    await page.locator("#assistantSearch").fill("not-a-real-destination");
+    await page.locator("#assistantSearch").fill("zz");
+    await page.locator('[data-action="assistant-search"]').click();
     await capture(page, "mobile-search-no-local-destination.png");
-    assert.match(await page.locator("#assistantResults").textContent(), /No local destination/);
-    await page.locator('[data-action="send-to-cyborg"]').click();
-    assert.match(await page.locator("#toast").textContent(), /not connected/);
+    assert.match(await page.locator("#assistantResults").textContent(), /No local destination; Cyborg is not connected/);
+    assert.equal(await page.locator(".assistant-ready").count(), 1);
+    assert.equal(await page.locator(".assistant-suggestion").count(), 0);
+    assert.equal(await page.locator('[data-action="send-to-cyborg"]').count(), 0);
     await page.keyboard.press("Escape");
     await page.keyboard.press("Escape");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");

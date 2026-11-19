@@ -93,7 +93,7 @@ test("every declared action has a handler and toast placeholders explain their s
   const handled = new Set([
     "profile", "close-pop", "theme", "collapse", "toast", "signout", "back-home", "chart-range",
     "launcher", "focus-menu-search", "close-launcher", "more-apps", "back-to-menu", "app-mode",
-    "assistant-search", "clear-search", "send-to-cyborg", "password-visibility"
+    "assistant-search", "clear-search", "password-visibility"
   ]);
   actions.forEach((action) => assert.ok(handled.has(action), "unhandled action: " + action));
 
@@ -141,6 +141,17 @@ test("mobile Ask Cyborg and footer icons match the supplied menu reference", () 
   assert.ok(html.includes('class="assistant-bot" aria-hidden="true"><i data-lucide="bot"></i></span>'));
   assert.ok(html.includes('data-action="assistant-search" aria-label="Search local destinations or ask Cyborg"><i data-lucide="send"></i></button>'));
   assert.ok(html.includes('class="launcher-power" data-action="signout" aria-label="Sign out"><i data-lucide="power"></i></button>'));
+});
+
+test("Ask Cyborg mirrors the recorded app-search result states", () => {
+  assert.ok(appScript.includes('collect(".app-tile", appGrid, "app");'));
+  assert.doesNotMatch(appScript, /collect\("\.menu-list-item"/);
+  assert.match(appScript, /const searchText = \[name, element\.dataset\.searchTerms \|\| ""\]/);
+  assert.match(appScript, /item\.searchText\.includes\(query\)/);
+  assert.match(html, /data-app-subtitle="Aliens App" data-search-terms="Aliens App"/);
+  assert.match(appScript, /No local destination; Cyborg is not connected\./);
+  assert.doesNotMatch(appScript, /send-to-cyborg|assistant-results-head|assistant-no-match/);
+  assert.match(css, /@media\(max-width:850px\)\{[\s\S]*?\.assistant-ready\{[^}]*border-bottom:1px solid var\(--line\)/);
 });
 
 test("theme, menu and profile controls keep keyboard and dialog affordances", () => {

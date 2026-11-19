@@ -8,7 +8,6 @@
   const launcherContent = $("#launcherContent");
   const searchInput = $("#assistantSearch");
   const searchClear = $(".assistant-clear");
-  const searchButton = $('.assistant-search [data-action="assistant-search"]');
   const assistantResults = $("#assistantResults");
   const appGrid = $("#appGrid");
   const appList = $("#appList");
@@ -138,19 +137,20 @@
     const seen = new Set();
 
     const collect = (selector, root, type) => {
-      $$(selector, root || document).forEach((element) => {
+      $(selector, root || document).forEach((element) => {
         const name = (element.dataset.appName || element.textContent || "").trim();
         const key = name.toLocaleLowerCase();
         if (!key || seen.has(key)) return;
         seen.add(key);
         const icon = $(".app-icon,.list-icon", element)?.textContent?.trim() || "•";
-        const subtitle = $("small", element)?.textContent?.trim() || (type === "app" ? "Aliens App" : "Workspace");
-        items.push({ name, subtitle, icon, source: element, type });
+        const detail = $("small", element)?.textContent?.trim() || element.dataset.appSubtitle || "";
+        const subtitle = detail || (type === "app" ? "Aliens App" : "Workspace");
+        const searchText = [name, element.dataset.searchTerms || ""].filter(Boolean).join(" ").toLocaleLowerCase();
+        items.push({ name, subtitle, searchText, icon, source: element, type });
       });
     };
 
     collect(".app-tile", appGrid, "app");
-    collect(".menu-list-item", appList, "menu");
     return items;
   }
 
@@ -172,28 +172,30 @@
     if (!assistantResults) return;
     assistantResults.replaceChildren();
     assistantResults.hidden = false;
+    assistantResults._matches = [];
 
     const query = (searchInput?.value || "").trim().toLocaleLowerCase();
-    const header = createElement("div", "assistant-results-head");
-    header.append(
+    const allMatches = query
+      ? buildSearchableItems().filter((item) => item.searchText.includes(query))
+      : [];
+    const statusText = !query
+      ? "Ready"
+      : allMatches.length
+        ? allMatches.length + " local " + (allMatches.length === 1 ? "match" : "matches")
+        : "No local destination; Cyborg is not connected.";
+
+    const ready = createElement("div", "assistant-ready");
+    const readyIcon = createElement("span", "assistant-ready-icon");
+    readyIcon.innerHTML = '<i data-lucide="bot"></i>';
+    ready.append(readyIcon, createElement("div", "assistant-ready-copy"));
+    $(".assistant-ready-copy", ready).append(
       createElement("strong", "", "Ask Cyborg"),
-      createElement("span", "assistant-results-status", query ? "Searching local destinations" : "Ready")
+      createElement("small", "", statusText)
     );
-    assistantResults.append(header);
+    assistantResults.append(ready);
+    window.updateTelcoIcons?.(assistantResults);
 
     if (!query) {
-      const ready = createElement("div", "assistant-ready");
-      const readyIcon = createElement("span", "assistant-ready-icon");
-      readyIcon.innerHTML = '<i data-lucide="bot"></i>';
-      ready.append(
-        readyIcon,
-        createElement("div", "assistant-ready-copy")
-      );
-      $(".assistant-ready-copy", ready).append(
-        createElement("strong", "", "Ask Cyborg"),
-        createElement("small", "", "Ready")
-      );
-
       const suggestions = createElement("div", "assistant-suggestions");
       [
         ["Open Project", "reports"],
@@ -205,34 +207,15 @@
         button.dataset.view = view;
         suggestions.append(button);
       });
-
-      assistantResults.append(ready, suggestions);
-      window.updateTelcoIcons?.(assistantResults);
+      assistantResults.append(suggestions);
       return;
     }
 
-    const allMatches = buildSearchableItems().filter((item) =>
-      (item.name + " " + item.subtitle).toLocaleLowerCase().includes(query)
-    );
-    const status = $(".assistant-results-status", header);
-    if (status) status.textContent = allMatches.length + " local " + (allMatches.length === 1 ? "match" : "matches");
+    if (!allMatches.length) return;
 
-    if (!allMatches.length) {
-      const empty = createElement("div", "assistant-no-match");
-      empty.append(
-        createElement("strong", "", "No local destination"),
-        createElement("p", "", "Send this request to Cyborg when the assistant service is connected.")
-      );
-      const send = createElement("button", "assistant-send", "Send to Cyborg");
-      send.type = "button";
-      send.dataset.action = "send-to-cyborg";
-      empty.append(send);
-      assistantResults.append(empty);
-      return;
-    }
-
+    const matches = allMatches.slice(0, 10);
     const results = createElement("div", "assistant-result-list");
-    allMatches.slice(0, 10).forEach((item, index) => {
+    matches.forEach((item, index) => {
       const button = createElement("button", "assistant-result");
       button.type = "button";
       button.dataset.resultIndex = String(index);
@@ -248,19 +231,12 @@
       results.append(button);
     });
     assistantResults.append(results);
-    assistantResults._matches = allMatches.slice(0, 10);
+    assistantResults._matches = matches;
   }
 
   function runAssistantSearch() {
     if (!launcher?.classList.contains("searching")) setSearchMode(true);
     renderAssistantResults();
-
-    const query = (searchInput?.value || "").trim();
-    if (query && !buildSearchableItems().some((item) =>
-      (item.name + " " + item.subtitle).toLocaleLowerCase().includes(query.toLocaleLowerCase())
-    )) {
-      notify("Cyborg service is not connected in this prototype.");
-    }
   }
 
   function clearSearch() {
@@ -421,9 +397,6 @@
         break;
       case "clear-search":
         clearSearch();
-        break;
-      case "send-to-cyborg":
-        notify("Cyborg service is not connected in this prototype.");
         break;
       case "password-visibility":
         togglePasswordVisibility(action);
