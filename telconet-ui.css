@@ -385,3 +385,15 @@ body.menu-open{overflow:hidden}
   background:color-mix(in srgb,var(--blue) 12%,var(--surface2));
   color:var(--blue);
 }
+
+/* Respect device cutouts and home-indicator insets on modern phones. */
+@media(max-width:850px){
+  .mobile-brand{top:calc(10px + env(safe-area-inset-top))}
+  .mobile-bottom{bottom:calc(10px + env(safe-area-inset-bottom))}
+  .main{
+    padding-top:calc(88px + env(safe-area-inset-top));
+    padding-bottom:calc(100px + env(safe-area-inset-bottom));
+  }
+  .launcher{padding-top:calc(10px + env(safe-area-inset-top))}
+  .profile-pop{bottom:calc(91px + env(safe-area-inset-bottom))}
+}
