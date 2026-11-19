@@ -166,6 +166,7 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator("#searchDesktop").fill("calendar");
     await page.locator("#searchDesktop").press("Enter");
     assert.equal(await page.locator("#view-calendar").evaluate((node) => node.classList.contains("active")), true);
+    await page.locator('.topnav [data-view="dashboard"]').click();
 
     await page.locator(".avatar-btn").click();
     await page.locator("#profilePop.show").waitFor();
@@ -199,6 +200,8 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
 test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu flow", async () => {
   const { context, page } = await openPage({ width: 390, height: 844 });
   try {
+    await page.locator(".mobile-brand [data-action='theme']").click();
+    assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
     assert.equal(await page.locator(".mobile-brand").isVisible(), true);
     assert.equal(await page.locator(".mobile-bottom").isVisible(), true);
     await assertNoHorizontalOverflow(page, "390px dashboard");
@@ -207,6 +210,10 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     await page.locator("#launcher.show").waitFor();
     await capture(page, "mobile-compact-menu.png");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
+    await page.locator("#assistantSearch").click();
+    await capture(page, "mobile-ask-cyborg-ready.png");
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => !document.querySelector("#launcher")?.classList.contains("searching"));
     assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 8);
     assert.equal(await page.locator("#appGrid .app-tile").count(), 26);
 
@@ -244,6 +251,7 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     await assertNoHorizontalOverflow(page, "390px Score Menu");
 
     await page.locator("#assistantSearch").fill("Calendar");
+    await capture(page, "mobile-search-local-match.png");
     assert.equal(await page.locator("#assistantResults").isVisible(), true);
     assert.equal(await page.locator(".assistant-result").count(), 1);
     await page.locator(".assistant-result").first().click();
