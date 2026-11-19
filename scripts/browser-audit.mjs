@@ -458,7 +458,7 @@ test("all sidebar and top navigation destinations open their matching views", as
     for (const destination of ["dashboard", "cyborgs", "aliens", "salary", "calendar"]) {
       await page.locator('.topnav [data-view="' + destination + '"]').click();
       assert.equal(await page.locator(".view.active").getAttribute("id"), "view-" + destination);
-      assert.equal(await page.locator('.topnav [data-view="' + destination + ']').getAttribute("aria-current"), "page", "active top navigation item should expose aria-current");
+      assert.equal(await page.locator('.topnav [data-view="' + destination + '"]').getAttribute("aria-current"), "page", "active top navigation item should expose aria-current");
     }
     assert.deepEqual(runtimeErrors, []);
   } finally {
@@ -510,6 +510,7 @@ test("mobile header, brand hierarchy and primary navigation fit common phone wid
         assert.equal(await header.locator('[data-action="focus-menu-search"]').getAttribute("aria-label"), "Search apps");
         assert.equal(await header.locator('[data-action="profile"]').getAttribute("aria-label"), "Open profile");
         assert.equal(await nav.locator("button").count(), 4);
+        assert.equal(await nav.locator('[data-view="dashboard"]').getAttribute("aria-current"), "page", "mobile dashboard should expose the current page");
 
         const geometry = await page.evaluate(() => {
           const headerRect = document.querySelector(".mobile-brand").getBoundingClientRect();
