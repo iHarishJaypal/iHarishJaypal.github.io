@@ -244,6 +244,24 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await waitForToastToClear(page);
     await capture(page, "desktop-signin-prototype.png");
     assert.match(await page.locator(".signin-note").textContent(), /Do not enter real credentials/);
+    const safetyNote = page.locator("#signinSafetyNote");
+    assert.equal(await safetyNote.getAttribute("role"), "note");
+    for (const field of [page.locator("#email"), page.locator("#password")]) {
+      assert.equal(await field.getAttribute("aria-describedby"), "signinSafetyNote");
+      const description = await field.evaluate((element) =>
+        document.getElementById(element.getAttribute("aria-describedby"))?.textContent || ""
+      );
+      assert.match(description, /Do not enter real credentials/);
+    }
+    const safetyStyle = await safetyNote.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return { color: style.color, fontSize: style.fontSize, lineHeight: style.lineHeight };
+    });
+    assert.deepEqual(safetyStyle, {
+      color: "rgb(174, 184, 200)",
+      fontSize: "11px",
+      lineHeight: "17.05px"
+    });
     assert.equal(await page.locator("#signinForm input").count(), 2, "reference SignIn should contain only email and password fields");
     assert.equal(await page.locator("#email").getAttribute("type"), "email");
     assert.equal(await page.locator("#email").getAttribute("placeholder"), "you@company.com");

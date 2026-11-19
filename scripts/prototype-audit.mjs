@@ -403,3 +403,21 @@ test("Ask Cyborg exposes one custom clear control without browser-native search 
   assert.match(css, /::-webkit-search-cancel-button[\s\S]*?display:\s*none;/);
   assert.match(css, /::-webkit-search-results-decoration[\s\S]*?display:\s*none;/);
 });
+
+
+test("SignIn safety notice is associated with both credential fields", () => {
+  assert.match(html, /id="signinSafetyNote" role="note">Prototype only · Do not enter real credentials\\. Nothing is sent or stored\\.<\\/div>/);
+  const fieldTag = (id) => {
+    const start = html.indexOf('id="' + id + '"');
+    const end = html.indexOf(">", start);
+    assert.ok(start >= 0 && end > start, "missing SignIn field: " + id);
+    return html.slice(start, end + 1);
+  };
+  assert.match(fieldTag("email"), /aria-describedby="signinSafetyNote"/);
+  assert.match(fieldTag("password"), /aria-describedby="signinSafetyNote"/);
+  const noteRules = [...css.matchAll(/\\.signin-card \\.signin-note\\s*\\{([^}]*)\\}/g)];
+  const noteStyle = noteRules.at(-1)?.[1] || "";
+  assert.match(noteStyle, /color:\\s*#aeb8c8/);
+  assert.match(noteStyle, /font-size:\\s*11px/);
+  assert.match(noteStyle, /line-height:\\s*1\\.55/);
+});

@@ -597,3 +597,13 @@ a:focus-visible {
   appearance:none;
   -webkit-appearance:none;
 }
+
+
+/* Keep the prototype credential warning readable without changing the reference card layout. */
+.signin-card .signin-note{
+  color:#aeb8c8;
+  font-size:11px;
+  line-height:1.55;
+  margin-top:22px;
+  padding:0 4px;
+}

@@ -172,16 +172,16 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <label for="email">Email</label>
     <div class="signin-field">
       <i data-lucide="at-sign" aria-hidden="true"></i>
-      <input id="email" type="email" placeholder="you@company.com" autocomplete="off" required>
+      <input id="email" type="email" placeholder="you@company.com" autocomplete="off" aria-describedby="signinSafetyNote" required>
     </div>
     <label for="password">Password</label>
     <div class="password-field">
       <i data-lucide="lock" aria-hidden="true"></i>
-      <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" required>
+      <input id="password" type="password" placeholder="Enter your password" autocomplete="new-password" aria-describedby="signinSafetyNote" required>
       <button class="password-toggle" type="button" data-action="password-visibility" aria-controls="password" aria-pressed="false">Show</button>
     </div>
     <button class="signin-submit" type="submit">Sign in to TelcoNet <span style="float:right"><i data-lucide="arrow-right"></i></span></button>
-    <div class="signin-note">Prototype only · Do not enter real credentials. Nothing is sent or stored.</div>
+    <div class="signin-note" id="signinSafetyNote" role="note">Prototype only · Do not enter real credentials. Nothing is sent or stored.</div>
   </form>
 </section>
 <div class="overlay" id="overlay" data-action="close-pop" aria-hidden="true"></div>
