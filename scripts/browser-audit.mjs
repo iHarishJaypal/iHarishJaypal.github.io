@@ -338,7 +338,8 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     await page.locator("#signin.show").waitFor();
     assert.equal(await page.locator(".signin-copy").isVisible(), false, "mobile SignIn should prioritize the form card");
     assert.equal(await page.locator(".signin-card").isVisible(), true);
-    assert.equal(await page.evaluate(() => document.activeElement?.id), "email");
+    await page.waitForFunction(() => document.activeElement?.id === "email");
+    await capture(page, "mobile-signin-prototype.png");
     assert.equal(await page.locator(".signin-field svg.icon-at-sign").count(), 1);
     assert.equal(await page.locator(".password-field svg.icon-lock").count(), 1);
     await assertNoHorizontalOverflow(page, "320px SignIn");
