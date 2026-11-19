@@ -128,7 +128,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     </nav>
     <div class="top-actions"><span class="updated"><i data-lucide="clock-3"></i><span>37 min ago</span></span><button class="icon-btn" data-action="toast" data-message="Messages panel is not connected yet" aria-label="Messages"><i data-lucide="list"></i></button><button class="icon-btn" data-action="toast" data-message="Team panel is not connected yet" aria-label="Team"><i data-lucide="users"></i></button><button class="icon-btn" data-action="toast" data-message="No new notifications" aria-label="Notifications"><i data-lucide="activity"></i></button><button class="avatar-btn" data-action="profile" aria-label="Account menu">AL</button></div>
   </header>
-  <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="focus-menu-search" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
+  <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"><i data-lucide="moon"></i></button><button data-action="focus-menu-search" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
   <nav class="mobile-bottom" aria-label="Mobile navigation"><button data-action="launcher" aria-label="Open apps menu"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health" title="Is everything running well?"><span><i data-lucide="activity"></i></span>Is everything...</button></nav>
   <main class="main" id="mainContent">
     <section class="view active" id="view-dashboard">
@@ -295,8 +295,10 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  function openProfile(){$('#profilePop').classList.add('show');$('#overlay').classList.add('show');}
  function closeProfile(){$('#profilePop').classList.remove('show');$('#overlay').classList.remove('show');}
  let toastTimer;function toast(message){const t=$('#toast');t.textContent=message||'Coming soon';t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300);}
- function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('score-theme',document.body.classList.contains('light')?'light':'dark');}
+ function syncThemeControls(){const light=document.body.classList.contains('light');$('[data-action="theme"]').forEach(b=>{b.setAttribute('aria-pressed',light?'true':'false');b.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');});}
+ function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('score-theme',document.body.classList.contains('light')?'light':'dark');syncThemeControls();}
  if(localStorage.getItem('score-theme')==='light')document.body.classList.add('light');
+ syncThemeControls();
  function showSignin(){closeProfile();$('#launcher').classList.remove('show');$('#app').style.display='none';$('#signin').classList.add('show');}
  function backHome(){$('#app').style.display='block';$('#signin').classList.remove('show');}
  function showLauncher(){$('#launcher').classList.add('show');}
