@@ -256,9 +256,21 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
 
     await page.locator('.mobile-bottom [data-action="launcher"]').click();
     await page.locator("#launcher.show").waitFor();
+    await page.keyboard.press("Tab");
+    assert.equal(await page.evaluate(() => document.activeElement?.id), "assistantSearch");
+    await page.keyboard.press("Shift+Tab");
+    assert.equal(await page.evaluate(() => document.activeElement?.classList.contains("launcher-power")), true);
+    await page.keyboard.press("Tab");
+    assert.equal(await page.evaluate(() => document.activeElement?.id), "assistantSearch");
+
     await page.locator(".launcher-avatar").click();
     await page.locator("#profilePop.show").waitFor();
+    await page.waitForFunction(() => document.activeElement?.classList.contains("close-pop"));
     assert.equal(await page.locator("#profilePop").getAttribute("aria-hidden"), "false");
+    await page.keyboard.press("Shift+Tab");
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.action), "signout");
+    await page.keyboard.press("Tab");
+    assert.equal(await page.evaluate(() => document.activeElement?.classList.contains("close-pop")), true);
     await page.keyboard.press("Escape");
     await page.waitForFunction(() => document.querySelector("#profilePop")?.getAttribute("aria-hidden") === "true");
     assert.equal(await page.evaluate(() => document.activeElement?.classList.contains("launcher-avatar")), true);
