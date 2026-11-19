@@ -825,7 +825,7 @@ test("desktop and mobile disclosure triggers expose their controlled regions", a
     assert.equal(await launcherTrigger.getAttribute("aria-expanded"), "true",
       "desktop rail launcher must expose its expanded state");
     assert.equal(await desktop.page.locator("#assistantResults").getAttribute("role"), "region");
-    assert.equal(await desktop.page.getByRole("region", { name: "Cyborg search results" }).count(), 1);
+    assert.equal(await desktop.page.locator("#assistantResults").getAttribute("aria-label"), "Cyborg search results");
 
     await desktop.page.keyboard.press("Escape");
     await desktop.page.waitForFunction(() =>
