@@ -278,7 +278,7 @@
       menuButton.setAttribute("aria-expanded", open ? "true" : "false");
       menuButton.classList.toggle("active", open);
     }
-    $$$('[data-action="focus-menu-search"]').forEach((button) =>
+    $$('[data-action="focus-menu-search"]').forEach((button) =>
       button.setAttribute("aria-expanded", open && launcher.classList.contains("searching") ? "true" : "false")
     );
 
@@ -321,7 +321,7 @@
     profilePop.setAttribute("aria-hidden", open ? "false" : "true");
     overlay?.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("profile-open", open);
-    $$$('[data-action="profile"]').forEach((button) =>
+    $$('[data-action="profile"]').forEach((button) =>
       button.setAttribute("aria-expanded", open ? "true" : "false")
     );
 

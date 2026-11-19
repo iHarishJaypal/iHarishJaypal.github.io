@@ -373,6 +373,7 @@ test("launcher, profile and Ask Cyborg triggers expose their controlled regions"
   const syncStart = appScript.indexOf("function syncLauncherState()");
   const syncEnd = appScript.indexOf("function openLauncher()", syncStart);
   const syncState = appScript.slice(syncStart, syncEnd);
-  assert.ok(syncState.includes("$$(") && syncState.includes('data-action="launcher"') && syncState.includes("aria-expanded"),
+  assert.doesNotMatch(appScript, /\$\$\$\(/, "selector helper must use exactly two dollar signs");
+  assert.ok(syncState.includes("$(") && syncState.includes('data-action="launcher"') && syncState.includes("aria-expanded"),
     "all launcher triggers must receive the current expanded state");
 });
