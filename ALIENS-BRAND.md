@@ -1,9 +1,9 @@
 # Aliens Brand — UI Reference
 
-Use **"Aliens Brand"** as the shorthand for this visual system and interaction pattern. For this project, the product name is **Aliens TelcoNet**.
+Use **"Aliens Brand"** as the shorthand for this visual system and interaction pattern. The product is **TelcoNet**; the company brand is **ALIENS COMPANY**; the company switcher label is **Aliens TelcoNet**.
 
 ## Visual direction
-- Project brand identity: **Aliens TelcoNet**. The supplied Aliens TelcoNet / base.software screens remain the layout and interaction reference, adapted to a telecom operations workspace within Aliens Company.
+- Naming hierarchy: product **TelcoNet**, company brand **ALIENS COMPANY**, company switcher **Aliens TelcoNet**. The supplied Aliens / base.software screens remain the layout and interaction reference, adapted to a telecom operations workspace.
 - Premium, compact SaaS dashboard aesthetic; clear hierarchy and dense but readable navigation.
 - Dark theme is the default: near-black page background, charcoal surfaces, subtle borders, muted secondary text.
 - Light theme is also required and should preserve the same hierarchy and layout.
@@ -55,3 +55,18 @@ Use **"Aliens Brand"** as the shorthand for this visual system and interaction p
 - Keep the workspace sidebar at approximately 300px, beginning immediately after the rail.
 - Align the desktop top bar and main content at 368px from the viewport's left edge.
 - The company switcher label is **Aliens TelcoNet**; the wordmark hierarchy remains **TelcoNet** with **ALIENS COMPANY** beneath it.
+
+
+## Current verification record — 2026-11-19
+- The seven supplied reference screenshots and the mobile-menu video were reviewed. The screenshots remain the visual source of truth; the video defines the mobile launcher flow.
+- The prototype retains the 26-app grid, 39 unique alphabetical Score Menu entries, compact eight-app preview, More Apps flow, Grid/List modes, and the three Ask Cyborg prototype states.
+- Navigation, chart-range controls, language selection, theme icons, and prototype SignIn interactions received a source audit. The local SVG icon map covers every icon referenced in the page.
+- Run `node scripts/prototype-audit.mjs` from the repository root for the dependency-free source checks. GitHub Actions runs this audit on relevant pushes and pull requests.
+- The latest successful source-audit run passed all 10 checks. The GitHub Pages deployment workflow also completed successfully for the preceding audited revision.
+
+## Known verification blockers
+- `score.base.software` remains inaccessible through the currently available web access path. Do not claim pixel-perfect parity until a real reference access path is available.
+- The connected browser context is unavailable in this session. Static checks and the Pages deployment succeeded, but live desktop/mobile rendering, touch behavior, and measured horizontal-overflow checks remain unverified.
+- SignIn is a local prototype only. No real credentials are sent or stored, and no production authentication service is connected.
+
+**Project status: IN PROGRESS.** Do not start the production WebApp, Dart app, or Python app as part of this prototype work.
