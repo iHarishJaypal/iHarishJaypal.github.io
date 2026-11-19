@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { after, before, test } from "node:test";
@@ -23,8 +23,18 @@ let server;
 let browser;
 let baseUrl;
 const runtimeErrors = [];
+const artifactDir = resolve(root, "test-results");
+
+async function capture(page, filename) {
+  await page.screenshot({
+    path: resolve(artifactDir, filename),
+    animations: "disabled",
+    fullPage: false
+  });
+}
 
 before(async () => {
+  await mkdir(artifactDir, { recursive: true });
   server = createServer(async (request, response) => {
     const pathname = new URL(request.url || "/", "http://127.0.0.1").pathname;
     const relative = routes.get(pathname);
@@ -129,6 +139,7 @@ test("desktop and compact-desktop shells stay within the viewport", async (t) =>
 test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remain functional", async () => {
   const { context, page } = await openPage({ width: 1440, height: 960 });
   try {
+    await capture(page, "desktop-dashboard-dark.png");
     await page.locator('[data-action="chart-range"][data-range="7"]').click();
     assert.equal(await page.locator(".chart").getAttribute("data-sample-range"), "7");
     assert.equal(await page.locator('[data-action="chart-range"][data-range="7"]').getAttribute("aria-pressed"), "true");
@@ -138,6 +149,7 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
 
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    await capture(page, "desktop-dashboard-light.png");
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), false);
 
@@ -157,8 +169,10 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
 
     await page.locator(".avatar-btn").click();
     await page.locator("#profilePop.show").waitFor();
+    await capture(page, "desktop-profile-popover.png");
     await page.locator('#profilePop [data-action="signout"]').click();
     await page.locator("#signin.show").waitFor();
+    await capture(page, "desktop-signin-prototype.png");
     assert.match(await page.locator(".signin-note").textContent(), /Do not enter real credentials/);
 
     const password = page.locator("#password");
@@ -191,17 +205,20 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
 
     await page.locator('.mobile-bottom [data-action="launcher"]').click();
     await page.locator("#launcher.show").waitFor();
+    await capture(page, "mobile-compact-menu.png");
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
     assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 8);
     assert.equal(await page.locator("#appGrid .app-tile").count(), 26);
 
     await page.locator('[data-action="more-apps"]').click();
+    await capture(page, "mobile-full-app-grid.png");
     assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 26);
     assert.equal(await page.locator("#launcher").evaluate((node) => node.classList.contains("all-apps")), true);
     await assertNoHorizontalOverflow(page, "390px full app grid");
 
     await page.locator('[data-action="back-to-menu"]').click();
     await page.locator('[data-action="app-mode"][data-mode="list"]').click();
+    await capture(page, "mobile-score-menu-list.png");
     assert.equal(await visibleCount(page.locator("#appList .menu-list-item")), 39);
     assert.equal(await page.locator("#appGrid").isVisible(), false);
 
@@ -212,6 +229,7 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     }));
     assert.ok(scrollMetrics.scrollHeight > scrollMetrics.clientHeight, "39-item list should scroll inside the launcher");
     await content.evaluate((node) => { node.scrollTop = node.scrollHeight; });
+    await capture(page, "mobile-score-menu-list-bottom.png");
     const lastItemVisible = await page.locator("#appList .menu-list-item").last().evaluate((node) => {
       const item = node.getBoundingClientRect();
       const parent = document.querySelector("#launcherContent").getBoundingClientRect();
@@ -234,6 +252,7 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
 
     await page.locator('.mobile-bottom [data-action="launcher"]').click();
     await page.locator("#assistantSearch").fill("not-a-real-destination");
+    await capture(page, "mobile-search-no-local-destination.png");
     assert.match(await page.locator("#assistantResults").textContent(), /No local destination/);
     await page.locator('[data-action="send-to-cyborg"]').click();
     assert.match(await page.locator("#toast").textContent(), /not connected/);
@@ -266,6 +285,7 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     await page.locator(".launcher-avatar").click();
     await page.locator("#profilePop.show").waitFor();
     await page.waitForFunction(() => document.activeElement?.classList.contains("close-pop"));
+    await capture(page, "mobile-profile-popover.png");
     assert.equal(await page.locator("#profilePop").getAttribute("aria-hidden"), "false");
     await page.keyboard.press("Shift+Tab");
     assert.equal(await page.evaluate(() => document.activeElement?.dataset.action), "signout");
