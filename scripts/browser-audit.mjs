@@ -228,6 +228,11 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
 
     await page.locator(".avatar-btn").click();
     await page.locator("#profilePop.show").waitFor();
+    const profileBounds = await page.locator("#profilePop").boundingBox();
+    assert.equal(Math.round(profileBounds.width), 350);
+    assert.ok(profileBounds.height >= 460, "desktop account popover should retain the supplied tall panel proportions");
+    assert.match(await page.locator("#profilePop").textContent(), /Hi, Aliens!/);
+    assert.doesNotMatch(await page.locator("#profilePop").textContent(), /Aliens TelcoNet workspace/);
     await capture(page, "desktop-profile-popover.png");
     await page.locator('#profilePop [data-lang="EN"]').click();
     assert.equal(await page.locator('#profilePop [data-lang="EN"]').getAttribute("aria-pressed"), "true");
@@ -514,11 +519,23 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     await capture(page, "mobile-signin-prototype.png");
     const passwordMetrics = await page.locator("#password").evaluate((input) => {
       const style = getComputedStyle(input);
-      const available = input.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const rect = input.getBoundingClientRect();
+      const available = rect.width
+        - parseFloat(style.borderLeftWidth)
+        - parseFloat(style.borderRightWidth)
+        - parseFloat(style.paddingLeft)
+        - parseFloat(style.paddingRight);
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
       context.font = style.font;
-      return { available, placeholderWidth: context.measureText(input.placeholder).width };
+      return {
+        available,
+        placeholderWidth: context.measureText(input.placeholder).width,
+        rectWidth: rect.width,
+        clientWidth: input.clientWidth,
+        paddingLeft: style.paddingLeft,
+        paddingRight: style.paddingRight
+      };
     });
     console.log("320px SignIn password metrics:", JSON.stringify(passwordMetrics));
     assert.ok(

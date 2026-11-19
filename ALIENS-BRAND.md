@@ -173,3 +173,14 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - GitHub Pages deployment for code/test commit `e3ca06f3f42ec107964a5a49f24a8ac573898f4e` succeeded. The new icon refinements are still awaiting deployment and browser verification.
 
 **Project status: IN PROGRESS.**
+
+
+## Run 11 follow-up — Desktop account popover proportions and input measurement (2026-11-19)
+
+- Rechecked the light profile reference (image(20261115-054719).png) against the Chromium account-popover screenshot. The reference has no extra workspace subtitle and uses a taller panel with substantial lower breathing room. Removed the unreferenced Aliens TelcoNet workspace line from the popover and set a 460px desktop minimum height while leaving the narrow-phone popover height automatic. The company switcher still reads **Aliens TelcoNet**.
+- The SignIn screenshot from artifact 14536300715 shows the password placeholder visually fitting. The previous browser metric incorrectly used input.clientWidth and subtracted padding a second time; Chromium reported a 28px content width despite the 244px field. The test now measures the content box from getBoundingClientRect() minus borders and padding, logs the raw dimensions, and checks the actual placeholder width.
+- Browser audit run 44535308475 passed 20/21 tests. All navigation, 30 Score Menu routes, nine placeholder actions, app preview labels, footer controls, Ask Cyborg states, new robot/send/power icons, list scrolling, and 320–430px mobile-shell checks passed. Only the incorrect SignIn width metric failed; the updated measurement is pending.
+- The Playwright container is now functioning reliably: browser binaries and system dependencies were available without the previously failing Ubuntu apt step. The new run will verify the profile height and the corrected SignIn measurement.
+- score.base.software remains inaccessible through the available access path. The connected browser extension remains unavailable; CI Playwright is the available browser path.
+
+**Project status: IN PROGRESS.**

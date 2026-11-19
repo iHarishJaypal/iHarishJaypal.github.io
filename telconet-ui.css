@@ -515,3 +515,8 @@ body.light .wordmark small{color:#65738a}
 .assistant-bot,.assistant-ready-icon{color:var(--blue)}
 .assistant-bot svg,.assistant-ready-icon svg{width:23px;height:23px}
 .assistant-search button svg{width:22px;height:22px}
+
+
+/* Desktop account popover follows the supplied taller reference panel. */
+@media(min-width:851px){.profile-pop{min-height:460px}}
+@media(max-width:850px){.profile-pop{min-height:0}}
