@@ -298,6 +298,12 @@
       launcher.focus({ preventScroll: true });
     }
     if (!open && menuWasOpen) {
+      launcher.classList.remove("searching", "all-apps");
+      const allHead = $("#launcherAllHead");
+      if (allHead) allHead.hidden = true;
+      if (searchInput) searchInput.value = "";
+      if (searchClear) searchClear.hidden = true;
+      if (assistantResults) assistantResults.hidden = true;
       if (menuReturnFocus && typeof menuReturnFocus.focus === "function") {
         menuReturnFocus.focus({ preventScroll: true });
       }
@@ -416,6 +422,7 @@
         break;
       case "signout":
         profileReturnFocus = null;
+        menuReturnFocus = null;
         break;
     }
   });
