@@ -311,7 +311,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  try{if(localStorage.getItem('score-theme')==='light')document.body.classList.add('light');}catch(_){}
  syncThemeControls();
  function showSignin(){closeProfile();$('#launcher').classList.remove('show');$('#app').style.display='none';$('#signin').classList.add('show');window.requestAnimationFrame(()=>$('#email')?.focus({preventScroll:true}));}
- function backHome(){$('#app').style.display='block';$('#signin').classList.remove('show');const heading=$('#view-dashboard h1');heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});}
+ function backHome(){showView('dashboard');}
  function showLauncher(){$('#launcher').classList.add('show');}
  function closeLauncher(){$('#launcher').classList.remove('show');}
  const chartSamples={
