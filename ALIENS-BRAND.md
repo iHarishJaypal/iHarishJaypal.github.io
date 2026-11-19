@@ -131,3 +131,18 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - score.base.software remains inaccessible through the available access path. No connected browser extension is available; CI Playwright remains the real-browser verification route.
 
 **Project status: IN PROGRESS.** The prototype is not approved complete; production WebApp, Dart app, Python app, and production authentication remain out of scope.
+
+## Run 10 — Navigation semantics and browser-audit hardening (2026-11-19)
+
+- Added `aria-current="page"` to the active TelcoNet workspace, sidebar, top navigation, and mobile navigation destinations. The shared view switcher now updates the current-page state across all navigation groups whenever a destination changes; app tiles remain ordinary launch actions rather than being marked as current navigation.
+- Expanded static coverage to assert the initial current-page markers and the collection-based navigation update. Static prototype audit passed **14/14 tests** on code commit `2cb86bd84cd5ae43a1b0b53f0b8e960426aef242`.
+- Expanded Playwright coverage to visit the actual three sidebar destinations and five top-navigation destinations, assert their active/current-page states, and smoke-test accessible names for visible buttons and form controls in the mobile dashboard, launcher, profile popover, and SignIn states.
+- Added reduced-motion assertions for transitions and page animations. The mobile dashboard retains its four-item navigation and initial Dashboard current-page marker.
+- Browser screenshot capture now waits for transient toast messages to clear before capturing the light dashboard and SignIn views. The successful browser artifact from run `44519832210` was inspected; the dashboard and SignIn screenshots are clean, with no stale toast overlay.
+- The first navigation-test iteration assumed every view had a sidebar item. Inspection confirmed the actual reference layout has three sidebar destinations and five top-navigation destinations; the test was corrected to cover the real navigation structure. No product navigation item was removed.
+- The latest combined audit workflow `44520330466` has passed the static job; the responsive Chromium job is still running at the time of this record. GitHub Pages deployment `44520329576` is also pending. Do not treat either as complete until GitHub reports its final conclusion.
+- The supplied mobile bottom-navigation reference was checked directly; its shortened “Is everything…” label is intentional in the reference, so it was preserved rather than rewritten.
+
+**Remaining blockers:** score.base.software still has no accessible route in the available environment. The connected browser extension context remains unavailable; CI Playwright is the available browser-verification path. The abbreviated Score Menu reference label remains unresolved and has not been guessed.
+
+**Project status: IN PROGRESS.** No production WebApp, Dart app, Python app, or production authentication has been started.
