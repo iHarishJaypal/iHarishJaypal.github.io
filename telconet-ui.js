@@ -8,6 +8,7 @@
   const launcherContent = $("#launcherContent");
   const searchInput = $("#assistantSearch");
   const searchClear = $(".assistant-clear");
+  const searchButton = $('.assistant-search [data-action="assistant-search"]');
   const assistantResults = $("#assistantResults");
   const appGrid = $("#appGrid");
   const appList = $("#appList");

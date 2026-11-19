@@ -158,6 +158,8 @@ test("theme, menu and profile controls keep keyboard and dialog affordances", ()
   assert.match(html, /role="dialog" aria-modal="true"/);
   assert.match(appScript, /function trapTab/);
   assert.match(appScript, /function focusable/);
+  assert.match(appScript, /const searchButton = \$\('\.assistant-search \[data-action="assistant-search"\]'\)/);
+  assert.match(appScript, /searchButton\.setAttribute\("aria-expanded"/);
   assert.match(appScript, /menuReturnFocus/);
   assert.match(appScript, /profileReturnFocus/);
   assert.match(css, /body\.menu-open/);
