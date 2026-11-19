@@ -762,12 +762,12 @@ test("keyboard skip link moves focus directly to main content on desktop and mob
       const skipBounds = await page.locator(".skip-link").boundingBox();
       assert.ok(skipBounds && skipBounds.y >= 0 && skipBounds.y < 80,
         viewport.width + "px: focused skip link should be visible near the top edge");
+      if (viewport.width === 390) await capture(page, "mobile-skip-link-focused.png");
       await page.keyboard.press("Enter");
       assert.equal(await page.evaluate(() => document.activeElement?.id), "mainContent",
         viewport.width + "px: activating the skip link should focus main content");
       assert.equal(await page.evaluate(() => location.hash), "#mainContent");
       await assertNoHorizontalOverflow(page, viewport.width + "px skip navigation");
-      if (viewport.width === 390) await capture(page, "mobile-skip-link-focused.png");
       assert.deepEqual(runtimeErrors, []);
     } finally {
       await context.close();
