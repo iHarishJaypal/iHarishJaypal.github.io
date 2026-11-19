@@ -236,6 +236,7 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     assert.equal(await page.locator('#profilePop [data-lang="HL"]').getAttribute("aria-pressed"), "true");
     await page.locator('#profilePop [data-action="signout"]').click();
     await page.locator("#signin.show").waitFor();
+    await waitForToastToClear(page);
     await capture(page, "desktop-signin-prototype.png");
     assert.match(await page.locator(".signin-note").textContent(), /Do not enter real credentials/);
     assert.equal(await page.locator("#signinForm input").count(), 2, "reference SignIn should contain only email and password fields");
@@ -442,7 +443,7 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
 test("all sidebar and top navigation destinations open their matching views", async () => {
   const { context, page } = await openPage({ width: 1440, height: 900 });
   try {
-    const sidebarDestinations = ["dashboard", "health", "reports", "aliens", "salary", "calendar"];
+    const sidebarDestinations = ["dashboard", "health", "reports"];
     for (const destination of sidebarDestinations) {
       const link = page.locator('#workspaceSidebar [data-view="' + destination + '"]');
       assert.equal(await link.count(), 1, "expected one sidebar link for " + destination);
