@@ -85,12 +85,17 @@ test("desktop search, chart ranges and selector collections are safe", () => {
   assert.match(html, /\$\$\('\[data-lang\]'\)\.forEach/);
 });
 
-test("brand hierarchy and prototype-only SignIn remain explicit", () => {
+test("product, company, switcher and prototype SignIn labels stay distinct", () => {
+  assert.match(html, /<title>TelcoNet — Network Operations Workspace \| ALIENS COMPANY<\/title>/);
   assert.match(html, /TelcoNet<small>ALIENS COMPANY<\/small>/);
   assert.match(html, /<strong>Aliens TelcoNet<\/strong>/);
+  assert.match(html, /<b>TelcoNet<\/b><small style="display:block;color:#999;font-size:11px">ALIENS COMPANY<\/small>/);
+  assert.match(html, /placeholder="Search TelcoNet"/);
   assert.match(html, /Do not enter real credentials\. Nothing is sent or stored\./);
   assert.match(html, /autocomplete="off"/);
   assert.match(html, /autocomplete="new-password"/);
+  assert.doesNotMatch(html, /Knowledge space selected|No new notifications/);
+  assert.match(html, /Notifications are not connected in this prototype\./);
 });
 
 test("responsive rules include phone columns, safe areas and compact desktop breakpoints", () => {
