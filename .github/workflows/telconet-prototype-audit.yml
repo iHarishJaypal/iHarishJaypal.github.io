@@ -60,3 +60,11 @@ jobs:
         run: npx playwright install chromium
       - name: Run responsive and interaction browser audit
         run: node --test scripts/browser-audit.mjs
+      - name: Upload browser audit screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: telconet-browser-audit-${{ github.run_id }}
+          path: test-results/*.png
+          if-no-files-found: ignore
+          retention-days: 7
