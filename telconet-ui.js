@@ -271,14 +271,14 @@
     const open = launcher.classList.contains("show");
     launcher.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("menu-open", open);
-    $('[data-action="launcher"]').forEach((button) =>
+    $$('[data-action="launcher"]').forEach((button) =>
       button.setAttribute("aria-expanded", open ? "true" : "false")
     );
     if (menuButton) {
       menuButton.setAttribute("aria-expanded", open ? "true" : "false");
       menuButton.classList.toggle("active", open);
     }
-    $$('[data-action="focus-menu-search"]').forEach((button) =>
+    $$$('[data-action="focus-menu-search"]').forEach((button) =>
       button.setAttribute("aria-expanded", open && launcher.classList.contains("searching") ? "true" : "false")
     );
 
@@ -321,7 +321,7 @@
     profilePop.setAttribute("aria-hidden", open ? "false" : "true");
     overlay?.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("profile-open", open);
-    $$('[data-action="profile"]').forEach((button) =>
+    $$$('[data-action="profile"]').forEach((button) =>
       button.setAttribute("aria-expanded", open ? "true" : "false")
     );
 
@@ -468,9 +468,9 @@
     syncProfileState();
   }
 
-  $('[data-action="profile"]').forEach((button) => button.setAttribute("aria-expanded", "false"));
-  $('[data-action="launcher"]').forEach((button) => button.setAttribute("aria-expanded", "false"));
-  $('[data-action="focus-menu-search"]').forEach((button) => button.setAttribute("aria-expanded", "false"));
+  $$('[data-action="profile"]').forEach((button) => button.setAttribute("aria-expanded", "false"));
+  $$('[data-action="launcher"]').forEach((button) => button.setAttribute("aria-expanded", "false"));
+  $$('[data-action="focus-menu-search"]').forEach((button) => button.setAttribute("aria-expanded", "false"));
   if (menuButton) menuButton.setAttribute("aria-expanded", "false");
 
   try {
