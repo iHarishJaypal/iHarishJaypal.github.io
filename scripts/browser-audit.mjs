@@ -351,6 +351,13 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     await page.locator("#signin.show").waitFor();
     assert.equal(await page.locator(".signin-copy").isVisible(), false, "mobile SignIn should prioritize the form card");
     assert.equal(await page.locator(".signin-card").isVisible(), true);
+    assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    assert.equal(await page.locator(".signin-card h2").evaluate((node) => getComputedStyle(node).color), "rgb(245, 246, 250)");
+    const passwordSpace = await page.locator("#password").evaluate((input) => {
+      const style = getComputedStyle(input);
+      return input.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    });
+    assert.ok(passwordSpace >= 110, "narrow SignIn password field must leave readable placeholder space");
     await page.waitForFunction(() => document.activeElement?.id === "email");
     await capture(page, "mobile-signin-prototype.png");
     assert.equal(await page.locator(".signin-field svg.icon-at-sign").count(), 1);
