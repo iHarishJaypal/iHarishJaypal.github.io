@@ -115,7 +115,7 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - Removed the redundant Score Menu top border. The app-grid bottom border remains the single separator, while the existing spacing is preserved.
 - Added a dependency-free source regression check and a Playwright browser assertion that verify the compact menu has exactly one divider.
 - Preserved all 26 app tiles, all 39 Score Menu entries, the existing Ask Cyborg states, SignIn behavior, and the product/company naming hierarchy.
-- Current changes are committed to `main`; the new source and browser audit runs are triggered by the commits. Their final results must be checked before treating this refinement as verified.
+- Static audit run `44508076305` passed all 12 checks, including the new single-divider regression test. The responsive Chromium job in the same run is still installing Chromium system dependencies, so its browser assertion has not run yet. Pages deployment run `44508142884` succeeded for documentation commit `42f46090ac3567dffb2ad75ec17c9c5699e1f820`.
 - The reference label `Which tool, model and effort finish work b…` remains abbreviated in the existing source. Its unseen continuation was not guessed.
 - `score.base.software` and the connected browser extension remain unavailable; visual parity is not claimed.
 
