@@ -56,6 +56,15 @@ test("compact mobile launcher uses one separator between app preview and Score M
   assert.doesNotMatch(css, /\.launcher:not\(\.list-mode\):not\(\.all-apps\):not\(\.searching\) \.score-menu-head\{[^}]*border-top:/);
 });
 
+
+test("active navigation exposes the current destination to assistive technology", () => {
+  assert.match(html, /class="rail-btn active dock-workspace"[^>]*aria-current="page"/);
+  assert.match(html, /class="side-link active"[^>]*aria-current="page"/);
+  assert.match(html, /class="active" data-view="dashboard" aria-current="page"/);
+  assert.match(html, /setAttribute\('aria-current','page'\)/);
+  assert.match(html, /removeAttribute\('aria-current'\)/);
+});
+
 test("every navigation destination has a real prototype view", () => {
   const destinations = [...new Set([...html.matchAll(/data-view="([^"]+)"/g)].map((match) => match[1]))];
   destinations.forEach((destination) => {
