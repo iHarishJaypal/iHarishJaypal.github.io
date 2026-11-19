@@ -224,3 +224,19 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The 26-app grid, 39 unique Score Menu entries, compact mobile preview, Ask Cyborg states, navigation, profile, themes, and prototype-only SignIn remain preserved. No production authentication or future WebApp/Dart/Python implementation was introduced.
 
 **Project status: IN PROGRESS.** The external `score.base.software` reference and independent public-page access remain unavailable, and the latest browser/deployment jobs still need their final results. No pixel-perfect or final-approval claim is made.
+
+
+
+## Run 15 — Theme-aware browser chrome and final responsive re-verification (2026-11-19)
+
+- Re-inspected the latest main branch, recent commits, current HTML/CSS/JavaScript, both audit scripts, and the Pages/audit workflow before editing. The final main HEAD for this run is f6666094d9d531caa8ddcbea908c00798a35bad2.
+- Re-opened all seven supplied reference screenshots and re-sampled the 23.253-second mobile-menu video at 0, 3, 6, 9, 12, 15, 18, and 21 seconds. The desktop dark/light dashboard, desktop profile popover, mobile header/footer, compact launcher, full app grid, Score Menu search states, and SignIn screenshots were compared with the latest Playwright artifact. No additional grounded layout regression was found.
+- Found a small theme-state mismatch not visible in static screenshots: the fixed theme-color meta tag stayed dark while the light dashboard was active. Added syncThemeColor() so browser chrome follows the visible surface: dark dashboard #08090d, light dashboard #e8f4ff, and the intentionally dark prototype SignIn surface #07080b. It synchronizes on initial persisted-theme restore, theme toggle, SignIn entry, and return to the dashboard.
+- Added a dependency-free static regression assertion for the theme-color states and for the theme-control collection selector. Added a Playwright flow that toggles light theme, reloads with the saved preference, signs out to the dark SignIn prototype, and returns to the light dashboard.
+- The first browser run on the intermediate theme-color commit exposed a JavaScript selector regression introduced by the text replacement: the plural $$ collection helper was accidentally reduced to the single-element $ helper, which stopped the inline controller. Restored the collection selector in commit 5f07f956377249f448d7b7ceb21ebbf522d0ce37 and added a static guard in f6666094d9d531caa8ddcbea908c00798a35bad2. The final run below is against the corrected HEAD.
+- GitHub Actions audit 44555948855 passed: **19/19 static checks** and **22/22 Chromium browser checks**. Desktop shell widths 1512, 1440, 1280, 1180, 1100, 1024, 920, and 851px passed; phone widths 320, 360, 375, 414, and 430px passed. The suite also passed chart ranges, navigation destinations, all Score Menu route/action checks, launcher/search states, focus behavior, safe areas, reduced motion, SignIn field cleanup, persisted theme, and theme-color transitions.
+- Reviewed all 15 screenshots in browser artifact 14545062497, including desktop light/dark dashboard, profile and SignIn, mobile compact launcher, local/no-match search, full app grid, 39-entry Score Menu scrolling, and mobile SignIn. No new reference-grounded visual regression was found.
+- GitHub Pages deployment for corrected code/test HEAD f6666094d9d531caa8ddcbea908c00798a35bad2 succeeded in run 44555948525.
+- The connected browser extension was retried, but still reports that no originating browser context is available. score.base.software and independent public-page opening remain unavailable through the current access path; no live-site or pixel-perfect parity claim is made.
+
+**Project status: IN PROGRESS.** The 26-app grid, 39-entry Score Menu, existing mobile flow, desktop shell, profile, light/dark themes, and prototype-only SignIn remain preserved. No production WebApp, Dart app, Python app, or production authentication has been started.
