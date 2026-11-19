@@ -399,3 +399,38 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The first static-test commit over-escaped the whitespace tokens in its new regular-expression assertion. Replaced the appended assertion with a correctly escaped pattern in this follow-up commit. No application runtime code or styling was changed by this test correction; only the final corrected Actions run is counted as verification.
 
 - Browser extension retry still fails because no originating browser context is available. The external `score.base.software` reference and independent public-page opening remain blocked; no pixel-perfect parity claim is made.
+
+
+## Run 22 — Ask Cyborg local-result fidelity and search-clear refinement (2026-11-20)
+
+### Repository and reference review
+
+- Re-inspected the current `main` branch, recent commits, dashboard HTML, shared UI CSS/JavaScript, static audit, Chromium audit and GitHub Actions workflow before editing. Run 22 began at `d3e436a2cfbe8ca4c5def7b45a0d0154ff3d1ab9`.
+- Re-opened eight supplied Aliens reference screenshots: the desktop dark/light dashboard and account popover, top navigation, compact mobile navigation, mobile footer, SignIn reference and the final TelcoNet dashboard hierarchy.
+- Re-sampled `20261115-0726-43.4686777.mp4` (23.253 seconds) at 0, 3, 6, 9, 12, 15, 18, 21 and 23 seconds. The compact 8-app preview, full 26-app grid, 39-entry Score Menu, Grid/List modes, Ask Cyborg ready state, local results and no-local-destination state remained intact.
+- Downloaded and inspected the previous Playwright artifact `14578746115`. It exposed two concrete search-state mismatches: local result rows used neutral glyph tiles instead of the source app tile's pastel tone, and Chromium displayed its native search cancel glyph alongside the prototype's own clear button.
+
+### Implementation
+
+- Local Ask Cyborg results now carry the `tone-*` class from the matching app-grid icon, reusing the same pastel background and glyph color. This keeps search results visually consistent with their source Aliens Apps tiles without inventing new icon artwork.
+- Each result button now has a concise accessible name in the form `App name, subtitle`. The result icon and trailing chevron are marked decorative so they are not read as part of the control name.
+- Suppressed native browser search decorations on the Ask Cyborg search input. The prototype's single custom clear button remains the only visible clear affordance.
+- Added static and Chromium regression coverage for icon-tone inheritance, concise accessible names, decorative icon semantics, and native-search-clear suppression. The browser test also captures the updated local-match state in the light theme.
+
+### Verification
+
+- Static prototype audit: **27/27 passed** in [Actions run 44626421255](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44626421255).
+- Responsive and interaction Chromium/Playwright audit: **28/28 passed** in the same run.
+- Final browser artifact **14580520023** contains the updated mobile local-match screenshot; it was downloaded and visually inspected. The duplicate native clear glyph is gone, the single custom clear control remains, and Amazon/Company result tiles inherit their source app tones.
+- GitHub Pages build and deployment for code HEAD `641dbea87a04b80f14d75b11d3525a61aafe28c4`: **SUCCESS**, [run 44626420121](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44626420121).
+- The first implementation revision `da0752117b31926b4b84d13333d2c58ad4dd6eda` also passed 26/26 static and 28/28 browser checks in [run 44625963320](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44625963320). The follow-up removed the native search decoration and added a dedicated regression assertion; only the final 27/27 and 28/28 results are treated as final verification.
+
+### Remaining blockers
+
+- `score.base.software` remains inaccessible through the available access path. No new genuine access route was available, so it was not retried.
+- The connected browser extension still has no originating browser context.
+- Independent public opening of `https://iharishjaypal.github.io/` remains unavailable through the web access path, although GitHub Pages deployment for the tested code revision succeeded.
+- GitHub's combined commit-status API still reports no status contexts; the successful custom Actions workflow is the verification source.
+- No pixel-perfect parity claim is made.
+
+**Project status: IN PROGRESS — NOT APPROVED COMPLETE.** The 26-app grid, 39-entry Score Menu, company/product hierarchy, desktop shell, mobile navigation, profile, themes and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
