@@ -167,6 +167,7 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator("#searchDesktop").press("Enter");
     assert.equal(await page.locator("#view-calendar").evaluate((node) => node.classList.contains("active")), true);
     await page.locator('.topnav [data-view="dashboard"]').click();
+    await page.waitForFunction(() => !document.querySelector("#toast")?.classList.contains("show"));
 
     await page.locator(".avatar-btn").click();
     await page.locator("#profilePop.show").waitFor();
@@ -322,5 +323,66 @@ test("narrow phone layout preserves the menu footer, profile focus and safe-area
     assert.deepEqual(runtimeErrors, []);
   } finally {
     await context.close();
+  }
+});
+
+
+test("mobile header, brand hierarchy and primary navigation fit common phone widths", async (t) => {
+  for (const width of [320, 360, 375, 414, 430]) {
+    await t.test(width + "px mobile shell", async () => {
+      const { context, page } = await openPage({ width, height: 844 });
+      try {
+        const header = page.locator(".mobile-brand");
+        const nav = page.locator(".mobile-bottom");
+        assert.equal(await header.isVisible(), true);
+        assert.equal(await nav.isVisible(), true);
+        assert.match(await header.textContent(), /TelcoNet/);
+        assert.match(await header.textContent(), /ALIENS COMPANY/);
+        assert.equal(await header.locator("button").count(), 3);
+        assert.equal(await header.locator('[data-action="theme"]').getAttribute("aria-label"), "Switch to light theme");
+        assert.equal(await header.locator('[data-action="focus-menu-search"]').getAttribute("aria-label"), "Search apps");
+        assert.equal(await header.locator('[data-action="profile"]').getAttribute("aria-label"), "Open profile");
+        assert.equal(await nav.locator("button").count(), 4);
+
+        const geometry = await page.evaluate(() => {
+          const headerRect = document.querySelector(".mobile-brand").getBoundingClientRect();
+          const navRect = document.querySelector(".mobile-bottom").getBoundingClientRect();
+          const mainStyle = getComputedStyle(document.querySelector("#mainContent"));
+          return {
+            viewportWidth: document.documentElement.clientWidth,
+            viewportHeight: document.documentElement.clientHeight,
+            header: { left: headerRect.left, right: headerRect.right, top: headerRect.top, bottom: headerRect.bottom },
+            nav: { left: navRect.left, right: navRect.right, top: navRect.top, bottom: navRect.bottom, height: navRect.height },
+            mainPaddingBottom: parseFloat(mainStyle.paddingBottom)
+          };
+        });
+        assert.ok(geometry.header.left >= 0 && geometry.header.right <= width + 1, "mobile header must stay within the viewport");
+        assert.ok(geometry.header.top >= 0 && geometry.header.bottom < geometry.nav.top, "header and bottom navigation must not overlap");
+        assert.ok(geometry.nav.left >= 0 && geometry.nav.right <= width + 1, "bottom navigation must stay within the viewport");
+        assert.ok(geometry.nav.bottom <= geometry.viewportHeight + 1, "bottom navigation must respect the viewport and safe area");
+        assert.ok(geometry.mainPaddingBottom >= geometry.nav.height + 20, "main content must reserve room above the bottom navigation");
+        await assertNoHorizontalOverflow(page, width + "px mobile shell");
+
+        if (width === 360) await capture(page, "mobile-dashboard-360-dark.png");
+        await header.locator('[data-action="theme"]').click();
+        assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+        assert.equal(await header.locator('[data-action="theme"]').getAttribute("aria-pressed"), "true");
+        if (width === 360) await capture(page, "mobile-dashboard-360-light.png");
+
+        await header.locator('[data-action="focus-menu-search"]').click();
+        await page.locator("#launcher.show.searching").waitFor();
+        assert.equal(await page.evaluate(() => document.activeElement?.id), "assistantSearch");
+        assert.equal(await page.locator("#assistantResults").isVisible(), true);
+        assert.match(await page.locator("#assistantResults").textContent(), /Ready/);
+        await page.keyboard.press("Escape");
+        await page.waitForFunction(() => !document.querySelector("#launcher")?.classList.contains("searching"));
+        assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
+        await page.keyboard.press("Escape");
+        assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "true");
+        assert.deepEqual(runtimeErrors, []);
+      } finally {
+        await context.close();
+      }
+    });
   }
 });
