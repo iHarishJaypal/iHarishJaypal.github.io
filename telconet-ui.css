@@ -378,3 +378,10 @@ body.menu-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .assistant-result,.assistant-suggestion,.launcher-more-apps{transition:none!important}
 }
+
+/* Active chart range mirrors the selected sample period. */
+.soft-btn.active{
+  border-color:color-mix(in srgb,var(--blue) 45%,var(--line));
+  background:color-mix(in srgb,var(--blue) 12%,var(--surface2));
+  color:var(--blue);
+}
