@@ -69,18 +69,31 @@ Use **"Aliens Brand"** as the shorthand for this visual system and interaction p
 - Run `node scripts/prototype-audit.mjs` from the repository root for the dependency-free source checks. GitHub Actions runs this audit on relevant pushes and pull requests.
 - The latest successful source-audit run passed all 10 checks. The GitHub Pages deployment workflow also completed successfully for the preceding audited revision.
 
+## Reference asset provenance — 2026-11-19
+The following Library assets were inspected as the visual source of truth:
+
+- Desktop sidebar and workspace: `image(20261115-054556).png`
+- Desktop top navigation: `image(20261115-054622).png`
+- Dark profile popover: `image(20261115-054645).png`
+- Light profile popover: `image(20261115-054719).png`
+- Mobile header: `image(20261115-054755).png`
+- Mobile primary navigation: `image(20261115-055306).png`
+- SignIn: `image(20261115-072554).png`
+- Mobile menu recording: `20261115-0726-43.4686777.mp4`
+
+The 23.25-second mobile recording was sampled throughout its sequence. It confirms the eight-app compact preview, the 39-entry Score Menu, the More Apps 26-app grid, Grid/List switching, the ready state, local search matches, and the no-local-destination state.
+
+## Latest refinement and verification record — 2026-11-19
+- The SignIn prototype was simplified to match the supplied reference more closely: work email, password with Show/Hide, a return-to-dashboard control, and the clear no-real-credentials notice. Unsupported Forgot Password, keep-signed-in, Google sign-in, and account-creation controls were removed. No authentication backend or credential storage was added.
+- Browser audit coverage now checks the compact mobile header and four-item navigation at 320, 360, 375, 414, and 430 CSS pixels, including header/nav geometry, theme switching, the header search entry point, and horizontal overflow. The desktop profile screenshot waits for transient toast feedback to clear.
+- The dependency-free source audit passed on commit `461a8ac5aca2d4067365aa1306846e34193ba613`. The GitHub Pages build and deployment also succeeded for that commit.
+- The latest responsive Chromium audit run is `44489321992`. Its static stage passed; its browser stage was still installing Chromium system dependencies at the time of this record. Do not claim the expanded responsive suite has passed until that job completes.
+- An earlier full Chromium browser audit, run `44478137693`, completed successfully and generated 12 screenshots covering desktop dark/light dashboards, profile and SignIn, the mobile compact menu, full app grid, Score Menu, and Ask Cyborg states. Those screenshots were inspected during this run.
+
 ## Known verification blockers
-- `score.base.software` remains inaccessible through the currently available web access path. Do not claim pixel-perfect parity until a real reference access path is available.
-- The connected browser context is unavailable in this session. Static checks and the Pages deployment succeeded, but live desktop/mobile rendering, touch behavior, and measured horizontal-overflow checks remain unverified.
-- SignIn is a local prototype only. No real credentials are sent or stored, and no production authentication service is connected.
+- `score.base.software` remains inaccessible through the currently available web access path. Do not claim pixel-perfect parity until a genuine access path is available.
+- The connected browser extension context is unavailable. CI Playwright provides a real Chromium verification path, but the latest expanded responsive run is still pending.
+- The GitHub Pages build/deployment workflow succeeded for commit `461a8ac5aca2d4067365aa1306846e34193ba613`, but the published site could not be opened through the available web access tool in this run.
+- SignIn remains a local prototype only. It does not send or store credentials and does not connect to an authentication provider.
 
 **Project status: IN PROGRESS.** Do not start the production WebApp, Dart app, or Python app as part of this prototype work.
-
-
-## Latest refinement run — 2026-11-19
-- The supplied mobile-menu video was inspected frame-by-frame. Compact Grid mode now shows the first eight Aliens Apps and a single **Dashboard** preview card under Score Menu; the count remains 39. List mode exposes the complete alphabetical 39-entry menu, and More Apps opens the 26-app grid.
-- The first eight app tiles now use local SVG icon definitions chosen to match the visible Base, Score, Project, Code, AI, Drive, Apps, and Admin concepts in the video.
-- Light-theme TelcoNet wordmark contrast was corrected. The SignIn demo now includes email-or-username, password visibility, local-only keep-signed-in checkbox, and explicit placeholder actions for password recovery, Google sign-in, and account creation. The no-real-credentials warning remains visible; no authentication backend was added.
-- The source audit passed on commit `779d37fe3e6464bb85c98ceca4597b91ccf551b6`, and the GitHub Pages build/deployment completed successfully for that commit.
-- The Playwright browser audit on the preceding verified revision completed successfully and produced 12 screenshots. The new browser audit for commit `779d37fe3e6464bb85c98ceca4597b91ccf551b6` passed its static stage but remained in progress during Chromium system-dependency installation at the time of this record. Do not treat the new responsive run as passed until its browser job completes.
-- The connected browser extension context remains unavailable. CI Playwright is the available real-browser verification path. `score.base.software` remains inaccessible through a genuine available access path.
