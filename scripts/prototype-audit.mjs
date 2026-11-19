@@ -51,6 +51,11 @@ test("the compact launcher and full Score Menu retain their reference counts", (
   assert.match(css, /\.launcher\.all-apps \.launcher-grid \.app-tile:nth-child\(n\+9\)\{display:flex!important\}/);
 });
 
+test("compact mobile launcher uses one separator between app preview and Score Menu", () => {
+  assert.match(css, /\.launcher:not\(\.list-mode\):not\(\.all-apps\):not\(\.searching\) #appGrid\{[^}]*border-bottom:1px solid var\(--line\)/);
+  assert.doesNotMatch(css, /\.launcher:not\(\.list-mode\):not\(\.all-apps\):not\(\.searching\) \.score-menu-head\{[^}]*border-top:/);
+});
+
 test("every navigation destination has a real prototype view", () => {
   const destinations = [...new Set([...html.matchAll(/data-view="([^"]+)"/g)].map((match) => match[1]))];
   destinations.forEach((destination) => {
