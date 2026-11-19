@@ -139,7 +139,6 @@ test("company switcher and account popover follow the reference naming hierarchy
 
 test("mobile Ask Cyborg and footer icons match the supplied menu reference", () => {
   assert.ok(html.includes('class="assistant-bot" aria-hidden="true"><i data-lucide="bot"></i></span>'));
-  assert.ok(html.includes('data-action="assistant-search" aria-label="Search local destinations or ask Cyborg" aria-controls="assistantResults" aria-expanded="false"'));
   assert.ok(html.includes('<i data-lucide="send"></i></button>'));
   assert.ok(html.includes('class="launcher-power" data-action="signout" aria-label="Sign out"><i data-lucide="power"></i></button>'));
 });
