@@ -747,3 +747,30 @@ test("desktop and mobile search fields show a visible ring when focused", async 
     await mobile.context.close();
   }
 });
+
+
+test("keyboard skip link moves focus directly to main content on desktop and mobile", async () => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+    const { context, page } = await openPage(viewport);
+    try {
+      await page.keyboard.press("Tab");
+      assert.equal(
+        await page.locator(".skip-link").evaluate((element) => element === document.activeElement),
+        true,
+        viewport.width + "px: the first Tab stop should be Skip to main content"
+      );
+      const skipBounds = await page.locator(".skip-link").boundingBox();
+      assert.ok(skipBounds && skipBounds.y >= 0 && skipBounds.y < 80,
+        viewport.width + "px: focused skip link should be visible near the top edge");
+      await page.keyboard.press("Enter");
+      assert.equal(await page.evaluate(() => document.activeElement?.id), "mainContent",
+        viewport.width + "px: activating the skip link should focus main content");
+      assert.equal(await page.evaluate(() => location.hash), "#mainContent");
+      await assertNoHorizontalOverflow(page, viewport.width + "px skip navigation");
+      if (viewport.width === 390) await capture(page, "mobile-skip-link-focused.png");
+      assert.deepEqual(runtimeErrors, []);
+    } finally {
+      await context.close();
+    }
+  }
+});

@@ -87,6 +87,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
 </head>
 <body>
 <div class="app" id="app">
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
   <aside class="rail" aria-label="Quick apps">
     <div class="rail-logo" aria-label="TelcoNet">T</div>
     <button class="rail-btn dock-launcher" title="App launcher" data-action="launcher"><i data-lucide="grid-2x2"></i></button>
@@ -130,7 +131,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
   </header>
   <header class="mobile-brand" aria-label="Mobile header"><div class="mb-left"><span class="brandmark">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span></div><div class="mb-actions"><button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"><i data-lucide="moon"></i></button><button data-action="focus-menu-search" aria-label="Search apps"><i data-lucide="search"></i></button><button data-action="profile" aria-label="Open profile"><i data-lucide="user-round"></i></button></div></header>
   <nav class="mobile-bottom" aria-label="Mobile navigation"><button data-action="launcher" aria-label="Open apps menu"><span><i data-lucide="grid-2x2"></i></span>Menu</button><button class="active" data-view="dashboard" aria-current="page"><span><i data-lucide="layout-dashboard"></i></span>Dashboard</button><button data-view="aliens"><span><i data-lucide="user-round"></i></span>Aliens</button><button data-view="health" title="Is everything running well?"><span><i data-lucide="activity"></i></span>Is everything...</button></nav>
-  <main class="main" id="mainContent">
+  <main class="main" id="mainContent" tabindex="-1">
     <section class="view active" id="view-dashboard">
       <div class="page-head"><div><h1>Dashboard</h1><p>Your telecom operations, network health and team activity at a glance.</p><div class="statusline"><i></i> Source: <b style="color:var(--blue)">TelcoNet demo workspace</b> · Sample data</div></div><div class="page-actions"><button class="soft-btn" data-view="calendar" aria-label="Open calendar view">▦ Calendar</button><button class="soft-btn" data-action="toast" data-message="Refresh is a prototype placeholder; sample data is unchanged.">↻ Web refresh</button><button class="soft-btn" data-action="toast" data-message="Demo snapshot shown; live data is not connected.">Latest data</button></div></div>
       <div class="metrics">

@@ -312,3 +312,16 @@ test("desktop and mobile search fields retain visible focus-within affordances",
   assert.ok(focusStyles.includes("box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);"));
   assert.ok(focusStyles.includes("box-shadow: var(--shadow), 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);"));
 });
+
+
+test("keyboard skip link is first in the app shell and targets main content", () => {
+  const skipMarkup = '<a class="skip-link" href="#mainContent">Skip to main content</a>';
+  const appStart = html.indexOf('<div class="app" id="app">');
+  const skipStart = html.indexOf(skipMarkup);
+  const railStart = html.indexOf('<aside class="rail"');
+  assert.ok(appStart >= 0 && skipStart > appStart && skipStart < railStart,
+    "skip link must be the first app-shell control");
+  assert.match(html, /<main class="main" id="mainContent" tabindex="-1">/);
+  assert.match(css, /\.skip-link\{[^}]*position:\s*fixed/);
+  assert.match(css, /\.skip-link:focus\{[^}]*transform:\s*translateY\(0\)/);
+});

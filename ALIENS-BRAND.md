@@ -254,3 +254,15 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - The connected browser extension was retried, but still reports that no originating browser context is available. The external score.base.software reference and independent public-page opening remain unavailable through the current access path; no pixel-perfect or final-approval claim is made.
 
 **Project status: IN PROGRESS.** The 26-app grid, 39-entry Score Menu, existing mobile flow, desktop shell, profile, themes, and prototype-only SignIn remain preserved. No production WebApp, Dart app, Python app, or production authentication has been started.
+
+
+## Run 17 — Skip-to-main keyboard navigation (2026-11-19)
+
+- Re-inspected the latest `main` ref, current HTML/CSS/JavaScript, static and Chromium audit scripts, workflow configuration, recent commits, and latest Actions runs before editing. The starting main HEAD was `87f6300aec5714c33e2175c560e2d6f20ba5a748`; no concurrent branch update was present.
+- Re-opened the supplied desktop/mobile screenshots and inspected the 23.253-second mobile launcher recording at 0, 3, 6, 9, 12, 15, 18, and 21 seconds. The recording confirms the compact eight-app preview, More Apps grid, alphabetized Score Menu list, Ask Cyborg ready state, no-local-destination state, local matches, and persistent mobile footer. Existing visuals remain aligned with the available evidence; no speculative layout edits were made.
+- The navigation/action audit found that keyboard users had no direct way to bypass the fixed desktop rail, workspace sidebar, and top navigation before reaching the page content. Added a visually hidden-until-focused **Skip to main content** link as the first control inside the app shell and made the main landmark programmatically focusable. The link is hidden automatically when the app shell is replaced by the SignIn prototype.
+- Added a dependency-free static regression test and a Chromium test for desktop (1440px) and mobile (390px). The browser test verifies first-Tab order, visible focused link, activation, focus transfer to `#mainContent`, and absence of horizontal overflow.
+- The existing 26-app grid, 39-entry Score Menu, mobile launcher states, navigation destinations, profile, themes, chart, and prototype SignIn were not rebuilt or changed.
+- The connected browser extension still has no originating browser context. The external `score.base.software` reference remains inaccessible through the available access path; no live-site or pixel-perfect parity claim is made.
+
+**Project status: IN PROGRESS.** The external reference-site access and independent public-page verification blockers remain open. No production WebApp, Dart app, Python app, or production authentication has been started.

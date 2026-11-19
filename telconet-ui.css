@@ -530,3 +530,27 @@ body.light .wordmark small{color:#65738a}
 .assistant-search:focus-within {
   box-shadow: var(--shadow), 0 0 0 3px color-mix(in srgb, var(--blue) 32%, transparent);
 }
+
+
+/* Let keyboard users bypass the repeated app navigation without changing the reference layout. */
+.skip-link {
+  position: fixed;
+  z-index: 120;
+  top: 12px;
+  left: 12px;
+  transform: translateY(calc(-100% - 18px));
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  transition: transform .18s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid color-mix(in srgb, var(--blue) 75%, white);
+  outline-offset: 3px;
+}
