@@ -245,6 +245,12 @@ test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu
     assert.equal(await page.locator("#launcher").getAttribute("aria-hidden"), "false");
     assert.equal(await visibleCount(page.locator("#appList .menu-list-item")), 1, "compact Grid mode must show only the Dashboard Score Menu preview");
     assert.equal(await page.locator("#appList .menu-list-item:visible").getAttribute("data-app-name"), "Dashboard");
+    const compactDivider = await page.evaluate(() => ({
+      appGridBottom: getComputedStyle(document.querySelector("#appGrid")).borderBottomWidth,
+      scoreMenuTop: getComputedStyle(document.querySelector(".score-menu-head")).borderTopWidth
+    }));
+    assert.equal(compactDivider.appGridBottom, "1px", "the compact app preview should own the section divider");
+    assert.equal(compactDivider.scoreMenuTop, "0px", "Score Menu must not add a second divider");
     await page.locator("#assistantSearch").click();
     await capture(page, "mobile-ask-cyborg-ready.png");
     await page.keyboard.press("Escape");
