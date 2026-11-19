@@ -211,6 +211,19 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     assert.equal(await visibility.textContent(), "Show");
     await page.locator('[data-action="back-home"]').click();
     assert.equal(await page.locator("#view-dashboard").evaluate((node) => node.classList.contains("active")), true);
+
+    await page.locator(".avatar-btn").click();
+    await page.locator("#profilePop.show").waitFor();
+    await page.locator('#profilePop [data-action="signout"]').click();
+    await page.locator("#signin.show").waitFor();
+    await page.locator("#email").fill("demo-cancel@example.invalid");
+    await password.fill("prototype-cancel-only");
+    await visibility.click();
+    await page.locator('[data-action="back-home"]').click();
+    assert.equal(await page.locator("#email").inputValue(), "", "leaving SignIn must clear the email field");
+    assert.equal(await password.inputValue(), "", "leaving SignIn must clear the password field");
+    assert.equal(await password.getAttribute("type"), "password", "leaving SignIn must hide the password");
+    assert.equal(await visibility.textContent(), "Show");
     assert.deepEqual(runtimeErrors, []);
   } finally {
     await context.close();
