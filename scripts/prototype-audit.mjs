@@ -322,6 +322,6 @@ test("keyboard skip link is first in the app shell and targets main content", ()
   assert.ok(appStart >= 0 && skipStart > appStart && skipStart < railStart,
     "skip link must be the first app-shell control");
   assert.match(html, /<main class="main" id="mainContent" tabindex="-1">/);
-  assert.match(css, /\.skip-link\{[^}]*position:\s*fixed/);
-  assert.match(css, /\.skip-link:focus\{[^}]*transform:\s*translateY\(0\)/);
+  assert.match(css, /\.skip-link\s*\{[^}]*position:\s*fixed/);
+  assert.match(css, /\.skip-link:focus\s*\{[^}]*transform:\s*translateY\(0\)/);
 });
