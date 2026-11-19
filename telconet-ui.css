@@ -397,3 +397,8 @@ body.menu-open{overflow:hidden}
   .launcher{padding-top:calc(10px + env(safe-area-inset-top))}
   .profile-pop{bottom:calc(91px + env(safe-area-inset-bottom))}
 }
+
+/* Collapsing the workspace sidebar must reclaim the content width. */
+body.sidebar-collapsed .workspace{transform:translateX(-100%)}
+body.sidebar-collapsed .topbar{left:68px}
+body.sidebar-collapsed .main{margin-left:68px}
