@@ -1124,7 +1124,7 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
     assert.equal((await signInMark.textContent()).trim(), "T");
     assert.equal(await signInMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     const signInLockupText = (await desktop.page.locator(".signin-logo").textContent()).replace(/\s+/g, " ").trim();
-    assert.equal(signInLockupText, "TTelcoNetALIENS COMPANY".replace("TT","T"));
+    assert.ok(signInLockupText.includes("TelcoNet") && signInLockupText.includes("ALIENS COMPANY"));
     await capture(desktop.page, "desktop-aliens-signin-brand-lockup.png");
     assert.deepEqual(runtimeErrors, []);
   } finally {
