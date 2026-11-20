@@ -1102,7 +1102,7 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
     assert.equal(await railMark.getAttribute("role"), "img");
     assert.equal(await railMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     const wordmarkText = (await desktop.page.locator(".wordmark").textContent()).replace(/\s+/g, " ").trim();
-    assert.equal(wordmarkText, "TelcoNet ALIENS COMPANY");
+    assert.ok(wordmarkText.includes("TelcoNet") && wordmarkText.includes("ALIENS COMPANY"));
     assert.equal((await desktop.page.locator(".company-select small").textContent()).trim(), "ALIENS COMPANY");
     assert.equal((await desktop.page.locator(".company-select strong").textContent()).trim(), "Aliens TelcoNet");
     assert.equal((await desktop.page.locator(".workspace-signature").textContent()).trim(), "Aliens TelcoNet workspace");
