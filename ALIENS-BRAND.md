@@ -497,3 +497,42 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - GitHub's combined commit-status endpoint still returns no status contexts; the successful custom Actions workflow is the verification source. No pixel-perfect parity claim is made.
 
 **Project status: IN PROGRESS — NOT APPROVED COMPLETE.** Remaining blockers: `score.base.software` access, the originating connected-browser context and independent public-page verification. The 26-app grid, 39-entry Score Menu, company/product hierarchy, desktop shell, mobile flow, profile, themes and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+
+## Run 25 — Visible TelcoNet / ALIENS COMPANY brand system (2026-11-20)
+
+### Fresh repository and reference inspection
+
+- Re-read the latest main branch, recent commits, index.html, telconet-ui.css, telconet-ui.js, both audit scripts and the GitHub Actions workflow. Starting HEAD was 9969ed26c6784ab3fe2657ae528677d2d8b96f3c; the immediately preceding change only updated reference-matched app-grid icons.
+- Opened the seven original Library screenshots from 2026-11-15, the later TelcoNet hierarchy screenshot image(20261115-092415).png, and the 23.1-second mobile-menu video 20261115-0726-43.4686777.mp4. The video was sampled at 0, 1.5, 3, 4.5, 6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5, 21 and 22.5 seconds.
+- The 09:24 reference clearly shows a square blue-violet “T” product mark in the 68px rail, a high-contrast “TelcoNet” wordmark with “ALIENS COMPANY” beneath it, and “Aliens TelcoNet” in the company switcher. A source-code gap was confirmed: the external stylesheet explicitly hid .rail-logo; the SignIn mark span was empty; the wordmark's dark gradient lowered contrast; and the compact mobile SignIn hid the left identity panel, leaving no visible product/company lockup.
+
+### Visible brand implementation
+
+- Restored the square “T” product mark in the desktop rail and unified the square mark treatment across the mobile dashboard header and desktop SignIn lockup.
+- Replaced the low-contrast gradient wordmark with theme-aware, high-contrast text; the “ALIENS COMPANY” signature now uses the reference blue accent in dark and light themes.
+- Made the company switcher expose the “ALIENS COMPANY” brand line while preserving “Aliens TelcoNet” as its company/workspace name.
+- Added a subtle brand-blue tint to the company icon surface and aligned the sidebar footer to “Aliens TelcoNet workspace”.
+- Added a compact “T / TelcoNet / ALIENS COMPANY” lockup inside the mobile SignIn card, because the desktop SignIn introduction is intentionally hidden on narrow phones. This remains a visual prototype only; no production authentication was added.
+- Preserved the 26-app grid, 39 Score Menu entries, mobile menu/search states, keyboard behavior, profile, theme controls, chart ranges, safe areas and honest placeholders.
+
+### Visual and functional verification
+
+- Compared a crop of the supplied 09:24 TelcoNet screenshot directly against the new Chromium desktop capture. The visible T mark, rail/workspace split, wordmark, company selector, and gradient New action align with the reference composition. Dark and light dashboard captures were also inspected.
+- Inspected 28 final Chromium screenshots, including desktop dark/light brand lockups, desktop SignIn, mobile dashboard brand, 320px and 375px mobile SignIn, compact mobile menu, full app grid, Score Menu, Ask Cyborg ready/local/no-local states, profile and navigation.
+- Re-sampled mobile video states against the Playwright captures: compact eight-app preview, More Apps, full 26-app grid, 39-entry list mode, Ready suggestions, no-local destination, and the two local matches (Amazon and Company) remain consistent with the recording.
+- Static audit: **32/32 passed**.
+- Responsive/interaction Chromium audit: **30/30 passed** in [Actions run 44657911497](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44657911497). It retains the existing viewport matrix (320, 360, 375, 414, 430px), 26/39 menu assertions, navigation, focus, safe-area, theme and overflow checks; the new mobile SignIn brand is visible at narrow width.
+- Browser screenshot artifact: **14593369232** (28 PNGs; downloaded and visually inspected).
+- GitHub Pages build/deployment for final code HEAD 73f790819bccc08c0caf470aafa393f7862848e2: **SUCCESS**, [run 44657911266](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44657911266).
+- Two early browser runs exposed brittle text-content assertions (HTML concatenates adjacent text nodes without inserting whitespace). The assertions were corrected; only the final 30/30 successful run is counted. No runtime visual regression was found.
+- GitHub's combined commit-status API still returns no status contexts; the custom Actions workflow is the verification source. No pixel-perfect parity claim is made.
+
+### Remaining external verification blockers
+
+- The connected Browser extension still reports: “Browser access requires the originating browser context.” The tab-list retry was made in this run.
+- Direct opening of https://iharishjaypal.github.io/ through the web access path still returns an internal access error, even though GitHub Pages deployment succeeded. The CI Chromium screenshots therefore verify the committed repository build locally, not an independently opened public page.
+- score.base.software has no newly available genuine access path; it was not retried through the same blocked route.
+- These access limitations do not prevent comparison against the supplied Library references, but independent public-page verification remains outstanding.
+
+**Project status: IN PROGRESS — VISIBLE ALIENS BRAND PASS AND LOCAL VISUAL/FUNCTIONAL AUDIT PASSED; INDEPENDENT PUBLIC VERIFICATION BLOCKED.** Production WebApp, Dart app, Python app and production authentication remain out of scope.
