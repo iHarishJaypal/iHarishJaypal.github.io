@@ -1144,7 +1144,12 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
     await mobile.page.locator("#profilePop.show").waitFor();
     await mobile.page.locator('#profilePop [data-action="signout"]').click();
     await mobile.page.locator("#signin.show").waitFor();
-    assert.equal((await mobile.page.locator(".signin-logo .brandmark").textContent()).trim(), "T");
+    const mobileSignInBrand = mobile.page.locator(".signin-mobile-brand");
+    assert.equal(await mobileSignInBrand.isVisible(), true, "mobile SignIn must keep the Aliens product/company lockup visible");
+    const mobileSignInText = await mobileSignInBrand.textContent();
+    assert.ok(mobileSignInText.includes("TelcoNet") && mobileSignInText.includes("ALIENS COMPANY"));
+    assert.equal((await mobileSignInBrand.locator(".brandmark").textContent()).trim(), "T");
+    assert.equal(await mobileSignInBrand.locator(".brandmark").evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     await capture(mobile.page, "mobile-aliens-signin-brand-lockup.png");
     await assertNoHorizontalOverflow(mobile.page, "mobile Aliens brand lockup");
     assert.deepEqual(runtimeErrors, []);

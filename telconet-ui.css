@@ -688,3 +688,42 @@ body.light .wordmark small{
   letter-spacing:.1px;
   white-space:nowrap;
 }
+
+
+/* The compact SignIn view keeps the TelcoNet / ALIENS COMPANY lockup visible on phones. */
+.signin-mobile-brand{display:none}
+@media(max-width:850px){
+  .signin-mobile-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 20px;
+    padding:0 0 16px;
+    border-bottom:1px solid rgba(255,255,255,.09);
+  }
+  .signin-mobile-brand .brandmark{
+    display:grid;
+    flex:0 0 36px;
+    width:36px;
+    height:36px;
+    place-items:center;
+    border-radius:12px;
+    background:linear-gradient(135deg,#56a8ff 0%,#7468ef 100%);
+    color:#fff;
+    font:700 15px 'Space Grotesk',sans-serif;
+    box-shadow:0 5px 15px rgba(76,133,235,.2);
+  }
+  .signin-mobile-brand b{
+    display:block;
+    color:#f5f6fa;
+    font:700 16px 'Space Grotesk',sans-serif;
+  }
+  .signin-mobile-brand small{
+    display:block;
+    margin-top:2px;
+    color:#80bfff;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1px;
+  }
+}

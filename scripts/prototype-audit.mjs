@@ -495,3 +495,13 @@ test("Aliens Company identity is visibly applied across desktop, mobile and Sign
   assert.ok(brandCss.includes(".signin-logo .brandmark") && brandCss.includes("border-radius:12px;"));
   assert.ok(brandCss.includes(".mobile-brand .brandmark"));
 });
+
+
+test("mobile SignIn retains a visible TelcoNet and ALIENS COMPANY lockup", () => {
+  assert.ok(html.includes('<div class="signin-mobile-brand"><span class="brandmark" aria-hidden="true">T</span><span><b>TelcoNet</b><small>ALIENS COMPANY</small></span></div>'));
+  const brandCss = css.slice(css.lastIndexOf("/* The compact SignIn view"));
+  assert.ok(brandCss.includes(".signin-mobile-brand{display:none}"));
+  assert.ok(brandCss.includes("@media(max-width:850px)"));
+  assert.ok(brandCss.includes("display:flex;"));
+  assert.ok(brandCss.includes("border-radius:12px;"));
+});
