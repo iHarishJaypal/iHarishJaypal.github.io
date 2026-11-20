@@ -131,7 +131,7 @@ test("company switcher and account popover follow the reference naming hierarchy
   const profileEnd = html.indexOf("</aside>", profileStart);
   assert.ok(profileStart >= 0 && profileEnd > profileStart, "profile popover markup must exist");
   const profile = html.slice(profileStart, profileEnd);
-  assert.ok(html.includes('<strong>Aliens TelcoNet</strong>'), "company switcher must retain Aliens TelcoNet");
+  assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'), "company switcher must expose ALIENS COMPANY and retain Aliens TelcoNet");
   assert.ok(profile.includes("Hi, Aliens!"), "account greeting must match the supplied reference");
   assert.doesNotMatch(profile, /Aliens TelcoNet workspace/, "profile popover must not add an unreferenced workspace subtitle");
   assert.match(css, /@media\(min-width:851px\)\{\.profile-pop\{min-height:460px\}\}/);
@@ -191,7 +191,7 @@ test("product, company, switcher and prototype SignIn labels stay distinct", () 
   assert.match(html, /<title>TelcoNet — Network Operations Workspace \| ALIENS COMPANY<\/title>/);
   assert.match(html, /TelcoNet<small>ALIENS COMPANY<\/small>/);
   assert.match(html, /<strong>Aliens TelcoNet<\/strong>/);
-  assert.match(html, /<b>TelcoNet<\/b><small style="display:block;color:#999;font-size:11px">ALIENS COMPANY<\/small>/);
+  assert.match(html, /<b>TelcoNet<\/b><small class="brand-company">ALIENS COMPANY<\/small>/);
   assert.match(html, /placeholder="Search Aliens TelcoNet"/);
   assert.match(html, /Do not enter real credentials\. Nothing is sent or stored\./);
   assert.match(html, /<h2>Sign in<\/h2>/);
@@ -479,4 +479,19 @@ test("theme toggle keeps a stable accessible name and reports the active theme",
     "pressed state must represent the active light theme");
   assert.ok(sync.includes("b.setAttribute('title',label)"),
     "hover title may describe the next theme action");
+});
+
+
+test("Aliens Company identity is visibly applied across desktop, mobile and SignIn", () => {
+  assert.ok(html.includes('<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T</div>'));
+  assert.ok(html.includes('<div class="wordmark">TelcoNet<small>ALIENS COMPANY</small></div>'));
+  assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'));
+  assert.ok(html.includes('class="workspace-signature">Aliens TelcoNet workspace</span>'));
+  assert.ok(html.includes('class="brandmark" aria-hidden="true">T</span>'));
+  const brandCss = css.slice(css.lastIndexOf("/* Aliens Company identity:"));
+  assert.ok(brandCss.includes(".rail-logo{") && brandCss.includes("display:grid;"));
+  assert.ok(brandCss.includes(".wordmark,") && brandCss.includes("color:var(--text);"));
+  assert.ok(brandCss.includes(".company-select small,") && brandCss.includes("color:var(--blue);"));
+  assert.ok(brandCss.includes(".signin-logo .brandmark") && brandCss.includes("border-radius:12px;"));
+  assert.ok(brandCss.includes(".mobile-brand .brandmark"));
 });

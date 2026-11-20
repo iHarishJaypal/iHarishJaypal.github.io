@@ -1091,3 +1091,64 @@ test("reference-visible mobile app tiles use the supplied Aliens icon artwork", 
     await mobile.context.close();
   }
 });
+
+
+test("Aliens Company product lockup is visible across desktop, mobile and SignIn", async () => {
+  const desktop = await openPage({ width: 1440, height: 900 });
+  try {
+    const railMark = desktop.page.locator(".rail-logo");
+    assert.equal(await railMark.isVisible(), true, "desktop rail must show the TelcoNet product mark");
+    assert.equal((await railMark.textContent()).trim(), "T");
+    assert.equal(await railMark.getAttribute("role"), "img");
+    assert.equal(await railMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
+    const wordmarkText = (await desktop.page.locator(".wordmark").textContent()).replace(/\s+/g, " ").trim();
+    assert.equal(wordmarkText, "TelcoNet ALIENS COMPANY");
+    assert.equal((await desktop.page.locator(".company-select small").textContent()).trim(), "ALIENS COMPANY");
+    assert.equal((await desktop.page.locator(".company-select strong").textContent()).trim(), "Aliens TelcoNet");
+    assert.equal((await desktop.page.locator(".workspace-signature").textContent()).trim(), "Aliens TelcoNet workspace");
+    const darkWordmarkColor = await desktop.page.locator(".wordmark").evaluate((el) => getComputedStyle(el).color);
+    assert.notEqual(darkWordmarkColor, "rgba(0, 0, 0, 0)", "TelcoNet wordmark must not render as transparent text");
+    await capture(desktop.page, "desktop-aliens-brand-lockup-dark.png");
+
+    await desktop.page.locator(".rail-btn.dock-theme").click();
+    assert.equal(await desktop.page.locator("body").evaluate((el) => el.classList.contains("light")), true);
+    const lightWordmarkColor = await desktop.page.locator(".wordmark").evaluate((el) => getComputedStyle(el).color);
+    assert.notEqual(lightWordmarkColor, "rgba(0, 0, 0, 0)", "light-theme TelcoNet wordmark must remain visible");
+    await capture(desktop.page, "desktop-aliens-brand-lockup-light.png");
+
+    await desktop.page.locator('.topbar [data-action="profile"]').click();
+    await desktop.page.locator("#profilePop.show").waitFor();
+    await desktop.page.locator('#profilePop [data-action="signout"]').click();
+    await desktop.page.locator("#signin.show").waitFor();
+    const signInMark = desktop.page.locator(".signin-logo .brandmark");
+    assert.equal((await signInMark.textContent()).trim(), "T");
+    assert.equal(await signInMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
+    const signInLockupText = (await desktop.page.locator(".signin-logo").textContent()).replace(/\s+/g, " ").trim();
+    assert.equal(signInLockupText, "TTelcoNetALIENS COMPANY".replace("TT","T"));
+    await capture(desktop.page, "desktop-aliens-signin-brand-lockup.png");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await desktop.context.close();
+  }
+
+  const mobile = await openPage({ width: 375, height: 812 });
+  try {
+    const mobileMark = mobile.page.locator(".mobile-brand .brandmark");
+    assert.equal(await mobileMark.isVisible(), true);
+    assert.equal((await mobileMark.textContent()).trim(), "T");
+    assert.equal(await mobileMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
+    const mobileLockupText = (await mobile.page.locator(".mobile-brand").textContent()).replace(/\s+/g, " ").trim();
+    assert.ok(mobileLockupText.includes("TelcoNet") && mobileLockupText.includes("ALIENS COMPANY"));
+    await capture(mobile.page, "mobile-aliens-brand-lockup.png");
+    await mobile.page.locator('.mobile-brand [data-action="profile"]').click();
+    await mobile.page.locator("#profilePop.show").waitFor();
+    await mobile.page.locator('#profilePop [data-action="signout"]').click();
+    await mobile.page.locator("#signin.show").waitFor();
+    assert.equal((await mobile.page.locator(".signin-logo .brandmark").textContent()).trim(), "T");
+    await capture(mobile.page, "mobile-aliens-signin-brand-lockup.png");
+    await assertNoHorizontalOverflow(mobile.page, "mobile Aliens brand lockup");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await mobile.context.close();
+  }
+});
