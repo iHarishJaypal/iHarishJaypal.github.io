@@ -469,3 +469,31 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - No pixel-perfect parity claim is made.
 
 **Project status: IN PROGRESS — NOT APPROVED COMPLETE.** The 26-app grid, 39-entry Score Menu, product/company hierarchy, desktop shell, mobile navigation, profile, themes and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+
+## Run 24 — Stable theme-toggle accessible name and pressed state (2026-11-20)
+
+### Repository and reference review
+
+- Re-inspected the latest `main` branch, recent commits, recursive tree, `index.html`, `telconet-ui.css`, `telconet-ui.js`, both audit scripts and the GitHub Actions workflow before editing. Starting HEAD was `2fd3947197def268b26ee1bb73756431d3dd1100`; the latest prior implementation commit was `0e60373f3f2d5d4f8e01af5356c966f4e49964c1`. Existing app-grid, Score Menu, mobile launcher, navigation and SignIn work was not rebuilt.
+- Re-opened the seven supplied reference screenshots: `image(20261115-054556).png`, `image(20261115-054622).png`, `image(20261115-054645).png`, `image(20261115-054719).png`, `image(20261115-054755).png`, `image(20261115-055306).png` and `image(20261115-072554).png`. Reviewed desktop dark/light dashboards, profile popover, top navigation, mobile navigation and SignIn.
+- Re-sampled the supplied `20261115-0726-43.4686777.mp4` recording (23.253313 seconds) at 0, 3, 6, 9, 12, 15, 18, 21 and 23 seconds. The compact 8-app preview, 26-app grid, 39-entry Score Menu, Grid/List modes, Ask Cyborg Ready/local/no-local states and fixed mobile footer remain intact.
+- Retried the connected browser tab context; the browser connector still requires its originating browser context. No new genuine access route to `score.base.software` was available, so it was not retried through the same blocked path. Independent public-page opening remains unverified.
+
+### Implementation
+
+- The theme toggle previously changed its accessible name between “Switch to light theme” and “Switch to dark theme” while also exposing `aria-pressed`. That mixes a toggle button's name with its changing action label and can make the control harder to track for assistive-technology users.
+- The accessible name is now stable as “Toggle light and dark theme”. `aria-pressed` carries the current state (`true` for light theme, `false` for dark theme), while the visible hover title remains dynamic to describe the next action.
+- Added the initial accessible name and pressed state to the desktop rail button so it is correctly described before the synchronization script runs. The same synchronization covers desktop and mobile theme buttons.
+- No CSS, dimensions, spacing, icon artwork, layout or authentication behavior changed. The product/company hierarchy remains “TelcoNet”, “ALIENS COMPANY” and “Aliens TelcoNet”.
+
+### Verification
+
+- Static prototype audit: **29/29 passed** in [Actions run 44646214118](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44646214118).
+- Responsive and interaction Chromium/Playwright audit: **28/28 passed** in the same run. Desktop and mobile theme-toggle names remain stable; `aria-pressed` changes correctly on theme switch and after persisted-theme reload.
+- Existing mobile viewport matrix passed at 320, 360, 375, 414 and 430px. Existing checks for 8/26/39 launcher states, navigation actions, profile, SignIn, focus behavior, safe areas, reduced motion and horizontal overflow also passed.
+- Browser artifact **14589196097** contains 22 screenshots. Desktop dark/light dashboard, profile, SignIn, compact mobile menu, full app grid, Score Menu list, local search results and 320px no-local search state were visually inspected. The change is semantic only and does not alter the reference-aligned appearance.
+- GitHub Pages build/deployment for code HEAD `75f1be0623e5946e49ffb81f50ea56994e8e52b6`: **SUCCESS**, [run 44646213748](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44646213748).
+- GitHub's combined commit-status endpoint still returns no status contexts; the successful custom Actions workflow is the verification source. No pixel-perfect parity claim is made.
+
+**Project status: IN PROGRESS — NOT APPROVED COMPLETE.** Remaining blockers: `score.base.software` access, the originating connected-browser context and independent public-page verification. The 26-app grid, 39-entry Score Menu, company/product hierarchy, desktop shell, mobile flow, profile, themes and prototype SignIn remain preserved. Production WebApp, Dart app, Python app and production authentication remain out of scope.
