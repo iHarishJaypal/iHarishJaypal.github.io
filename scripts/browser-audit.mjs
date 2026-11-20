@@ -1017,6 +1017,10 @@ test("Ask Cyborg local matches reuse app-grid icon tones and concise accessible 
         resultBackground: icon ? getComputedStyle(icon).backgroundImage : "",
         sourceColor: source ? getComputedStyle(source).color : "",
         resultColor: icon ? getComputedStyle(icon).color : "",
+        sourceMarkup: source?.innerHTML || "",
+        resultMarkup: icon?.innerHTML || "",
+        sourceIconClass: source?.querySelector("svg")?.getAttribute("class") || "",
+        resultIconClass: icon?.querySelector("svg")?.getAttribute("class") || "",
         iconHidden: icon?.getAttribute("aria-hidden"),
         arrowHidden: row.querySelector(".assistant-result-arrow")?.getAttribute("aria-hidden")
       };
@@ -1027,12 +1031,61 @@ test("Ask Cyborg local matches reuse app-grid icon tones and concise accessible 
       assert.equal(item.resultTone, item.sourceTone, item.name + " result should reuse its source tone");
       assert.equal(item.resultBackground, item.sourceBackground, item.name + " result background should match its app tile");
       assert.equal(item.resultColor, item.sourceColor, item.name + " result glyph should match its app tile");
+      assert.equal(item.resultMarkup, item.sourceMarkup, item.name + " search result must preserve the source SVG artwork");
+      assert.equal(item.resultIconClass, item.sourceIconClass, item.name + " search result must preserve the source icon class");
       assert.equal(item.iconHidden, "true", "decorative result icon should be hidden from the accessible name");
       assert.equal(item.arrowHidden, "true", "decorative result chevron should be hidden from the accessible name");
     }
 
     await capture(mobile.page, "mobile-search-local-match-icons.png");
     await assertNoHorizontalOverflow(mobile.page, "mobile local-match icon refinement");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await mobile.context.close();
+  }
+});
+
+
+test("reference-visible mobile app tiles use the supplied Aliens icon artwork", async () => {
+  const mobile = await openPage({ width: 390, height: 844 });
+  try {
+    await mobile.page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await mobile.page.locator('[data-action="more-apps"]').click();
+    const actual = await mobile.page.locator("#appGrid .app-tile").evaluateAll((tiles) =>
+      tiles.map((tile) => ({
+        name: tile.dataset.appName,
+        tone: [...tile.querySelector(".app-icon").classList].find((token) => token.startsWith("tone-")),
+        icon: tile.querySelector(".app-icon svg")?.getAttribute("class") || ""
+      }))
+    );
+    assert.equal(actual.length, 26, "full app grid must retain all 26 entries");
+    const expected = {
+      Base: "icon-list-check",
+      Apps: "icon-wallet-dollar",
+      Assistant: "icon-percent",
+      Clock: "icon-trash-2",
+      School: "icon-list-minus",
+      Shopping: "icon-shopping-bag",
+      Amazon: "icon-venus-and-mars",
+      OTT: "icon-message-circle-clock",
+      ID: "icon-id-card",
+      AirDrop: "icon-smartphone-alert",
+      Messages: "icon-message-square",
+      Friends: "icon-users",
+      Notifications: "icon-bell",
+      Company: "icon-house",
+      Git: "icon-lock",
+      Store: "icon-shopping-bag",
+      Task: "icon-calendar-star"
+    };
+    for (const [name, iconClass] of Object.entries(expected)) {
+      const tile = actual.find((item) => item.name === name);
+      assert.ok(tile, name + " app tile should remain in the grid");
+      assert.ok(tile.icon.includes(iconClass), name + " must use the reference-matched icon");
+    }
+    assert.equal(actual.find((item) => item.name === "School").tone, "tone-red");
+    await capture(mobile.page, "mobile-app-grid-reference-icons.png");
+    await assertNoHorizontalOverflow(mobile.page, "reference app-grid icons");
     assert.deepEqual(runtimeErrors, []);
   } finally {
     await mobile.context.close();

@@ -426,6 +426,46 @@ test("SignIn safety notice is associated with both credential fields", () => {
 });
 
 
+
+test("reference-visible app tiles use the supplied icon artwork and Ask Cyborg preserves it", () => {
+  const gridStart = html.indexOf('<div class="launcher-grid" id="appGrid">');
+  const gridEnd = html.indexOf('<div class="launcher-list"', gridStart);
+  const grid = html.slice(gridStart, gridEnd);
+  const expected = {
+    Base: "list-check",
+    Apps: "wallet-dollar",
+    Assistant: "percent",
+    Clock: "trash-2",
+    School: "list-minus",
+    Shopping: "shopping-bag",
+    Amazon: "venus-and-mars",
+    OTT: "message-circle-clock",
+    ID: "id-card",
+    AirDrop: "smartphone-alert",
+    Messages: "message-square",
+    Friends: "users",
+    Notifications: "bell",
+    Company: "house",
+    Git: "lock",
+    Store: "shopping-bag",
+    Task: "calendar-star"
+  };
+  for (const [name, icon] of Object.entries(expected)) {
+    const nameIndex = grid.indexOf('data-app-name="' + name + '"');
+    const buttonStart = grid.lastIndexOf('<button class="app-tile"', nameIndex);
+    const buttonEnd = grid.indexOf("</button>", nameIndex);
+    const tile = nameIndex >= 0 && buttonStart >= 0 && buttonEnd > nameIndex ? grid.slice(buttonStart, buttonEnd) : "";
+    assert.ok(tile.includes('data-lucide="' + icon + '"'), name + " must use its reference-matched icon");
+  }
+  const schoolIndex = grid.indexOf('data-app-name="School"');
+  const schoolStart = grid.lastIndexOf('<button class="app-tile"', schoolIndex);
+  const schoolEnd = grid.indexOf("</button>", schoolIndex);
+  assert.ok(grid.slice(schoolStart, schoolEnd).includes('class="app-icon tone-red"'), "School keeps the reference red icon tile");
+  assert.match(appScript, /const iconMarkup = iconElement\?\.innerHTML\?\.trim\(\) \|\| "";/);
+  assert.ok(appScript.includes("items.push({ name, subtitle, searchText, icon, iconMarkup, iconTone, source: element, type });"));
+  assert.ok(appScript.includes("if (item.iconMarkup) icon.innerHTML = item.iconMarkup;"));
+});
+
 test("theme toggle keeps a stable accessible name and reports the active theme", () => {
   assert.match(html, /<button class="rail-btn dock-theme"[^>]*aria-label="Toggle light and dark theme"[^>]*aria-pressed="false"/);
   assert.match(html, /<button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"/);

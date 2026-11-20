@@ -607,3 +607,7 @@ a:focus-visible {
   margin-top:22px;
   padding:0 4px;
 }
+
+
+/* Search results reuse the original app tile SVG, scaled to the compact result affordance. */
+.assistant-result-icon svg{width:20px;height:20px;stroke-width:2}

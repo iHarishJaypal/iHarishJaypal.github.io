@@ -145,11 +145,12 @@
         seen.add(key);
         const iconElement = $(".app-icon,.list-icon", element);
         const icon = iconElement?.textContent?.trim() || "•";
+        const iconMarkup = iconElement?.innerHTML?.trim() || "";
         const iconTone = Array.from(iconElement?.classList || []).find((className) => className.startsWith("tone-")) || "";
         const detail = $("small", element)?.textContent?.trim() || element.dataset.appSubtitle || "";
         const subtitle = detail || (type === "app" ? "Aliens App" : "Workspace");
         const searchText = [name, element.dataset.searchTerms || ""].filter(Boolean).join(" ").toLocaleLowerCase();
-        items.push({ name, subtitle, searchText, icon, iconTone, source: element, type });
+        items.push({ name, subtitle, searchText, icon, iconMarkup, iconTone, source: element, type });
       });
     };
 
@@ -224,8 +225,10 @@
       button.setAttribute("aria-label", item.name + ", " + item.subtitle);
       button.dataset.resultIndex = String(index);
       const iconClass = item.iconTone ? "assistant-result-icon " + item.iconTone : "assistant-result-icon";
-      const icon = createElement("span", iconClass, item.icon);
+      const icon = createElement("span", iconClass);
       icon.setAttribute("aria-hidden", "true");
+      if (item.iconMarkup) icon.innerHTML = item.iconMarkup;
+      else icon.textContent = item.icon;
       button.append(
         icon,
         createElement("span", "assistant-result-copy")
