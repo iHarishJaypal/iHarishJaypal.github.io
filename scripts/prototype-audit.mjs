@@ -424,3 +424,19 @@ test("SignIn safety notice is associated with both credential fields", () => {
   assert.ok(noteRule.includes("font-size:11px;"));
   assert.ok(noteRule.includes("line-height:1.55;"));
 });
+
+
+test("theme toggle keeps a stable accessible name and reports the active theme", () => {
+  assert.match(html, /<button class="rail-btn dock-theme"[^>]*aria-label="Toggle light and dark theme"[^>]*aria-pressed="false"/);
+  assert.match(html, /<button data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"/);
+  const syncStart = html.indexOf("function syncThemeControls()");
+  const syncEnd = html.indexOf("function toggleTheme()", syncStart);
+  const sync = html.slice(syncStart, syncEnd);
+  assert.ok(syncStart >= 0 && syncEnd > syncStart, "theme control synchronization must be present");
+  assert.ok(sync.includes("b.setAttribute('aria-label','Toggle light and dark theme')"),
+    "theme toggle accessible name must remain stable");
+  assert.ok(sync.includes("b.setAttribute('aria-pressed',light?'true':'false')"),
+    "pressed state must represent the active light theme");
+  assert.ok(sync.includes("b.setAttribute('title',label)"),
+    "hover title may describe the next theme action");
+});

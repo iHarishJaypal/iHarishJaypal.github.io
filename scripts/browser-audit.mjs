@@ -313,15 +313,24 @@ test("browser chrome theme color follows persisted theme and prototype SignIn", 
   const { context, page } = await openPage({ width: 1440, height: 960 });
   try {
     const themeColor = page.locator('meta[name="theme-color"]');
+    const themeToggle = page.locator(".dock-theme");
     assert.equal(await themeColor.getAttribute("content"), "#08090d");
+    assert.equal(await themeToggle.getAttribute("aria-label"), "Toggle light and dark theme");
+    assert.equal(await themeToggle.getAttribute("aria-pressed"), "false");
+    assert.equal(await themeToggle.getAttribute("title"), "Switch to light theme");
 
-    await page.locator(".dock-theme").click();
+    await themeToggle.click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    assert.equal(await themeToggle.getAttribute("aria-label"), "Toggle light and dark theme");
+    assert.equal(await themeToggle.getAttribute("aria-pressed"), "true");
+    assert.equal(await themeToggle.getAttribute("title"), "Switch to dark theme");
     assert.equal(await themeColor.getAttribute("content"), "#e8f4ff");
 
     await page.evaluate(() => localStorage.setItem("score-theme", "light"));
     await page.reload({ waitUntil: "domcontentloaded" });
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    assert.equal(await themeToggle.getAttribute("aria-label"), "Toggle light and dark theme");
+    assert.equal(await themeToggle.getAttribute("aria-pressed"), "true");
     assert.equal(await themeColor.getAttribute("content"), "#e8f4ff");
 
     await page.locator(".avatar-btn").click();
@@ -341,8 +350,12 @@ test("browser chrome theme color follows persisted theme and prototype SignIn", 
 test("mobile menu matches the 8-app preview, 26-app grid and 39-entry Score Menu flow", async () => {
   const { context, page } = await openPage({ width: 390, height: 844 });
   try {
-    await page.locator(".mobile-brand [data-action='theme']").click();
+    const mobileThemeToggle = page.locator(".mobile-brand [data-action='theme']");
+    await mobileThemeToggle.click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
+    assert.equal(await mobileThemeToggle.getAttribute("aria-label"), "Toggle light and dark theme");
+    assert.equal(await mobileThemeToggle.getAttribute("aria-pressed"), "true");
+    assert.equal(await mobileThemeToggle.getAttribute("title"), "Switch to dark theme");
     assert.equal(await page.locator(".mobile-brand").isVisible(), true);
     assert.equal(await page.locator(".mobile-bottom").isVisible(), true);
     await assertNoHorizontalOverflow(page, "390px dashboard");
@@ -706,7 +719,9 @@ test("mobile header, brand hierarchy and primary navigation fit common phone wid
         assert.match(await header.textContent(), /TelcoNet/);
         assert.match(await header.textContent(), /ALIENS COMPANY/);
         assert.equal(await header.locator("button").count(), 3);
-        assert.equal(await header.locator('[data-action="theme"]').getAttribute("aria-label"), "Switch to light theme");
+        assert.equal(await header.locator('[data-action="theme"]').getAttribute("aria-label"), "Toggle light and dark theme");
+        assert.equal(await header.locator('[data-action="theme"]').getAttribute("aria-pressed"), "false");
+        assert.equal(await header.locator('[data-action="theme"]').getAttribute("title"), "Switch to light theme");
         assert.equal(await header.locator('[data-action="focus-menu-search"]').getAttribute("aria-label"), "Search apps");
         assert.equal(await header.locator('[data-action="profile"]').getAttribute("aria-label"), "Open profile");
         assert.equal(await nav.locator("button").count(), 4);

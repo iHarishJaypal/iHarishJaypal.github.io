@@ -97,7 +97,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <button class="rail-btn active dock-workspace" title="Workspace" data-view="dashboard" aria-current="page"><i data-lucide="network"></i></button>
     <button class="rail-btn dock-projects" title="Projects" data-action="toast" data-message="Projects are coming soon"><i data-lucide="folder-kanban"></i></button>
     <div class="rail-spacer"></div>
-    <button class="rail-btn dock-theme" title="Toggle theme" data-action="theme"><i data-lucide="moon"></i></button>
+    <button class="rail-btn dock-theme" title="Toggle light and dark theme" data-action="theme" aria-label="Toggle light and dark theme" aria-pressed="false"><i data-lucide="moon"></i></button>
     <button class="rail-btn dock-profile" title="Profile" data-action="profile" aria-controls="profilePop" aria-expanded="false"><i data-lucide="circle-user-round"></i></button>
     <button class="rail-btn dock-settings" title="Settings" data-action="toast" data-message="Settings panel coming soon"><i data-lucide="settings"></i></button>
   </aside>
@@ -329,7 +329,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
  function closeProfile(){$('#profilePop').classList.remove('show');$('#overlay').classList.remove('show');}
  let toastTimer;function toast(message){const t=$('#toast');t.textContent=message||'Coming soon';t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300);}
  function syncThemeColor(){const meta=$('meta[name="theme-color"]');if(meta){const signinVisible=$('#signin')?.classList.contains('show');meta.setAttribute('content',signinVisible?'#07080b':(document.body.classList.contains('light')?'#e8f4ff':'#08090d'));}}
- function syncThemeControls(){const light=document.body.classList.contains('light');$$('[data-action="theme"]').forEach(b=>{const label=light?'Switch to dark theme':'Switch to light theme';b.setAttribute('aria-pressed',light?'true':'false');b.setAttribute('aria-label',label);b.setAttribute('title',label);b.dataset.iconName=light?'sun':'moon';});window.updateTelcoThemeIcons?.();syncThemeColor();}
+ function syncThemeControls(){const light=document.body.classList.contains('light');$$('[data-action="theme"]').forEach(b=>{const label=light?'Switch to dark theme':'Switch to light theme';b.setAttribute('aria-pressed',light?'true':'false');b.setAttribute('aria-label','Toggle light and dark theme');b.setAttribute('title',label);b.dataset.iconName=light?'sun':'moon';});window.updateTelcoThemeIcons?.();syncThemeColor();}
  function toggleTheme(){document.body.classList.toggle('light');try{localStorage.setItem('score-theme',document.body.classList.contains('light')?'light':'dark');}catch(_){}syncThemeControls();}
  try{if(localStorage.getItem('score-theme')==='light')document.body.classList.add('light');}catch(_){}
  syncThemeControls();
