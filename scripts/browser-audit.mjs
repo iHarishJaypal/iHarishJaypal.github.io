@@ -253,7 +253,8 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     await page.locator("#profilePop.show").waitFor();
     const profileBounds = await page.locator("#profilePop").boundingBox();
     assert.equal(Math.round(profileBounds.width), 350);
-    assert.ok(profileBounds.height >= 460, "desktop account popover should retain the supplied tall panel proportions");
+    assert.equal(Math.round(profileBounds.height), 404, "desktop account popover should match the supplied 404px panel");
+    assert.equal(Math.round(profileBounds.y + profileBounds.height), 948, "desktop account popover should sit 12px above the viewport bottom");
     assert.match(await page.locator("#profilePop").textContent(), /Hi, Aliens!/);
     assert.doesNotMatch(await page.locator("#profilePop").textContent(), /Aliens TelcoNet workspace/);
     await capture(page, "desktop-profile-popover.png");
@@ -1200,6 +1201,9 @@ test("wide desktop shell and profile match the supplied reference proportions in
         topnav: rect(".topnav"),
         main: rect("#mainContent"),
         chart: rect(".chart-wrap"),
+        mainPaddingTop: getComputedStyle(document.querySelector("#mainContent")).paddingTop,
+        searchHeight: rect(".search").height,
+        collapseHeight: rect(".collapse-btn").height,
         wordmarkColor: getComputedStyle(document.querySelector(".wordmark")).color,
         productMark: getComputedStyle(document.querySelector(".rail-logo")).backgroundImage
       };
@@ -1209,10 +1213,13 @@ test("wide desktop shell and profile match the supplied reference proportions in
     assert.equal(Math.round(geometry.workspace.width), 300);
     assert.equal(Math.round(geometry.topbar.x), 368);
     assert.equal(Math.round(geometry.topbar.height), 76);
-    assert.equal(Math.round(geometry.topnav.height), 48);
+    assert.equal(Math.round(geometry.topnav.height), 44);
     assert.equal(Math.round(geometry.main.x), 368);
     assert.equal(Math.round(geometry.main.width), 1410);
-    assert.equal(Math.round(geometry.chart.height), 220);
+    assert.equal(Math.round(geometry.chart.height), 245);
+    assert.equal(geometry.mainPaddingTop, "110px");
+    assert.equal(Math.round(geometry.searchHeight), 40);
+    assert.equal(Math.round(geometry.collapseHeight), 40);
     assert.notEqual(geometry.wordmarkColor, "rgba(0, 0, 0, 0)");
     assert.match(geometry.productMark, /linear-gradient/);
     await capture(page, "desktop-reference-1920-dark.png");
@@ -1258,6 +1265,27 @@ test("320px mobile launcher keeps the supplied compact Aliens flow in both theme
     assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 8);
     assert.equal(await page.locator("#appList .menu-list-item").count(), 39);
     assert.equal(await page.locator(".launcher-footer").isVisible(), true);
+    const compactGeometry = await page.evaluate(() => {
+      const rect = (selector) => document.querySelector(selector).getBoundingClientRect();
+      return {
+        launcherPadding: getComputedStyle(document.querySelector("#launcher")).paddingLeft,
+        toggle: rect(".app-view-toggle").height,
+        appIcon: rect("#appGrid .app-icon").width,
+        appTile: rect("#appGrid .app-tile").height,
+        scoreRow: rect("#appList .menu-list-item").height,
+        scoreIcon: rect("#appList .list-icon").width,
+        footer: rect(".launcher-footer").height,
+        avatar: rect(".launcher-avatar").width
+      };
+    });
+    assert.equal(compactGeometry.launcherPadding, "16px");
+    assert.equal(Math.round(compactGeometry.toggle), 40);
+    assert.equal(Math.round(compactGeometry.appIcon), 34);
+    assert.equal(Math.round(compactGeometry.appTile), 64);
+    assert.equal(Math.round(compactGeometry.scoreRow), 58);
+    assert.equal(Math.round(compactGeometry.scoreIcon), 36);
+    assert.equal(Math.round(compactGeometry.footer), 64);
+    assert.equal(Math.round(compactGeometry.avatar), 40);
     await capture(page, "mobile-compact-menu-320-light.png");
     await assertNoHorizontalOverflow(page, "320px light compact launcher");
 

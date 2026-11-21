@@ -60,7 +60,7 @@ body.light .avatar-btn{background:linear-gradient(145deg,#dfeaff,#fff);color:#34
 .assistant-search input::placeholder{color:var(--muted);opacity:1}
 .assistant-search button{width:46px;height:46px;border:0;border-radius:50%;background:linear-gradient(135deg,#56b7ee,#615de6);color:#fff;font-size:24px;box-shadow:0 6px 18px rgba(78,129,235,.24)}
 .launcher-heading-row{display:flex;align-items:center;gap:14px}
-.launcher-back{width:48px;height:48px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--blue);font-size:30px;line-height:1}
+.launcher-back{width:48px;height:44px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--blue);font-size:30px;line-height:1}
 .launcher-heading-row h2{margin:0;font:700 22px 'Space Grotesk',sans-serif;letter-spacing:-.5px}
 .launcher-heading-row p{margin:2px 0 0;color:var(--muted);font-size:12px}
 .app-view-toggle{width:100%;max-width:520px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border:1px solid var(--line);border-radius:19px;background:var(--surface)}
@@ -138,7 +138,7 @@ body.menu-open{overflow:hidden}
   .launcher-heading-row h2{font-size:21px}
   .launcher-heading-row p{font-size:12px}
   .app-view-toggle{height:52px;border-radius:18px}
-  .app-view-toggle button{min-height:42px;font-size:14px}
+  .app-view-toggle button{min-height:40px;font-size:14px}
   .launcher-content{padding:12px 8px;border-radius:23px}
   .launcher-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 4px}
   .launcher-grid .app-tile{min-height:93px;padding:5px 2px;gap:6px}
@@ -816,7 +816,7 @@ body.light .side-link.active .side-icon{
     max-width:1410px;
     margin-left:368px;
     margin-right:0;
-    padding:102px 28px 42px;
+    padding:110px 28px 42px;
   }
   .topbar{
     left:368px;
@@ -844,7 +844,7 @@ body.light .side-link.active .side-icon{
   }
   .top-actions{height:42px}
   .collapse-btn{width:42px;height:42px}
-  .chart-wrap{height:220px}
+  .chart-wrap{height:245px}
   .profile-pop{bottom:12px;min-height:404px}
   body.sidebar-collapsed .main{width:calc(100% - 68px)}
 }
@@ -861,5 +861,85 @@ body.light .side-link.active .side-icon{
   .top-actions{gap:2px;padding:4px}
   .top-actions .icon-btn{width:34px;height:34px}
   .top-actions .avatar-btn{width:36px;height:36px}
+}
+
+/* Run 27.1 — compact mobile launcher sizing from the supplied 354px recording. */
+@media(max-width:420px){
+  .launcher{
+    padding:calc(10px + env(safe-area-inset-top)) 16px env(safe-area-inset-bottom);
+  }
+  .launcher-shell{gap:4px}
+  .launcher-content{
+    padding:8px 8px;
+    gap:14px;
+    border-radius:20px;
+  }
+  .app-view-toggle{
+    height:40px;
+    padding:3px;
+    margin-bottom:20px;
+    border-radius:15px;
+  }
+  .app-view-toggle button{
+    min-height:32px;
+    font-size:13px;
+    border-radius:11px;
+  }
+  .app-view-toggle button span{font-size:17px}
+  .launcher-summary-head{margin-bottom:6px}
+  .launcher-summary-head h2,
+  .score-menu-head h2,
+  .launcher-all-head h2{font-size:16px}
+  .launcher-more-apps{min-height:30px;padding:5px 9px;font-size:11px}
+  .launcher-grid{
+    gap:28px 2px;
+  }
+  .launcher-grid .app-tile{
+    min-height:64px;
+    padding:2px 1px;
+    gap:4px;
+  }
+  .app-icon{
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    font-size:18px;
+  }
+  .launcher-grid .app-tile b{font-size:10px}
+  .menu-list-item{
+    min-height:58px;
+    padding:7px 10px;
+    gap:10px;
+    margin-bottom:8px;
+    border-radius:14px;
+  }
+  .list-icon{
+    width:36px;
+    height:36px;
+    flex-basis:36px;
+    border-radius:11px;
+    font-size:18px;
+  }
+  .menu-list-item strong{font-size:12px}
+  .menu-list-item small{font-size:10px}
+  .launcher-footer{
+    height:64px;
+    min-height:64px;
+    flex:0 0 64px;
+    margin-top:8px;
+    padding:8px 10px;
+  }
+  .launcher-avatar{
+    width:40px;
+    height:40px;
+    font-size:14px;
+  }
+  .launcher-footer-actions{gap:8px}
+  .launcher-footer-actions button{
+    width:34px;
+    height:36px;
+    font-size:20px;
+  }
+  .launcher-footer-actions .launcher-power{font-size:22px}
 }
 

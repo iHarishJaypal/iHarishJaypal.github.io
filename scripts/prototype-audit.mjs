@@ -554,7 +554,7 @@ test("dashboard metric cards follow the supplied restrained reference", () => {
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-6/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-7/);
 });
 
 
@@ -581,4 +581,24 @@ test("ALIENS COMPANY palette and product wordmark remain distinct across themes"
   assert.ok(referencePass.includes(".wordmark small{\n  color:var(--blue);"));
   assert.ok(html.includes('<div class="wordmark">TelcoNet<small>ALIENS COMPANY</small></div>'));
   assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'));
+});
+
+
+test("mobile compact launcher sizing follows the supplied 354px recording", () => {
+  const compactPass = css.slice(css.lastIndexOf("/* Run 27.1 — compact mobile launcher sizing"));
+  assert.ok(compactPass.includes("@media(max-width:420px)"));
+  assert.ok(compactPass.includes(".launcher-content{\n    padding:8px 8px;"));
+  assert.ok(compactPass.includes("height:40px;"));
+  assert.ok(compactPass.includes("min-height:64px;"));
+  assert.ok(compactPass.includes("width:34px;"));
+  assert.ok(compactPass.includes("min-height:58px;"));
+  assert.ok(compactPass.includes("width:40px;"));
+  assert.ok(compactPass.includes("height:64px;"));
+});
+
+test("desktop reference spacing keeps the dashboard heading, cards and chart aligned", () => {
+  const referencePass = css.slice(css.lastIndexOf("/* Run 27 — Aliens reference fidelity pass"));
+  assert.ok(referencePass.includes("padding:110px 28px 42px;"));
+  assert.ok(referencePass.includes("height:44px;"));
+  assert.ok(referencePass.includes(".chart-wrap{height:245px}"));
 });
