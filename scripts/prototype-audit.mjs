@@ -554,7 +554,7 @@ test("dashboard metric cards follow the supplied restrained reference", () => {
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-8/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-9/);
 });
 
 
@@ -592,8 +592,8 @@ test("mobile compact launcher sizing follows the supplied 354px recording", () =
   assert.ok(compactPass.includes("min-height:64px;"));
   assert.ok(compactPass.includes("width:34px;"));
   assert.ok(compactPass.includes("min-height:58px;"));
-  assert.ok(compactPass.includes("width:40px;"));
-  assert.ok(compactPass.includes("height:64px;"));
+  assert.ok(compactPass.includes("width:clamp(36px,10.2vw,40px);"));
+  assert.ok(compactPass.includes("height:clamp(64px,19.8vw,70px);"));
 });
 
 test("desktop reference spacing keeps the dashboard heading, cards and chart aligned", () => {
@@ -601,6 +601,7 @@ test("desktop reference spacing keeps the dashboard heading, cards and chart ali
   assert.ok(referencePass.includes("padding:110px 28px 42px;"));
   assert.ok(referencePass.includes("height:44px;"));
   assert.ok(referencePass.includes(".chart-wrap{height:245px}"));
+  assert.ok(referencePass.includes(".collapse-btn{width:40px;height:40px;min-width:40px;min-height:40px;padding:0}"));
   assert.ok(referencePass.includes(".metric{min-height:105px}"));
   assert.ok(referencePass.includes(".panel{margin-top:16px}"));
 });

@@ -1268,24 +1268,24 @@ test("320px mobile launcher keeps the supplied compact Aliens flow in both theme
     const compactGeometry = await page.evaluate(() => {
       const rect = (selector) => document.querySelector(selector).getBoundingClientRect();
       return {
-        launcherPadding: getComputedStyle(document.querySelector("#launcher")).paddingLeft,
+        launcherPadding: parseFloat(getComputedStyle(document.querySelector("#launcher")).paddingLeft),
         toggle: rect(".app-view-toggle").height,
         appIcon: rect("#appGrid .app-icon").width,
         appTile: rect("#appGrid .app-tile").height,
-        scoreRow: rect("#appList .menu-list-item").height,
-        scoreIcon: rect("#appList .list-icon").width,
+        scoreRow: rect('#appList .menu-list-item[data-app-name="Dashboard"]').height,
+        scoreIcon: rect('#appList .menu-list-item[data-app-name="Dashboard"] .list-icon').width,
         footer: rect(".launcher-footer").height,
         avatar: rect(".launcher-avatar").width
       };
     });
-    assert.equal(compactGeometry.launcherPadding, "16px");
+    assert.equal(Math.round(compactGeometry.launcherPadding), 18);
     assert.equal(Math.round(compactGeometry.toggle), 40);
     assert.equal(Math.round(compactGeometry.appIcon), 34);
     assert.equal(Math.round(compactGeometry.appTile), 64);
     assert.equal(Math.round(compactGeometry.scoreRow), 58);
     assert.equal(Math.round(compactGeometry.scoreIcon), 36);
     assert.equal(Math.round(compactGeometry.footer), 64);
-    assert.equal(Math.round(compactGeometry.avatar), 40);
+    assert.equal(Math.round(compactGeometry.avatar), 36);
     await capture(page, "mobile-compact-menu-320-light.png");
     await assertNoHorizontalOverflow(page, "320px light compact launcher");
 
@@ -1296,6 +1296,48 @@ test("320px mobile launcher keeps the supplied compact Aliens flow in both theme
     await page.locator("#launcher.show").waitFor();
     await capture(page, "mobile-compact-menu-320-dark.png");
     await assertNoHorizontalOverflow(page, "320px dark compact launcher");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});
+
+
+test("354x656 mobile launcher matches the supplied recording frame", async () => {
+  const { context, page } = await openPage({ width: 354, height: 656 });
+  try {
+    await page.locator('.mobile-brand [data-action="theme"]').click();
+    await page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await page.locator("#launcher.show").waitFor();
+    assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 8);
+    assert.equal(await page.locator("#appList .menu-list-item").count(), 39);
+    const frameGeometry = await page.evaluate(() => {
+      const rect = (selector) => document.querySelector(selector).getBoundingClientRect();
+      return {
+        gutter: parseFloat(getComputedStyle(document.querySelector("#launcher")).paddingLeft),
+        toggle: rect(".app-view-toggle").height,
+        icon: rect("#appGrid .app-icon").width,
+        row: rect('#appList .menu-list-item[data-app-name="Dashboard"]').height,
+        footer: rect(".launcher-footer").height,
+        avatar: rect(".launcher-avatar").width
+      };
+    });
+    assert.equal(Math.round(frameGeometry.gutter), 20);
+    assert.equal(Math.round(frameGeometry.toggle), 40);
+    assert.equal(Math.round(frameGeometry.icon), 34);
+    assert.equal(Math.round(frameGeometry.row), 58);
+    assert.equal(Math.round(frameGeometry.footer), 70);
+    assert.equal(Math.round(frameGeometry.avatar), 36);
+    await capture(page, "mobile-reference-354x656-light.png");
+    await assertNoHorizontalOverflow(page, "354x656 reference light launcher");
+
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => document.querySelector("#launcher")?.getAttribute("aria-hidden") === "true");
+    await page.locator('.mobile-brand [data-action="theme"]').click();
+    await page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await page.locator("#launcher.show").waitFor();
+    await capture(page, "mobile-reference-354x656-dark.png");
+    await assertNoHorizontalOverflow(page, "354x656 reference dark launcher");
     assert.deepEqual(runtimeErrors, []);
   } finally {
     await context.close();

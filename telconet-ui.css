@@ -868,7 +868,7 @@ body.light .side-link.active .side-icon{
 /* Run 27.1 — compact mobile launcher sizing from the supplied 354px recording. */
 @media(max-width:420px){
   .launcher{
-    padding:calc(10px + env(safe-area-inset-top)) 16px env(safe-area-inset-bottom);
+    padding:calc(10px + env(safe-area-inset-top)) clamp(16px,5.6vw,20px) env(safe-area-inset-bottom);
   }
   .launcher-shell{gap:4px}
   .launcher-content{
@@ -925,15 +925,15 @@ body.light .side-link.active .side-icon{
   .menu-list-item strong{font-size:12px}
   .menu-list-item small{font-size:10px}
   .launcher-footer{
-    height:64px;
-    min-height:64px;
-    flex:0 0 64px;
+    height:clamp(64px,19.8vw,70px);
+    min-height:clamp(64px,19.8vw,70px);
+    flex:0 0 clamp(64px,19.8vw,70px);
     margin-top:8px;
     padding:8px 10px;
   }
   .launcher-avatar{
-    width:40px;
-    height:40px;
+    width:clamp(36px,10.2vw,40px);
+    height:clamp(36px,10.2vw,40px);
     font-size:14px;
   }
   .launcher-footer-actions{gap:8px}
