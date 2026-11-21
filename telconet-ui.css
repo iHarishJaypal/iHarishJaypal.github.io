@@ -643,17 +643,17 @@ body.light .wordmark small,
 .signin-logo .brand-company{
   color:var(--blue);
   font-weight:800;
-  letter-spacing:1px;
+  letter-spacing:1.1px;
   text-transform:uppercase;
 }
 .wordmark small,
 body.light .wordmark small{
   display:block;
   margin-top:3px;
-  font-size:10px;
-  line-height:1.4;
+  font-size:11px;
+  line-height:1.35;
 }
-.company-select small{font-size:9px;letter-spacing:.95px}
+.company-select small{font-size:10px;letter-spacing:1.05px}
 .company-icon{
   background:linear-gradient(145deg,color-mix(in srgb,var(--blue) 17%,var(--surface3)),var(--surface3));
   border:1px solid color-mix(in srgb,var(--blue) 22%,var(--line));
@@ -681,7 +681,7 @@ body.light .wordmark small{
   color:#f5f6fa;
   font:700 16px 'Space Grotesk',sans-serif;
 }
-.signin-logo .brand-company{font-size:9px;line-height:1.3;color:#80bfff}
+.signin-logo .brand-company{font-size:10px;line-height:1.35;color:var(--blue);font-weight:900;letter-spacing:1.1px}
 .workspace-signature{
   color:var(--muted);
   font-size:10px;
@@ -721,20 +721,14 @@ body.light .wordmark small{
   .signin-mobile-brand small{
     display:block;
     margin-top:2px;
-    color:#80bfff;
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:1px;
+    color:var(--blue);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1.1px;
   }
 }
 
 
-/* ALIENS COMPANY monogram treatment across desktop, mobile, and SignIn. */
-.rail-logo.aliens-mark,.brandmark.aliens-mark{position:relative;display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-1.5px;color:#fff;background:linear-gradient(145deg,#56a8ff 0%,#7168f2 58%,#9364ed 100%);text-shadow:0 1px 8px rgba(20,35,80,.25);}
-.rail-logo.aliens-mark{font-size:22px;}
-.brandmark.aliens-mark{font-size:19px;border-radius:12px!important;}
-.signin-logo .brandmark.aliens-mark{width:38px;height:38px;border-radius:12px!important;}
-@media(max-width:850px){.mobile-brand .brandmark.aliens-mark{width:36px;height:36px;border-radius:11px!important;font-size:18px;}}
 
 
 /* Dashboard visual pass: metric glyphs, compact trend signatures and layered surfaces. */
@@ -796,3 +790,8 @@ body.light .wordmark small{
  .metric-spark{width:38px;flex-basis:38px}
 }
 @media(prefers-reduced-motion:reduce){.metric:hover{transform:none}}
+
+
+/* Consistent ALIENS COMPANY signature weight across the product shell. */
+.mobile-brand small{font-size:10px;letter-spacing:1.1px}
+.workspace-signature{color:var(--blue);font-weight:700;letter-spacing:.15px}

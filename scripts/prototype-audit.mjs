@@ -482,18 +482,24 @@ test("theme toggle keeps a stable accessible name and reports the active theme",
 });
 
 
-test("Aliens Company identity is visibly applied across desktop, mobile and SignIn", () => {
-  assert.ok(html.includes('<div class="rail-logo aliens-mark" role="img" aria-label="ALIENS COMPANY brand mark">A</div>'));
+test("TelcoNet product and ALIENS COMPANY identity stay distinct across entry points", () => {
+  assert.ok(html.includes('<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T</div>'));
+  const productMark = 'class="brandmark" aria-hidden="true">T</span>';
+  assert.equal(html.split(productMark).length - 1, 3, "mobile header, desktop SignIn and mobile SignIn use the TelcoNet product mark");
   assert.ok(html.includes('<div class="wordmark">TelcoNet<small>ALIENS COMPANY</small></div>'));
   assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'));
   assert.ok(html.includes('class="workspace-signature">Aliens TelcoNet workspace</span>'));
-  assert.ok(html.includes('class="brandmark aliens-mark" aria-hidden="true">A</span>'));
+  assert.ok(html.includes('aria-label="Account menu">AL</button>'));
+  assert.ok(html.includes('class="pop-avatar">AL</div>'));
+  assert.doesNotMatch(html, /aliens-mark/);
   const brandCss = css.slice(css.lastIndexOf("/* Aliens Company identity:"));
   assert.ok(brandCss.includes(".rail-logo{") && brandCss.includes("display:grid;"));
   assert.ok(brandCss.includes(".wordmark,") && brandCss.includes("color:var(--text);"));
   assert.ok(brandCss.includes(".company-select small,") && brandCss.includes("color:var(--blue);"));
   assert.ok(brandCss.includes(".signin-logo .brandmark") && brandCss.includes("border-radius:12px;"));
   assert.ok(brandCss.includes(".mobile-brand .brandmark"));
+  assert.ok(brandCss.includes(".signin-mobile-brand small"));
+  assert.ok(brandCss.includes(".workspace-signature{color:var(--blue)"));
 });
 
 
@@ -521,18 +527,25 @@ test("custom typography keeps sans-serif fallbacks when Google Fonts are unavail
 });
 
 
-test("ALIENS COMPANY monogram is used consistently across product entry points", () => {
-  assert.ok(html.includes('<div class="rail-logo aliens-mark" role="img" aria-label="ALIENS COMPANY brand mark">A</div>'));
-  const mobileAndSignInMarks = 'class="brandmark aliens-mark" aria-hidden="true">A</span>';
-  assert.equal(html.split(mobileAndSignInMarks).length - 1, 2,
-    "mobile header and SignIn must share the ALIENS monogram");
-  assert.ok(css.includes(".rail-logo.aliens-mark,.brandmark.aliens-mark"));
-  assert.ok(css.includes(".signin-logo .brandmark.aliens-mark"));
-  assert.ok(css.includes("@media(max-width:850px){.mobile-brand .brandmark.aliens-mark"));
+test("ALIENS COMPANY signature remains visible beside the TelcoNet product mark", () => {
+  assert.ok(html.includes('<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T</div>'));
+  assert.ok(html.includes('<span class="brandmark" aria-hidden="true">T</span><span><strong>TelcoNet</strong><small>ALIENS COMPANY</small></span>'));
+  assert.ok(html.includes('<span class="brandmark" aria-hidden="true">T</span><span class="signin-wordmark"><b>TelcoNet</b><small class="brand-company">ALIENS COMPANY</small></span>'));
+  assert.ok(css.includes(".wordmark small,"));
+  assert.ok(css.includes(".signin-mobile-brand small{"));
+  assert.ok(css.includes(".workspace-signature{color:var(--blue)"));
+  assert.doesNotMatch(css, /\.rail-logo\.aliens-mark/);
 });
 
 
+test("dashboard chart defines its theme-aware brand gradient", () => {
+  assert.ok(html.includes('<linearGradient id="telcoBarGradient"'));
+  assert.ok(html.includes('stop-color="var(--cyan)"'));
+  assert.ok(html.includes('stop-color="var(--blue)"'));
+  assert.ok(css.includes('.chart .bar{fill:url(#telcoBarGradient)}'));
+});
+
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-3/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-4/);
 });

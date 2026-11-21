@@ -202,10 +202,32 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     });
     assert.equal(chartGeometry.labelsInside, true, "day labels must remain inside the chart viewport");
     assert.equal(chartGeometry.highestBar, 25, "the maximum normalized bar must align with the 2.5M top gridline");
+    const chartPaint = await page.locator(".chart").evaluate((svg) => {
+      const gradient = svg.querySelector("#telcoBarGradient");
+      const bars = [...svg.querySelectorAll("#chartBars .bar")];
+      const first = bars[0];
+      const box = first?.getBBox();
+      return {
+        gradientStops: gradient?.querySelectorAll("stop").length ?? 0,
+        barCount: bars.length,
+        fill: first ? getComputedStyle(first).fill : "none",
+        width: box?.width ?? 0,
+        height: box?.height ?? 0,
+        stopColors: gradient ? [...gradient.querySelectorAll("stop")].map((stop) => getComputedStyle(stop).stopColor) : []
+      };
+    });
+    assert.equal(chartPaint.gradientStops, 2, "chart bars need a defined two-stop gradient");
+    assert.ok(chartPaint.barCount > 0, "chart sample bars must be rendered");
+    assert.ok(chartPaint.width > 0 && chartPaint.height > 0, "chart bars must have visible geometry");
+    assert.notEqual(chartPaint.fill, "none", "chart bars must receive a paint server");
+    assert.ok(chartPaint.stopColors.every((color) => color && color !== "rgba(0, 0, 0, 0)"), "chart gradient stops must resolve to visible theme colors");
+    const darkChartColor = chartPaint.stopColors[0];
 
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
     await waitForToastToClear(page);
+    const lightChartColor = await page.locator("#telcoBarGradient stop").first().evaluate((stop) => getComputedStyle(stop).stopColor);
+    assert.notEqual(lightChartColor, darkChartColor, "chart brand gradient must adapt to the light theme");
     await capture(page, "desktop-dashboard-light.png");
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), false);
@@ -1098,8 +1120,9 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
   try {
     const railMark = desktop.page.locator(".rail-logo");
     assert.equal(await railMark.isVisible(), true, "desktop rail must show the TelcoNet product mark");
-    assert.equal((await railMark.textContent()).trim(), "A");
+    assert.equal((await railMark.textContent()).trim(), "T");
     assert.equal(await railMark.getAttribute("role"), "img");
+    assert.equal(await railMark.getAttribute("aria-label"), "TelcoNet product mark");
     assert.equal(await railMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     const wordmarkText = (await desktop.page.locator(".wordmark").textContent()).replace(/\s+/g, " ").trim();
     assert.ok(wordmarkText.includes("TelcoNet") && wordmarkText.includes("ALIENS COMPANY"));
@@ -1121,7 +1144,7 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
     await desktop.page.locator('#profilePop [data-action="signout"]').click();
     await desktop.page.locator("#signin.show").waitFor();
     const signInMark = desktop.page.locator(".signin-logo .brandmark");
-    assert.equal((await signInMark.textContent()).trim(), "A");
+    assert.equal((await signInMark.textContent()).trim(), "T");
     assert.equal(await signInMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     const signInLockupText = (await desktop.page.locator(".signin-logo").textContent()).replace(/\s+/g, " ").trim();
     assert.ok(signInLockupText.includes("TelcoNet") && signInLockupText.includes("ALIENS COMPANY"));
@@ -1135,7 +1158,7 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
   try {
     const mobileMark = mobile.page.locator(".mobile-brand .brandmark");
     assert.equal(await mobileMark.isVisible(), true);
-    assert.equal((await mobileMark.textContent()).trim(), "A");
+    assert.equal((await mobileMark.textContent()).trim(), "T");
     assert.equal(await mobileMark.evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     const mobileLockupText = (await mobile.page.locator(".mobile-brand").textContent()).replace(/\s+/g, " ").trim();
     assert.ok(mobileLockupText.includes("TelcoNet") && mobileLockupText.includes("ALIENS COMPANY"));
@@ -1148,7 +1171,7 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
     assert.equal(await mobileSignInBrand.isVisible(), true, "mobile SignIn must keep the Aliens product/company lockup visible");
     const mobileSignInText = await mobileSignInBrand.textContent();
     assert.ok(mobileSignInText.includes("TelcoNet") && mobileSignInText.includes("ALIENS COMPANY"));
-    assert.equal((await mobileSignInBrand.locator(".brandmark").textContent()).trim(), "A");
+    assert.equal((await mobileSignInBrand.locator(".brandmark").textContent()).trim(), "T");
     assert.equal(await mobileSignInBrand.locator(".brandmark").evaluate((el) => getComputedStyle(el).borderRadius), "12px");
     await capture(mobile.page, "mobile-aliens-signin-brand-lockup.png");
     await assertNoHorizontalOverflow(mobile.page, "mobile Aliens brand lockup");
