@@ -83,7 +83,7 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
 @media(max-width:1180px){.topnav{min-width:0}.workspace{width:285px}.topbar{left:349px}.main{margin-left:349px}}
 @media(max-width:850px){.workspace,.rail,.topbar{display:none}.main{margin:0;padding:86px 16px 100px}}
 </style>
-<link rel="stylesheet" href="telconet-ui.css?v=20261121-2">
+<link rel="stylesheet" href="telconet-ui.css?v=20261121-3">
 </head>
 <body>
 <div class="app" id="app">
@@ -135,14 +135,14 @@ body.light{--blue:#168fc2;--violet:#6555d9;--cyan:#168f98}
     <section class="view active" id="view-dashboard">
       <div class="page-head"><div><h1>Dashboard</h1><p>Your telecom operations, network health and team activity at a glance.</p><div class="statusline"><i></i> Source: <b style="color:var(--blue)">TelcoNet demo workspace</b> · Sample data</div></div><div class="page-actions"><button class="soft-btn" data-view="calendar" aria-label="Open calendar view">▦ Calendar</button><button class="soft-btn" data-action="toast" data-message="Refresh is a prototype placeholder; sample data is unchanged.">↻ Web refresh</button><button class="soft-btn" data-action="toast" data-message="Demo snapshot shown; live data is not connected.">Latest data</button></div></div>
       <div class="metrics">
-        <article class="metric"><label>CS RECEIVED</label><strong>139,659</strong><small>↑ 8.4% · vs previous window</small></article>
-        <article class="metric"><label>CS SALE</label><strong>5,102,781</strong><small>↑ 11.2% · vs previous window</small></article>
-        <article class="metric"><label>PREMIUM INCOME</label><strong>1,246,076</strong><small>↑ 6.7% · vs previous window</small></article>
-        <article class="metric"><label>FILE CHANGES</label><strong>6,130,950</strong><small>Recorded in selected window</small></article>
-        <article class="metric"><label>ACTIVE DAYS</label><strong>482</strong><small>Within this period</small></article>
-        <article class="metric"><label>AVG / DAY</label><strong>12,719.8</strong><small>Changes per active day</small></article>
-        <article class="metric"><label>PEAK DAY</label><strong>909,995</strong><small>2026-10-22</small></article>
-        <article class="metric"><label>LONGEST STREAK</label><strong>190</strong><small>Consecutive days</small></article>
+        <article class="metric metric-1"><div class="metric-top"><label>CS RECEIVED</label><span class="metric-icon"><i data-lucide="inbox"></i></span></div><strong>139,659</strong><div class="metric-bottom"><small>↑ 8.4% · vs previous window</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 17 8 11 13 14 22 5"/></svg></div></article>
+        <article class="metric metric-2"><div class="metric-top"><label>CS SALE</label><span class="metric-icon"><i data-lucide="chart-no-axes-combined"></i></span></div><strong>5,102,781</strong><div class="metric-bottom"><small>↑ 11.2% · vs previous window</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 18 8 13 13 15 22 4"/></svg></div></article>
+        <article class="metric metric-3"><div class="metric-top"><label>PREMIUM INCOME</label><span class="metric-icon"><i data-lucide="wallet"></i></span></div><strong>1,246,076</strong><div class="metric-bottom"><small>↑ 6.7% · vs previous window</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 17 7 12 12 14 22 6"/></svg></div></article>
+        <article class="metric metric-4"><div class="metric-top"><label>FILE CHANGES</label><span class="metric-icon"><i data-lucide="file-pen-line"></i></span></div><strong>6,130,950</strong><div class="metric-bottom"><small>Recorded in selected window</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 18 7 14 12 11 17 13 22 4"/></svg></div></article>
+        <article class="metric metric-5"><div class="metric-top"><label>ACTIVE DAYS</label><span class="metric-icon"><i data-lucide="calendar-check"></i></span></div><strong>482</strong><div class="metric-bottom"><small>Within this period</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 17 8 14 13 10 18 12 22 5"/></svg></div></article>
+        <article class="metric metric-6"><div class="metric-top"><label>AVG / DAY</label><span class="metric-icon"><i data-lucide="activity"></i></span></div><strong>12,719.8</strong><div class="metric-bottom"><small>Changes per active day</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16 7 13 12 15 17 9 22 7"/></svg></div></article>
+        <article class="metric metric-7"><div class="metric-top"><label>PEAK DAY</label><span class="metric-icon"><i data-lucide="zap"></i></span></div><strong>909,995</strong><div class="metric-bottom"><small>2026-10-22</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 19 7 12 11 16 15 9 22 4"/></svg></div></article>
+        <article class="metric metric-8"><div class="metric-top"><label>LONGEST STREAK</label><span class="metric-icon"><i data-lucide="flame"></i></span></div><strong>190</strong><div class="metric-bottom"><small>Consecutive days</small><svg class="metric-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 18 7 13 12 15 17 10 22 5"/></svg></div></article>
       </div>
       <article class="panel"><div class="panel-head"><div><h2>Activity by trend</h2><p>Company activity across the selected time period</p></div><div><button class="soft-btn" data-action="chart-range" data-range="7" aria-pressed="false">7 day</button> <button class="soft-btn active" data-action="chart-range" data-range="30" aria-pressed="true">30 day</button> <button class="soft-btn" data-action="chart-range" data-range="90" aria-pressed="false">90 day</button></div></div><div class="chart-wrap"><svg class="chart" viewBox="0 0 1000 245" preserveAspectRatio="none" role="img" aria-label="Activity bar chart"><g class="gridline"><path d="M35 25H990M35 75H990M35 125H990M35 175H990M35 220H990"/></g><g id="chartBars"></g><g id="chartXAxis" aria-hidden="true"></g><g><text x="2" y="29">2.5M</text><text x="2" y="79">2M</text><text x="2" y="129">1.5M</text><text x="2" y="179">500K</text><text x="2" y="224">0</text></g></svg></div></article>
       <div class="lower-grid">
