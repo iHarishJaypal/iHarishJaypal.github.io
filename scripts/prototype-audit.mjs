@@ -533,3 +533,13 @@ test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
   assert.match(html, /telconet-ui\.css\?v=20261121-2/);
 });
+
+
+test("ALIENS COMPANY monogram is used consistently across product entry points", () => {
+  assert.match(html, /class="rail-logo aliens-mark" role="img" aria-label="ALIENS COMPANY brand mark">A<\\/div>/);
+  assert.match(html, /class="brandmark aliens-mark" aria-hidden="true">A<\\/span>/);
+  assert.equal((html.match(/class="brandmark aliens-mark" aria-hidden="true">A<\\/span>/g) || []).length, 2,
+    "mobile header and SignIn must share the ALIENS monogram");
+  assert.match(css, /\\.rail-logo\\.aliens-mark,\\.brandmark\\.aliens-mark/);
+  assert.match(css, /\\.signin-logo \\.brandmark\\.aliens-mark/);
+});
