@@ -483,11 +483,11 @@ test("theme toggle keeps a stable accessible name and reports the active theme",
 
 
 test("Aliens Company identity is visibly applied across desktop, mobile and SignIn", () => {
-  assert.ok(html.includes('<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T</div>'));
+  assert.ok(html.includes('<div class="rail-logo aliens-mark" role="img" aria-label="ALIENS COMPANY brand mark">A</div>'));
   assert.ok(html.includes('<div class="wordmark">TelcoNet<small>ALIENS COMPANY</small></div>'));
   assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'));
   assert.ok(html.includes('class="workspace-signature">Aliens TelcoNet workspace</span>'));
-  assert.ok(html.includes('class="brandmark" aria-hidden="true">T</span>'));
+  assert.ok(html.includes('class="brandmark aliens-mark" aria-hidden="true">A</span>'));
   const brandCss = css.slice(css.lastIndexOf("/* Aliens Company identity:"));
   assert.ok(brandCss.includes(".rail-logo{") && brandCss.includes("display:grid;"));
   assert.ok(brandCss.includes(".wordmark,") && brandCss.includes("color:var(--text);"));
