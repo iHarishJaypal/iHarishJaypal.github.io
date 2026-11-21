@@ -843,7 +843,7 @@ body.light .side-link.active .side-icon{
     padding:6px 8px;
   }
   .top-actions{height:40px}
-  .collapse-btn{width:40px;height:40px;min-width:40px;min-height:40px;padding:0}
+  .topbar .collapse-btn{width:40px;height:40px;min-width:40px;min-height:40px;padding:0}
   .chart-wrap{height:245px}
   .metric{min-height:105px}
   .panel{margin-top:16px}
@@ -908,9 +908,11 @@ body.light .side-link.active .side-icon{
     font-size:18px;
   }
   .launcher-grid .app-tile b{font-size:10px}
-  .menu-list-item{
+  .launcher-content .menu-list-item{
+    height:58px;
     min-height:58px;
-    padding:7px 10px;
+    padding:0 10px;
+    box-sizing:border-box;
     gap:10px;
     margin-bottom:8px;
     border-radius:14px;
