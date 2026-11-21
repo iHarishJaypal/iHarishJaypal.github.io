@@ -523,11 +523,12 @@ test("custom typography keeps sans-serif fallbacks when Google Fonts are unavail
 
 test("ALIENS COMPANY monogram is used consistently across product entry points", () => {
   assert.ok(html.includes('<div class="rail-logo aliens-mark" role="img" aria-label="ALIENS COMPANY brand mark">A</div>'));
-  assert.equal((html.match(/class="brandmark aliens-mark" aria-hidden="true">A<\\/span>/g) || []).length, 2,
+  const mobileAndSignInMarks = 'class="brandmark aliens-mark" aria-hidden="true">A</span>';
+  assert.equal(html.split(mobileAndSignInMarks).length - 1, 2,
     "mobile header and SignIn must share the ALIENS monogram");
-  assert.match(css, /\\.rail-logo\\.aliens-mark,\\.brandmark\\.aliens-mark/);
-  assert.match(css, /\\.signin-logo \\.brandmark\\.aliens-mark/);
-  assert.match(css, /@media\\(max-width:850px\\)\\{\\.mobile-brand \\.brandmark\\.aliens-mark/);
+  assert.ok(css.includes(".rail-logo.aliens-mark,.brandmark.aliens-mark"));
+  assert.ok(css.includes(".signin-logo .brandmark.aliens-mark"));
+  assert.ok(css.includes("@media(max-width:850px){.mobile-brand .brandmark.aliens-mark"));
 });
 
 
