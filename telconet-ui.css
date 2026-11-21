@@ -744,3 +744,8 @@ body.light .metric:hover{box-shadow:0 14px 30px rgba(40,64,100,.12)}
 .chart .bar{fill:var(--blue);opacity:.9;rx:4}
 @media(max-width:850px){.metrics{gap:9px}.metric{min-height:93px;padding:13px 12px;border-radius:15px}.metric strong{font-size:clamp(19px,5.7vw,24px)}.metric small{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.metric:hover{transform:none}}
+
+
+/* Consistent ALIENS COMPANY signature weight across the product shell. */
+.mobile-brand small{font-size:10px;letter-spacing:1.1px}
+.workspace-signature{color:var(--blue);font-weight:700;letter-spacing:.15px}
