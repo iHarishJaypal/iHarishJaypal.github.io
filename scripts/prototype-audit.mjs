@@ -505,3 +505,17 @@ test("mobile SignIn retains a visible TelcoNet and ALIENS COMPANY lockup", () =>
   assert.ok(brandCss.includes("display:flex;"));
   assert.ok(brandCss.includes("border-radius:12px;"));
 });
+
+
+test("custom typography keeps sans-serif fallbacks when Google Fonts are unavailable", () => {
+  for (const [file, source] of [["index.html", html], ["telconet-ui.css", css]]) {
+    const declarations = [...source.matchAll(/font(?:-family)?\\s*:\\s*([^;}]+)/g)].map((match) => match[1]);
+    for (const declaration of declarations) {
+      if (/Space Grotesk|DM Sans/.test(declaration)) {
+        assert.match(declaration, /sans-serif/i, file + " font fallback: " + declaration);
+      }
+    }
+  }
+  assert.match(html, /font:700 30px 'Space Grotesk',sans-serif/);
+  assert.match(css, /font:700 15px 'Space Grotesk',sans-serif/);
+});
