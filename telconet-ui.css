@@ -749,3 +749,117 @@ body.light .metric:hover{box-shadow:0 14px 30px rgba(40,64,100,.12)}
 /* Consistent ALIENS COMPANY signature weight across the product shell. */
 .mobile-brand small{font-size:10px;letter-spacing:1.1px}
 .workspace-signature{color:var(--blue);font-weight:700;letter-spacing:.15px}
+
+/* Run 27 — Aliens reference fidelity pass: clearer product/company contrast and tighter desktop proportions. */
+:root{
+  --blue:#56a8ff;
+  --violet:#8066f2;
+  --cyan:#55d5d0;
+  --brand-glow:rgba(86,168,255,.16);
+}
+body.light{
+  --blue:#397fe0;
+  --violet:#7658e8;
+  --cyan:#239f9a;
+  --brand-glow:rgba(57,127,224,.14);
+}
+.rail-logo,
+.mobile-brand .brandmark,
+.signin-logo .brandmark,
+.signin-mobile-brand .brandmark{
+  background:linear-gradient(135deg,#56a8ff 0%,#8066f2 100%);
+}
+.wordmark{
+  background:none;
+  color:var(--text);
+  -webkit-text-fill-color:var(--text);
+}
+.wordmark small{
+  color:var(--blue);
+  font-weight:700;
+  letter-spacing:1.05px;
+}
+.signin-wordmark .brand-company,
+.signin-mobile-brand small{
+  color:var(--blue);
+  letter-spacing:1px;
+}
+.company-select .company-icon{
+  background:var(--surface3);
+  color:var(--blue);
+}
+.side-icon{color:var(--muted)}
+.side-link.active .side-icon{color:var(--blue)}
+body.light .rail{
+  background:#f7faff;
+  border-right-color:rgba(55,80,125,.12);
+}
+body.light .workspace{
+  background:#f7f9ff;
+  border-right-color:rgba(55,80,125,.12);
+}
+body.light .company-select{
+  background:#fff;
+  border-color:rgba(55,80,125,.12);
+}
+body.light .side-icon{
+  background:#edf2fa;
+  color:#78859a;
+}
+body.light .side-link.active .side-icon{
+  background:#e1edff;
+  color:#397fe0;
+}
+@media(min-width:1181px){
+  .main{
+    width:calc(100% - 368px);
+    max-width:1410px;
+    margin-left:368px;
+    margin-right:0;
+    padding:102px 28px 42px;
+  }
+  .topbar{
+    left:368px;
+    gap:12px;
+    justify-content:space-between;
+  }
+  .search{
+    max-width:290px;
+    min-width:130px;
+    flex:0 1 290px;
+    height:42px;
+  }
+  .topnav{
+    min-width:340px;
+    max-width:460px;
+    flex:0 1 460px;
+    height:48px;
+    margin:0 auto;
+    padding:4px;
+  }
+  .topnav button{
+    min-width:0;
+    flex:1;
+    padding:6px 8px;
+  }
+  .top-actions{height:42px}
+  .collapse-btn{width:42px;height:42px}
+  .chart-wrap{height:220px}
+  .profile-pop{bottom:12px;min-height:404px}
+  body.sidebar-collapsed .main{width:calc(100% - 68px)}
+}
+@media(max-width:1500px) and (min-width:1181px){
+  .topbar{padding:0 16px;gap:10px}
+  .search{max-width:210px;min-width:120px;flex:1 1 160px}
+  .topnav{
+    min-width:300px;
+    max-width:420px;
+    flex:1 1 300px;
+  }
+  .topnav button{min-width:0;flex:1;padding:6px 6px}
+  .updated{display:none}
+  .top-actions{gap:2px;padding:4px}
+  .top-actions .icon-btn{width:34px;height:34px}
+  .top-actions .avatar-btn{width:36px;height:36px}
+}
+

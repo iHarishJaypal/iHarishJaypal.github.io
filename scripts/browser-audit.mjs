@@ -1183,3 +1183,93 @@ test("Aliens Company product lockup is visible across desktop, mobile and SignIn
     await mobile.context.close();
   }
 });
+
+
+test("wide desktop shell and profile match the supplied reference proportions in both themes", async () => {
+  const { context, page } = await openPage({ width: 1920, height: 920 });
+  try {
+    const geometry = await page.evaluate(() => {
+      const rect = (selector) => {
+        const box = document.querySelector(selector).getBoundingClientRect();
+        return { x: box.x, y: box.y, width: box.width, height: box.height, right: box.right, bottom: box.bottom };
+      };
+      return {
+        rail: rect(".rail"),
+        workspace: rect("#workspaceSidebar"),
+        topbar: rect(".topbar"),
+        topnav: rect(".topnav"),
+        main: rect("#mainContent"),
+        chart: rect(".chart-wrap"),
+        wordmarkColor: getComputedStyle(document.querySelector(".wordmark")).color,
+        productMark: getComputedStyle(document.querySelector(".rail-logo")).backgroundImage
+      };
+    });
+    assert.equal(Math.round(geometry.rail.width), 68);
+    assert.equal(Math.round(geometry.workspace.x), 68);
+    assert.equal(Math.round(geometry.workspace.width), 300);
+    assert.equal(Math.round(geometry.topbar.x), 368);
+    assert.equal(Math.round(geometry.topbar.height), 76);
+    assert.equal(Math.round(geometry.topnav.height), 48);
+    assert.equal(Math.round(geometry.main.x), 368);
+    assert.equal(Math.round(geometry.main.width), 1410);
+    assert.equal(Math.round(geometry.chart.height), 220);
+    assert.notEqual(geometry.wordmarkColor, "rgba(0, 0, 0, 0)");
+    assert.match(geometry.productMark, /linear-gradient/);
+    await capture(page, "desktop-reference-1920-dark.png");
+
+    await page.locator('.topbar [data-action="profile"]').click();
+    await page.locator("#profilePop.show").waitFor();
+    const darkProfile = await page.locator("#profilePop").evaluate((el) => {
+      const box = el.getBoundingClientRect();
+      return { width: box.width, height: box.height, bottom: box.bottom };
+    });
+    assert.equal(Math.round(darkProfile.width), 350);
+    assert.equal(Math.round(darkProfile.height), 404);
+    assert.equal(Math.round(darkProfile.bottom), 908);
+    await capture(page, "desktop-profile-reference-dark.png");
+    await page.locator('#profilePop [data-action="close-pop"]').click();
+
+    await page.locator(".rail-btn.dock-theme").click();
+    assert.equal(await page.locator("body").evaluate((el) => el.classList.contains("light")), true);
+    const lightSurfaces = await page.evaluate(() => ({
+      rail: getComputedStyle(document.querySelector(".rail")).backgroundColor,
+      workspace: getComputedStyle(document.querySelector("#workspaceSidebar")).backgroundColor
+    }));
+    assert.equal(lightSurfaces.rail, "rgb(247, 250, 255)");
+    assert.equal(lightSurfaces.workspace, "rgb(247, 249, 255)");
+    await capture(page, "desktop-reference-1920-light.png");
+
+    await page.locator('.topbar [data-action="profile"]').click();
+    await page.locator("#profilePop.show").waitFor();
+    await capture(page, "desktop-profile-reference-light.png");
+    await assertNoHorizontalOverflow(page, "1920px Aliens reference shell");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});
+
+test("320px mobile launcher keeps the supplied compact Aliens flow in both themes", async () => {
+  const { context, page } = await openPage({ width: 320, height: 720 });
+  try {
+    await page.locator('.mobile-brand [data-action="theme"]').click();
+    await page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await page.locator("#launcher.show").waitFor();
+    assert.equal(await visibleCount(page.locator("#appGrid .app-tile")), 8);
+    assert.equal(await page.locator("#appList .menu-list-item").count(), 39);
+    assert.equal(await page.locator(".launcher-footer").isVisible(), true);
+    await capture(page, "mobile-compact-menu-320-light.png");
+    await assertNoHorizontalOverflow(page, "320px light compact launcher");
+
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => document.querySelector("#launcher")?.getAttribute("aria-hidden") === "true");
+    await page.locator('.mobile-brand [data-action="theme"]').click();
+    await page.locator('.mobile-bottom [data-action="launcher"]').click();
+    await page.locator("#launcher.show").waitFor();
+    await capture(page, "mobile-compact-menu-320-dark.png");
+    await assertNoHorizontalOverflow(page, "320px dark compact launcher");
+    assert.deepEqual(runtimeErrors, []);
+  } finally {
+    await context.close();
+  }
+});

@@ -554,5 +554,31 @@ test("dashboard metric cards follow the supplied restrained reference", () => {
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-5/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-6/);
+});
+
+
+test("desktop shell follows the supplied Aliens reference proportions", () => {
+  const referencePass = css.slice(css.lastIndexOf("/* Run 27 — Aliens reference fidelity pass"));
+  assert.ok(referencePass.includes(".topnav{\n    min-width:340px;"));
+  assert.ok(referencePass.includes("max-width:460px;"));
+  assert.ok(referencePass.includes("height:48px;"));
+  assert.ok(referencePass.includes(".main{\n    width:calc(100% - 368px);"));
+  assert.ok(referencePass.includes("max-width:1410px;"));
+  assert.ok(referencePass.includes(".chart-wrap{height:220px}"));
+  assert.ok(referencePass.includes(".profile-pop{bottom:12px;min-height:404px}"));
+  assert.ok(referencePass.includes("body.light .rail{\n  background:#f7faff;"));
+  assert.ok(referencePass.includes(".side-link.active .side-icon{color:var(--blue)}"));
+  assert.ok(html.includes('data-lucide="building-2"'));
+});
+
+test("ALIENS COMPANY palette and product wordmark remain distinct across themes", () => {
+  const referencePass = css.slice(css.lastIndexOf("/* Run 27 — Aliens reference fidelity pass"));
+  assert.ok(referencePass.includes("--blue:#56a8ff;"));
+  assert.ok(referencePass.includes("--violet:#8066f2;"));
+  assert.ok(referencePass.includes(".rail-logo,\n.mobile-brand .brandmark,"));
+  assert.ok(referencePass.includes(".wordmark{\n  background:none;"));
+  assert.ok(referencePass.includes(".wordmark small{\n  color:var(--blue);"));
+  assert.ok(html.includes('<div class="wordmark">TelcoNet<small>ALIENS COMPANY</small></div>'));
+  assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'));
 });
