@@ -134,7 +134,7 @@ test("company switcher and account popover follow the reference naming hierarchy
   assert.ok(html.includes('<small>ALIENS COMPANY</small><strong>Aliens TelcoNet</strong>'), "company switcher must expose ALIENS COMPANY and retain Aliens TelcoNet");
   assert.ok(profile.includes("Hi, Aliens!"), "account greeting must match the supplied reference");
   assert.doesNotMatch(profile, /Aliens TelcoNet workspace/, "profile popover must not add an unreferenced workspace subtitle");
-  assert.match(css, /@media\(min-width:851px\)\{\.profile-pop\{min-height:460px\}\}/);
+  assert.match(css, /@media\(min-width:851px\)\{\.profile-pop\{min-height:404px;bottom:12px\}\}/);
 });
 
 test("mobile Ask Cyborg and footer icons match the supplied menu reference", () => {
