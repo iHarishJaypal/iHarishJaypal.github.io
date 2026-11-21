@@ -554,7 +554,7 @@ test("dashboard metric cards follow the supplied restrained reference", () => {
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-7/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-8/);
 });
 
 
@@ -562,10 +562,10 @@ test("desktop shell follows the supplied Aliens reference proportions", () => {
   const referencePass = css.slice(css.lastIndexOf("/* Run 27 — Aliens reference fidelity pass"));
   assert.ok(referencePass.includes(".topnav{\n    min-width:340px;"));
   assert.ok(referencePass.includes("max-width:460px;"));
-  assert.ok(referencePass.includes("height:48px;"));
+  assert.ok(referencePass.includes("height:44px;"));
   assert.ok(referencePass.includes(".main{\n    width:calc(100% - 368px);"));
   assert.ok(referencePass.includes("max-width:1410px;"));
-  assert.ok(referencePass.includes(".chart-wrap{height:220px}"));
+  assert.ok(referencePass.includes(".chart-wrap{height:245px}"));
   assert.ok(referencePass.includes(".profile-pop{bottom:12px;min-height:404px}"));
   assert.ok(referencePass.includes("body.light .rail{\n  background:#f7faff;"));
   assert.ok(referencePass.includes(".side-link.active .side-icon{color:var(--blue)}"));
@@ -601,4 +601,6 @@ test("desktop reference spacing keeps the dashboard heading, cards and chart ali
   assert.ok(referencePass.includes("padding:110px 28px 42px;"));
   assert.ok(referencePass.includes("height:44px;"));
   assert.ok(referencePass.includes(".chart-wrap{height:245px}"));
+  assert.ok(referencePass.includes(".metric{min-height:105px}"));
+  assert.ok(referencePass.includes(".panel{margin-top:16px}"));
 });
