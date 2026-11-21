@@ -39,7 +39,7 @@ body.light .rail-btn.active{border-color:rgba(80,130,190,.2);box-shadow:0 6px 18
 body.light .topnav{background:rgba(255,255,255,.86);border-color:rgba(55,80,125,.12);box-shadow:0 10px 30px rgba(70,90,140,.12)}
 body.light .topnav button.active{background:#e8efff;color:#397fe0}
 body.light .avatar-btn{background:linear-gradient(145deg,#dfeaff,#fff);color:#34415d}
-.page-head h1{font-size:29px;letter-spacing:-1.25px}
+.page-head h1{font-family:'Space Grotesk','DM Sans',sans-serif;font-size:29px;letter-spacing:-1.25px}
 .metric,.panel{border-radius:17px}
 .statusline{gap:6px}
 .profile-pop{left:78px;right:auto;top:auto;bottom:62px;width:350px;border-radius:23px}
