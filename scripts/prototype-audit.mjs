@@ -527,3 +527,9 @@ test("Aliens product mark stays visible and uses the square mobile lockup", () =
   assert.match(html, /<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T<\/div>/);
   assert.match(html, /<span class="brandmark" aria-hidden="true">T<\/span><span><strong>TelcoNet<\/strong><small>ALIENS COMPANY<\/small><\/span>/);
 });
+
+
+test("dashboard heading uses the product sans-serif typography", () => {
+  assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-2/);
+});
