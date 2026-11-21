@@ -572,3 +572,41 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - `score.base.software` remains inaccessible through the available access path; no new genuine route was available, so the same blocked route was not retried.
 
 **Project status: IN PROGRESS — ALIENS COMPANY BRAND HIERARCHY AND REFERENCE-BASED LOCAL VISUAL/FUNCTIONAL AUDIT PASSED; INDEPENDENT PUBLIC VERIFICATION BLOCKED.** Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+## Run 27 — Reference-aligned ALIENS brand and responsive shell (21 November 2026)
+
+Starting HEAD: `af9d28d85987052acb32efe0948f444288e055f5`. Final code HEAD: `354edc6a787984954a663e533c935594ca0fc901`.
+
+### Reference evidence
+
+- Re-inspected the current `main` branch, recent commits and all eight supplied Library screenshots, including the 09:24 TelcoNet hierarchy reference.
+- Re-materialized the 23.253313-second mobile-menu video and reviewed frames at 0, 3, 6, 9, 12, 15, 18, 21 and 23 seconds. The 354×656 Playwright viewport now matches the recording's dimensions for direct comparison.
+- The final screenshot artifact is [14690399106](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44863151654). Its 1920×920 desktop dark/light dashboard, dark/light profile popover, 320×720 and 354×656 mobile launcher dark/light, 360px mobile dashboard dark/light, desktop/mobile SignIn and launcher/search states were captured and visually inspected.
+
+### Visible changes
+
+- Re-established the reference color system: blue `#56a8ff`, violet `#8066f2`, with theme-specific blue accents. The square `T` product mark now uses a blue-violet gradient; `TelcoNet` is the solid product wordmark; `ALIENS COMPANY` is a distinct uppercase blue signature.
+- Updated the company switcher to use a locally supported building icon while preserving the exact hierarchy: `TelcoNet` product, `ALIENS COMPANY` brand and `Aliens TelcoNet` company name. Inactive workspace icons are neutral; the active destination retains the blue accent.
+- Lightened the light-theme rail/workspace surfaces to match the reference's near-white shell while retaining the pale blue/lavender main canvas. Dark surfaces remain near-black.
+- Rebalanced the wide desktop shell against the 1921×918 reference: 68px rail, 300px workspace, 1410px maximum main region, 44px top navigation, 40px search/collapse controls, 110px main top padding, 105px metric cards, 245px chart region and a 16px panel gap.
+- Matched the desktop profile popover to the supplied 404px panel anchored 12px from the viewport bottom in both themes.
+- Reworked narrow mobile launcher proportions against the video: adaptive 16–20px outer gutters, 40px Grid/List control, 34px app icons, 64px app tiles, 58px compact Score Menu row, 36px list icon, 36–40px account avatar and a 64–70px footer. Existing safe-area handling and all launcher states remain intact.
+- Preserved the 26-app grid, all 39 Score Menu entries, Grid/List modes, Ask Cyborg ready/local/no-destination states, keyboard/focus behavior, dialog scroll locking, sidebar collapse/reflow, profile/theme controls, prototype SignIn notice/password visibility, chart ranges and honest placeholder messaging. No production authentication or future app was added.
+
+### Verification
+
+- Static prototype audit: **41/41 passed**.
+- Chromium/Playwright responsive and interaction audit: **33/33 passed**.
+- Browser captures were taken at 1920×920 desktop dark/light, 320×720 narrow mobile dark/light, 354×656 reference mobile dark/light and the existing 360px mobile dashboard sizes. The desktop profile and SignIn captures were also visually inspected.
+- GitHub Pages deployment for final code HEAD `354edc6a787984954a663e533c935594ca0fc901`: **SUCCESS**, [Actions run 44863151100](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44863151100).
+- Final custom audit: [Actions run 44863151654](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44863151654).
+- Intermediate runs exposed a missing local icon-map entry, an outdated profile-size assertion, CSS specificity on the desktop collapse control and a hidden Score Menu test selector. Each was corrected before the final successful 41/41 and 33/33 run.
+- The combined commit-status endpoint still returns no status contexts; the successful custom Actions workflow is the verification source. No pixel-perfect parity claim is made.
+
+### External access notes and completion
+
+- The connected Browser extension still has no originating browser context. CI Chromium/Playwright was available and supplied the actual visual screenshots used for comparison.
+- Independent public opening of `https://iharishjaypal.github.io/` remains unavailable through the current web access path; a site-scoped search also returned no indexed result. GitHub Pages deployment itself succeeded. Thus the final screenshots verify the committed repository build, not an independently fetched public edge response.
+- `score.base.software` remains inaccessible and no new genuine access route was available; it was not retried through the same blocked path.
+
+**Project status: COMPLETE against the supplied references and available visual/functional checks.** The independent public-page fetch and external Score URL remain access limitations, not unverified claims. Production WebApp, Dart app, Python app and production authentication remain out of scope.
