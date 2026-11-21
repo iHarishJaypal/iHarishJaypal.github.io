@@ -536,3 +536,39 @@ The 23.25-second mobile recording was sampled throughout its sequence. It confir
 - These access limitations do not prevent comparison against the supplied Library references, but independent public-page verification remains outstanding.
 
 **Project status: IN PROGRESS — VISIBLE ALIENS BRAND PASS AND LOCAL VISUAL/FUNCTIONAL AUDIT PASSED; INDEPENDENT PUBLIC VERIFICATION BLOCKED.** Production WebApp, Dart app, Python app and production authentication remain out of scope.
+
+
+## Run 26 — Reference-correct ALIENS COMPANY hierarchy and dashboard visual refinement (2026-11-21)
+
+### Repository and reference review
+
+- Re-inspected the latest `main` branch, recent commits, recursive tree, `index.html`, `telconet-ui.css`, `telconet-ui.js`, static/browser audit scripts and Pages workflow. Starting HEAD was `e0e3afe6cfe528d503797dd8e9ded33c19f3cd68`; the three code revisions in this run are `729d7eb0b5329d1453b0df165d4fbad363d2358e`, `af6142c1ef733d2451754e47089604b1985bb804` and `8e37495229c41fdc5278b4c6f344e2207f7c6bb9`.
+- Re-opened the eight supplied Library screenshots: `image(20261115-054556).png`, `image(20261115-054622).png`, `image(20261115-054645).png`, `image(20261115-054719).png`, `image(20261115-054755).png`, `image(20261115-055306).png`, `image(20261115-072554).png` and the later `image(20261115-092415).png` TelcoNet hierarchy reference. Re-materialized the 23.253313-second mobile-menu video and inspected frames at 0, 3, 6, 9, 12, 15, 18, 21 and 23 seconds.
+- The 09:24 reference establishes the product/company distinction: a square `T` product mark, `TelcoNet` wordmark, `ALIENS COMPANY` signature and `Aliens TelcoNet` company switcher. The current branch had drifted to an `A` company monogram in the product-mark positions; the mobile SignIn still used `T`, so the lockup was inconsistent. The current dashboard also had an empty chart because its stylesheet referenced an undefined SVG gradient, and the metric cards had extra icon/sparkline decoration absent from the supplied dashboard reference.
+- Retried the connected browser tab context; it still requires the originating browser context. The published Pages URL is not accessible through the available web-opening path, and `score.base.software` still has no genuine access route. These blockers are recorded rather than inferred around.
+
+### Visible product/company and dashboard changes
+
+- Restored `T` as the TelcoNet product mark in the desktop rail, mobile header and desktop/mobile SignIn. Kept `ALIENS COMPANY` as the distinct company signature, `Aliens TelcoNet` as the company-switcher name, and `AL` as the account/profile initials. This corrects the earlier A-monogram placement without inventing a new company logo.
+- Increased the ALIENS COMPANY signature's visual weight and consistency across the desktop wordmark, company switcher, mobile lockup, SignIn lockup and workspace footer. The product mark remains the blue-violet square shown in the supplied reference.
+- Restored the reference's clean eight-card dashboard hierarchy: five metric cards on desktop and two columns on mobile, with the original values and color-coded value treatment. Removed the added metric icon and sparkline decorations because they were not present in the supplied reference and made the compact mobile cards unnecessarily busy.
+- Fixed the blank dashboard chart. The first pass defined a missing paint server; the final reference-aligned pass uses the theme-aware TelcoNet `--blue` fill directly, avoiding an invented cyan-to-blue gradient. The bars now render in both dark and light themes.
+- Bumped the external stylesheet cache version and added static/Chromium regression checks for the product/company hierarchy, metric-card count and layout, absence of decorative metric noise, visible chart-bar geometry and theme-responsive chart fill.
+- Preserved the 26-app grid, all 39 Score Menu entries, mobile launcher/search states, keyboard and focus behavior, sidebar collapse/reflow, profile, theme controls, SignIn safety notice/password visibility, chart ranges, safe areas and honest placeholder behavior.
+
+### Verification
+
+- Static prototype audit: **37/37 passed** in [Actions run 44855534941](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44855534941).
+- Responsive/interaction Chromium audit: **30/30 passed** in the same run. It covers 320, 360, 375, 414 and 430px mobile shells; 8/26/39 launcher states; every Score Menu route; local/no-local Ask Cyborg states; navigation; focus; safe areas; SignIn; and theme persistence.
+- Browser artifact **14687565915** contains 28 screenshots. Downloaded and visually inspected desktop dark/light dashboards, mobile 360px dark/light dashboards, desktop/mobile SignIn, brand lockups, compact menu, full app grid, local search and 320px no-local search. The chart bars are visible and blue in both themes; the eight metric cards now match the supplied reference's simpler composition. The 09:24 reference and mobile video frames were compared directly against these captures.
+- GitHub Pages build/deployment for code HEAD `8e37495229c41fdc5278b4c6f344e2207f7c6bb9`: **SUCCESS**, [run 44855534689](https://github.com/iHarishJaypal/iHarishJaypal.github.io/actions/runs/44855534689).
+- Intermediate checks exposed two issues before the final run: the first dashboard cleanup removed the workspace footer signature rule, causing two static assertions to fail; the rule was restored in `8e37495` and the final static audit passed 37/37. The previous browser run also exposed a mobile mark radius mismatch; restoring the reference `T` product mark and its normal 12px treatment corrected it. Only the final successful 37/37 and 30/30 run is counted.
+- GitHub's combined commit-status endpoint has no status contexts; the successful custom Actions workflow is the verification source. No pixel-perfect parity claim is made.
+
+### Remaining external verification blockers
+
+- The connected Browser extension still reports: `Browser access requires the originating browser context.`
+- Direct opening of `https://iharishjaypal.github.io/` through the available web access path returns an internal access error, although the GitHub Pages deployment completed successfully. The Chromium screenshots therefore verify the committed repository build locally, not an independently opened public page.
+- `score.base.software` remains inaccessible through the available access path; no new genuine route was available, so the same blocked route was not retried.
+
+**Project status: IN PROGRESS — ALIENS COMPANY BRAND HIERARCHY AND REFERENCE-BASED LOCAL VISUAL/FUNCTIONAL AUDIT PASSED; INDEPENDENT PUBLIC VERIFICATION BLOCKED.** Production WebApp, Dart app, Python app and production authentication remain out of scope.
