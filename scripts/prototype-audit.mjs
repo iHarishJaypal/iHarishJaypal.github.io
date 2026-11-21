@@ -521,11 +521,13 @@ test("custom typography keeps sans-serif fallbacks when Google Fonts are unavail
 });
 
 
-test("Aliens product mark stays visible and uses the square mobile lockup", () => {
-  assert.match(css, /\.rail-logo\{display:grid\}/);
-  assert.match(css, /\.mobile-brand \.brandmark\{width:36px;height:36px;border-radius:12px\}/);
-  assert.match(html, /<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T<\/div>/);
-  assert.match(html, /<span class="brandmark" aria-hidden="true">T<\/span><span><strong>TelcoNet<\/strong><small>ALIENS COMPANY<\/small><\/span>/);
+test("ALIENS COMPANY monogram is used consistently across product entry points", () => {
+  assert.ok(html.includes('<div class="rail-logo aliens-mark" role="img" aria-label="ALIENS COMPANY brand mark">A</div>'));
+  assert.equal((html.match(/class="brandmark aliens-mark" aria-hidden="true">A<\\/span>/g) || []).length, 2,
+    "mobile header and SignIn must share the ALIENS monogram");
+  assert.match(css, /\\.rail-logo\\.aliens-mark,\\.brandmark\\.aliens-mark/);
+  assert.match(css, /\\.signin-logo \\.brandmark\\.aliens-mark/);
+  assert.match(css, /@media\\(max-width:850px\\)\\{\\.mobile-brand \\.brandmark\\.aliens-mark/);
 });
 
 
