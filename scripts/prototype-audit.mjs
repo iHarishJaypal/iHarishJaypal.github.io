@@ -534,5 +534,5 @@ test("ALIENS COMPANY monogram is used consistently across product entry points",
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-2/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-3/);
 });
