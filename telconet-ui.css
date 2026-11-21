@@ -6,7 +6,7 @@ body.light .rail{background:#ebf7fd;border-right-color:rgba(80,130,170,.14)}
 body.light .rail-btn{border-color:transparent}
 body.light .rail-btn.active{border-color:rgba(80,130,190,.2);box-shadow:0 6px 18px rgba(70,120,180,.1)}
 .rail{width:68px;padding:15px 8px;gap:10px}
-.rail-logo{display:none}
+.rail-logo{display:grid}
 .workspace{left:68px;width:300px;padding:18px 12px 13px 8px}
 .topbar{left:368px;height:76px;padding:0 24px;gap:12px;background:transparent}
 .main{margin-left:368px;padding:102px 28px 42px;max-width:none}
@@ -120,7 +120,7 @@ body.menu-open{overflow:hidden}
   .rail,.workspace,.topbar{display:none}
   .main{margin:0;padding:88px 16px 100px}
   .mobile-brand{height:58px;left:12px;right:12px;top:10px;padding:7px 10px;border-radius:18px;box-shadow:0 12px 35px rgba(0,0,0,.14)}
-  .mobile-brand .brandmark{width:36px;height:36px;border-radius:50%}
+  .mobile-brand .brandmark{width:36px;height:36px;border-radius:12px}
   .mobile-brand strong{font:700 15px 'Space Grotesk',sans-serif;letter-spacing:-.3px}
   .mobile-brand small{font-size:9px}
   .mobile-brand button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:var(--surface2);color:var(--text)}
