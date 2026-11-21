@@ -519,3 +519,11 @@ test("custom typography keeps sans-serif fallbacks when Google Fonts are unavail
   assert.match(html, /font:700 30px 'Space Grotesk',sans-serif/);
   assert.match(css, /font:700 15px 'Space Grotesk',sans-serif/);
 });
+
+
+test("Aliens product mark stays visible and uses the square mobile lockup", () => {
+  assert.match(css, /\.rail-logo\{display:grid\}/);
+  assert.match(css, /\.mobile-brand \.brandmark\{width:36px;height:36px;border-radius:12px\}/);
+  assert.match(html, /<div class="rail-logo" role="img" aria-label="TelcoNet product mark">T<\/div>/);
+  assert.match(html, /<span class="brandmark" aria-hidden="true">T<\/span><span><strong>TelcoNet<\/strong><small>ALIENS COMPANY<\/small><\/span>/);
+});
