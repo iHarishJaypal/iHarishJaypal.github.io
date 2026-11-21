@@ -538,14 +538,21 @@ test("ALIENS COMPANY signature remains visible beside the TelcoNet product mark"
 });
 
 
-test("dashboard chart defines its theme-aware brand gradient", () => {
-  assert.ok(html.includes('<linearGradient id="telcoBarGradient"'));
-  assert.ok(html.includes('stop-color="var(--cyan)"'));
-  assert.ok(html.includes('stop-color="var(--blue)"'));
-  assert.ok(css.includes('.chart .bar{fill:url(#telcoBarGradient)}'));
+test("dashboard chart bars use the theme-aware TelcoNet blue", () => {
+  assert.doesNotMatch(html, /telcoBarGradient/);
+  assert.ok(css.includes(".chart .bar{fill:var(--blue);opacity:.9;rx:4}"));
+});
+
+test("dashboard metric cards follow the supplied restrained reference", () => {
+  const start = html.indexOf('id="view-dashboard"');
+  const end = html.indexOf('id="view-health"', start);
+  const dashboard = html.slice(start, end);
+  assert.equal((dashboard.match(/<article class="metric">/g) || []).length, 8);
+  assert.doesNotMatch(dashboard, /metric-icon|metric-spark|metric-top|metric-bottom/);
+  assert.ok(css.includes(".metric{min-height:104px;padding:17px 18px;"));
 });
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-4/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-5/);
 });

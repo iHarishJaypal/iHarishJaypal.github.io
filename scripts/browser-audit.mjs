@@ -176,6 +176,12 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
   const { context, page } = await openPage({ width: 1440, height: 960 });
   try {
     await capture(page, "desktop-dashboard-dark.png");
+    const metricCardCount = await page.locator("#view-dashboard .metrics .metric").count();
+    assert.equal(metricCardCount, 8, "dashboard must keep all eight reference metric cards");
+    assert.equal(await page.locator("#view-dashboard .metric-icon, #view-dashboard .metric-spark").count(), 0,
+      "reference metric cards should not gain decorative icon or sparkline rows");
+    const desktopMetricColumns = await page.locator("#view-dashboard .metrics").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+    assert.equal(desktopMetricColumns, 5, "desktop metric grid must retain five columns");
     assert.equal(await page.locator(".updated").textContent(), "Demo snapshot");
     assert.match(await page.locator(".updated").getAttribute("title"), /Static sample data/);
     await page.locator('[data-action="chart-range"][data-range="7"]').click();
@@ -203,31 +209,26 @@ test("desktop navigation, chart ranges, sidebar collapse, theme and SignIn remai
     assert.equal(chartGeometry.labelsInside, true, "day labels must remain inside the chart viewport");
     assert.equal(chartGeometry.highestBar, 25, "the maximum normalized bar must align with the 2.5M top gridline");
     const chartPaint = await page.locator(".chart").evaluate((svg) => {
-      const gradient = svg.querySelector("#telcoBarGradient");
       const bars = [...svg.querySelectorAll("#chartBars .bar")];
       const first = bars[0];
       const box = first?.getBBox();
       return {
-        gradientStops: gradient?.querySelectorAll("stop").length ?? 0,
         barCount: bars.length,
         fill: first ? getComputedStyle(first).fill : "none",
         width: box?.width ?? 0,
-        height: box?.height ?? 0,
-        stopColors: gradient ? [...gradient.querySelectorAll("stop")].map((stop) => getComputedStyle(stop).stopColor) : []
+        height: box?.height ?? 0
       };
     });
-    assert.equal(chartPaint.gradientStops, 2, "chart bars need a defined two-stop gradient");
     assert.ok(chartPaint.barCount > 0, "chart sample bars must be rendered");
     assert.ok(chartPaint.width > 0 && chartPaint.height > 0, "chart bars must have visible geometry");
-    assert.notEqual(chartPaint.fill, "none", "chart bars must receive a paint server");
-    assert.ok(chartPaint.stopColors.every((color) => color && color !== "rgba(0, 0, 0, 0)"), "chart gradient stops must resolve to visible theme colors");
-    const darkChartColor = chartPaint.stopColors[0];
+    assert.notEqual(chartPaint.fill, "none", "chart bars must receive the TelcoNet blue fill");
+    const darkChartFill = chartPaint.fill;
 
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), true);
     await waitForToastToClear(page);
-    const lightChartColor = await page.locator("#telcoBarGradient stop").first().evaluate((stop) => getComputedStyle(stop).stopColor);
-    assert.notEqual(lightChartColor, darkChartColor, "chart brand gradient must adapt to the light theme");
+    const lightChartFill = await page.locator("#chartBars .bar").first().evaluate((bar) => getComputedStyle(bar).fill);
+    assert.notEqual(lightChartFill, darkChartFill, "chart bars must adapt to the light-theme brand blue");
     await capture(page, "desktop-dashboard-light.png");
     await page.locator(".dock-theme").click();
     assert.equal(await page.locator("body").evaluate((body) => body.classList.contains("light")), false);
@@ -766,6 +767,8 @@ test("mobile header, brand hierarchy and primary navigation fit common phone wid
         assert.ok(geometry.nav.left >= 0 && geometry.nav.right <= width + 1, "bottom navigation must stay within the viewport");
         assert.ok(geometry.nav.bottom <= geometry.viewportHeight + 1, "bottom navigation must respect the viewport and safe area");
         assert.ok(geometry.mainPaddingBottom >= geometry.nav.height + 20, "main content must reserve room above the bottom navigation");
+        const mobileMetricColumns = await page.locator("#view-dashboard .metrics").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+        assert.equal(mobileMetricColumns, 2, "mobile dashboard metrics must remain a two-column grid");
         await assertNoHorizontalOverflow(page, width + "px mobile shell");
 
         if (width === 360) await capture(page, "mobile-dashboard-360-dark.png");
