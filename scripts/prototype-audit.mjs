@@ -554,7 +554,7 @@ test("dashboard metric cards follow the supplied restrained reference", () => {
 
 test("dashboard heading uses the product sans-serif typography", () => {
   assert.match(css, /\.page-head h1\{font-family:'Space Grotesk','DM Sans',sans-serif/);
-  assert.match(html, /telconet-ui\.css\?v=20261121-9/);
+  assert.match(html, /telconet-ui\.css\?v=20261121-10/);
 });
 
 
@@ -602,6 +602,7 @@ test("desktop reference spacing keeps the dashboard heading, cards and chart ali
   assert.ok(referencePass.includes("height:44px;"));
   assert.ok(referencePass.includes(".chart-wrap{height:245px}"));
   assert.ok(referencePass.includes(".collapse-btn{width:40px;height:40px;min-width:40px;min-height:40px;padding:0}"));
+  assert.ok(referencePass.includes(".top-actions{height:40px}"));
   assert.ok(referencePass.includes(".metric{min-height:105px}"));
   assert.ok(referencePass.includes(".panel{margin-top:16px}"));
 });
