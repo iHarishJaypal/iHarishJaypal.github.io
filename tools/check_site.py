@@ -76,9 +76,9 @@ def main():
     if not (ROOT / "api/projects.php").is_file():
         raise SystemExit("Missing PHP projects API")
 
-    if not re.search(r"<main\\b", html, re.I):
+    if not re.search(r"<main\b", html, re.I):
         raise SystemExit("Missing semantic <main> landmark")
-    if not re.search(r"<footer\\b", html, re.I):
+    if not re.search(r"<footer\b", html, re.I):
         raise SystemExit("Missing semantic <footer> landmark")
 
     print(
