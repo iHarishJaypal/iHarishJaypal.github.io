@@ -1,0 +1,23 @@
+[
+  {
+    "id": "gamenet",
+    "name": "ALIENS GameNet",
+    "status": "Prototype",
+    "description": "Gaming-industry operations workspace with studios, games, teams, esports and live operations.",
+    "url": "/gamenet/"
+  },
+  {
+    "id": "portfolio",
+    "name": "Developer Portfolio",
+    "status": "Live",
+    "description": "Personal developer portfolio and project index.",
+    "url": "/"
+  },
+  {
+    "id": "ai-learning",
+    "name": "AI Development Journey",
+    "status": "In progress",
+    "description": "Learning Python, AI fundamentals and practical application development.",
+    "url": "https://github.com/iHarishJaypal"
+  }
+]
