@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+<title id="title">ALIENS COMPANY mark</title>
+<defs>
+  <linearGradient id="bg" x1="8" y1="8" x2="88" y2="90" gradientUnits="userSpaceOnUse"><stop stop-color="#12B9E8"/><stop offset=".52" stop-color="#3478E8"/><stop offset="1" stop-color="#7457E8"/></linearGradient>
+  <linearGradient id="glyph" x1="26" y1="18" x2="72" y2="78" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#D8F7FF"/></linearGradient>
+</defs>
+<rect x="3" y="3" width="90" height="90" rx="25" fill="#0A1425" stroke="#67DDF4" stroke-opacity=".3" stroke-width="2"/>
+<path d="M48 13 78 73H64L48 41 32 73H18L48 13Z" fill="url(#glyph)"/>
+<path d="M35 61h26" stroke="url(#bg)" stroke-width="7" stroke-linecap="round"/>
+<path d="M12 49c8-17 22-27 38-27 14 0 26 7 34 19" fill="none" stroke="url(#bg)" stroke-width="2.8" stroke-linecap="round" opacity=".95"/>
+<circle cx="83" cy="41" r="5" fill="#52DCEB" stroke="#0A1425" stroke-width="2"/>
+</svg>
