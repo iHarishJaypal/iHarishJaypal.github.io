@@ -22,3 +22,22 @@ body.light{--bg:#f3f6fc;--panel:#fff;--panel2:#f6f8fd;--panel3:#eaf0fa;--text:#1
 .footer{border-top:1px solid var(--line);margin-top:25px;padding-top:18px}
 .template-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.template-card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:15px;min-height:142px;display:flex;flex-direction:column;gap:9px;transition:.18s}.template-card:hover{transform:translateY(-2px);border-color:rgba(66,174,235,.45)}.template-card b{font-size:11px}.template-card p{font-size:10px;color:var(--muted);margin:0;line-height:1.5}.template-meta{font-size:9px;color:#54bfe8;margin-top:auto}
 @media(max-width:1100px){:root{--side:260px}.template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.page-heading{padding:20px 17px;min-height:0}.page-heading:after{right:-75px;opacity:.6}.template-grid{grid-template-columns:1fr 1fr}}@media(max-width:420px){.template-grid{grid-template-columns:1fr}}
+
+
+/* ALIENS master-brand identity — GameNet product lockup */
+.brand-lockup{display:flex;align-items:center;gap:12px;padding:2px 12px 21px;text-decoration:none}
+.brand-logo{width:48px;height:48px;flex:0 0 48px;filter:drop-shadow(0 7px 16px rgba(25,151,224,.2))}
+.brand-copy{display:grid;grid-template-columns:auto auto;align-items:baseline;column-gap:5px;line-height:1}
+.brand-copy strong{font:800 21px 'Space Grotesk';letter-spacing:1.6px;color:var(--text)}
+.brand-copy small{font:700 9px 'DM Sans';letter-spacing:2.4px;color:#55c9ef}
+.brand-copy em{grid-column:1/-1;margin-top:7px;font:800 8px 'DM Sans';font-style:normal;letter-spacing:1.45px;color:var(--muted)}
+.brand-symbol{padding:0;overflow:hidden;border:1px solid rgba(85,201,239,.25);background:var(--panel);border-radius:14px}
+.brand-symbol img{width:100%;height:100%;display:block}
+.company-mark{width:39px;height:39px;flex:0 0 39px;object-fit:cover;border-radius:11px;box-shadow:0 5px 16px rgba(25,151,224,.16)}
+.avatar{width:36px;height:36px;object-fit:cover;border-radius:11px;background:none}
+.profile-button{overflow:hidden;padding:0;background:var(--panel);border:1px solid var(--line)}
+.profile-button img{width:100%;height:100%;display:block}
+.company-switch{border-color:rgba(73,183,231,.22);background:linear-gradient(110deg,var(--panel),color-mix(in srgb,var(--blue) 6%,var(--panel)))}
+.company-switch b{letter-spacing:.85px}
+.brand-company{display:none}
+@media(max-width:760px){.brand-lockup{padding-bottom:18px}.brand-logo{width:43px;height:43px;flex-basis:43px}.brand-copy strong{font-size:19px}}
